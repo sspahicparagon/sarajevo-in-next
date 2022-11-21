@@ -6,10 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "prisma-generate": "npx prisma generate",
-    "prisma-push": "npx prisma db push",
-    "start": "node server.js",
-    "next-start": "next start -p 8080",
+    "start": "next start",
     "lint": "next lint",
     "gcp-build": "npm run build",
     "deploy": "gcloud config set project sarajevoin-next && gcloud app deploy app.yaml --version=0-1-0"
