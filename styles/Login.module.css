@@ -1,0 +1,33 @@
+.container {
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-repeat: no-repeat;
+    background-image: url('/images/track-images/track-image-8.jpg');
+    /* background-image: url('https://www.w3schools.com/howto/img_parallax.jpg'); */
+    overflow-x: auto !important;
+}
+
+.form {
+    justify-content: center;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    color: var(--base-color);
+}
+
+.button {
+    width: 100%;
+    margin-block: 10px;
+    color: var(--base-color);
+}
+
+@media (max-width:400px) {
+    .form {
+        width: 250px !important;
+    }
+}

@@ -1,0 +1,11 @@
+.container {
+    background-color: var(--base-color);
+    color: var(--color-gray);
+    border: 0 !important;
+    text-align: center;
+}
+
+
+.option {
+    background: var(--base-color) !important;
+}

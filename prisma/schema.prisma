@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model groupe {
+  GroupeID Int        @id @default(autoincrement())
+  Name     String     @db.VarChar(255)
+  location location[]
+}
+
+model location {
+  LocationID Int        @id @default(autoincrement())
+  Name       String?    @db.VarChar(255)
+  Phone      String?    @db.VarChar(255)
+  Website    String?    @db.VarChar(255)
+  Image      String     @db.VarChar(1023)
+  GroupeID   Int?
+  CreatedAt  DateTime   @default(now()) @db.DateTime(0)
+  Adresa     String?    @db.VarChar(255)
+  Latitude   String?    @db.VarChar(255)
+  Longitude  String?    @db.VarChar(255)
+  groupe     groupe?    @relation(fields: [GroupeID], references: [GroupeID], onDelete: Cascade, map: "Location_GroupeID")
+  worktime   worktime[]
+
+  @@index([GroupeID], map: "GroupeID")
+}
+
+model trackimage {
+  TrackImageID Int    @id @default(autoincrement())
+  Image        String @db.VarChar(255)
+}
+
+model worktime {
+  WorkTimeID Int      @id @default(autoincrement())
+  DayOfWeek  Int
+  OpenTime   DateTime @db.Time(0)
+  CloseTime  DateTime @db.Time(0)
+  LocationID Int
+  location   location @relation(fields: [LocationID], references: [LocationID], onDelete: Cascade, map: "WorkTime_LocationID")
+
+  @@index([LocationID], map: "LocationID")
+}

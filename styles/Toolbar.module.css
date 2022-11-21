@@ -1,0 +1,7 @@
+.container {
+    background-color: var(--base-color);
+}
+
+.column {
+    justify-content: center;
+}

@@ -1,0 +1,21 @@
+.slyder-title {
+  font-size: 2rem;
+  color: lightgray;
+  width: auto;
+  margin: 1rem;
+  text-align: center;
+  align-self: center;
+}
+
+.slyder-container {
+  background-color: var(--base-color);
+  border-radius: 20px;
+  margin: auto;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.container {
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-gray);
+}

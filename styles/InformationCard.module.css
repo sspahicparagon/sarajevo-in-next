@@ -1,0 +1,19 @@
+.title-container {
+    display: block;
+    align-self: center;
+}
+
+.information-container {
+    justify-content: center;
+    margin: auto;
+}
+
+.information-row {
+    justify-content: space-evenly;
+    margin-block: 5px;
+}
+
+.information-column-icon {
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    align-self: center;
+    flex: auto;
+}
+
+.map {
+    border: 0;
+    align-self: center;
+}

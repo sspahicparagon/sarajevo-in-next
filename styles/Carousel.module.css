@@ -1,0 +1,122 @@
+.chakra-carousel-slyder {
+    --items-per-screen: 6;
+    width: 100%;
+    transition: transform 10s;
+}
+
+.row {
+    position: relative;
+    overflow: hidden;
+    margin: 1rem;
+}
+
+.card {
+    position: relative;
+    height: 100% !important;
+    width: calc((100% - var(--items-per-screen)) / var(--items-per-screen));
+    flex: 0 0 calc(100% / var(--items-per-screen));
+    background: var(--base-color);
+    padding-inline: 1% !important;
+}
+
+.card-image {
+    object-fit: cover;
+    float: left;
+    z-index: 2;
+    opacity: 0.8 !important;
+    width: 100%;
+    height: 100%;
+}
+
+.card>.card-text {
+    position: absolute;
+    font-size: larger;
+    z-index: 4;
+    display: table-cell;
+    vertical-align: middle;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s, visibility 0.2s;
+    color: white;
+    word-wrap: break-word;
+    text-overflow: ellipsis !important;
+    text-align: center;
+}
+
+.card:hover .card-image {
+    opacity: 0.8;
+    z-index: 3;
+}
+
+.card:hover .card-text {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+}
+
+.left-carousel-button {
+    position: absolute !important;
+    background-color: transparent !important;
+    color: white;
+    top: 50%;
+    left: 0;
+    z-index: 2;
+    transform: translate(0%, -50%);
+    width: 5%;
+    height: 100% !important;
+}
+
+.right-carousel-button {
+    position: absolute !important;
+    background-color: transparent !important;
+    color: white;
+    top: 50%;
+    right: 0;
+    transform: translate(0%, -50%);
+    width: 5%;
+    height: 100% !important;
+}
+
+@media (max-width: 1400px) {
+    .chakra-carousel-slyder {
+        --items-per-screen: 5;
+    }
+
+
+    .card>.card-text {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 1200px) {
+    .chakra-carousel-slyder {
+        --items-per-screen: 4;
+    }
+}
+
+
+@media (max-width: 900px) {
+    .chakra-carousel-slyder {
+        --items-per-screen: 3;
+    }
+
+    .card>.card-text {
+        font-size: smaller;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .chakra-carousel-slyder {
+        --items-per-screen: 2;
+    }
+
+    .card>.card-text {
+        font-size: smaller;
+    }
+}

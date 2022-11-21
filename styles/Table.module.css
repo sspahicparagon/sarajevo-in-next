@@ -1,0 +1,24 @@
+.table-row:hover {
+    background-color: lightgray;
+}
+
+.table-row {
+    padding: 5px;
+    justify-content: space-evenly;
+}
+
+.table-cell-day {
+    font-weight: 600;
+    color: #1a2437;
+    justify-content: center;
+}
+
+.table-title {
+    display: block;
+    align-self: center;
+}
+
+.container {
+    align-self: center;
+    margin-top: 5%;
+}

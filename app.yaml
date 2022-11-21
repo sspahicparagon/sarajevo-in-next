@@ -1,0 +1,23 @@
+runtime: nodejs
+env: flex
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 10
+  cool_down_period_sec: 3600
+  cpu_utilization:
+    target_utilization: 0.9
+# Run database migration
+name: 'gcr.io/cloud-builders/npm'
+  entrypoint: npx
+  env:
+    DATABASE_URL=$_DATABASE_URL
+  args:
+    'prisma'
+    'migrate'
+    'deploy' 
+resources:
+  cpu: 2
+  memory_gb: 4.6
+  disk_size_gb: 10
+network:
+  name: default

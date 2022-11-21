@@ -1,0 +1,48 @@
+.size-50 {
+    width: 50%;
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.title-container {
+    background-color: var(--base-color);
+
+}
+
+.information-container {
+    justify-content: center;
+    margin-block: 50px;
+}
+
+.information-card {
+    margin: auto;
+    border: 1px solid var(--base-color);
+    border-radius: 35px;
+    padding: 15px;
+}
+
+.responsive {
+    justify-content: space-around;
+}
+
+.heading-text {
+    font-size: 300%;
+    color: var(--color-gray);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 500px) {
+    .responsive {
+        flex-direction: column !important;
+    }
+
+    .heading-text {
+        font-size: x-large;
+    }
+}

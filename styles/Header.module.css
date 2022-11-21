@@ -1,0 +1,13 @@
+.header-container {
+    background-color: white;
+    justify-content: center;
+}
+
+.logo-container {
+    margin: auto;
+    align-items: center;
+}
+
+.slideshow-container {
+    padding: 5px;
+}
