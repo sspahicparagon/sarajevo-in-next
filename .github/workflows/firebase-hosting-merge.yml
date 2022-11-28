@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        env:
+          REACT_APP_DATABASE_URL: '${{ secrets.FIREBASE_DATABASE_URL }}'
+          REACT_APP_TOKEn_SECRET: '123456789'
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
