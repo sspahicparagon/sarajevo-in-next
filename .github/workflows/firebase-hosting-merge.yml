@@ -10,11 +10,13 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Build
+        run: npm run build
         env:
           DATABASE_URL: '${{ secrets.FIREBASE_DATABASE_URL }}'
           TOKEN_SECRET: '123456789'
-      - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
