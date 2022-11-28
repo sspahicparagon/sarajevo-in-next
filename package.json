@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "npx prisma db pull && npx prisma db push && npx prisma generate && next build",
     "start": "next start",
-    "only-build": "next build",
+    "only-build": "next build && next export",
     "lint": "next lint",
     "gcp-build": "npm run build",
     "generate-local": "dotenv -e .env.local -- npx prisma generate",

@@ -4,6 +4,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Loading from "./Loading";
 import Image from "next/image";
+import imageLoader from "../lib/imageLoader";
 
 interface CardConfig {
     image?: string;
@@ -21,7 +22,8 @@ export default function Card({ image = "", text = "", link = "", enableClick = t
                     <div className={carouselStyle.card} >
                         <Image
                             className={carouselStyle["card-image"]}
-                            src={`http://sarajevoin.ba/public${image}`}
+                            src={`${image}`}
+                            loader={imageLoader}
                             layout={'fill'}
                             objectFit={'cover'}
                             objectPosition={'50% 50%'}
@@ -36,10 +38,12 @@ export default function Card({ image = "", text = "", link = "", enableClick = t
                 <div className={carouselStyle.card}>
                     <Image
                         className={carouselStyle["card-image"]}
-                        src={`http://sarajevoin.ba/public${image}`}
-                        width={'100%'}
-                        height={'160%'}
-                        layout={'responsive'}
+                        src={`${image}`}
+                        loader={imageLoader}
+                        layout={'fill'}
+                        objectFit={'cover'}
+                        objectPosition={'50% 50%'}
+                        placeholder={'blur'}
                         blurDataURL={`http://sarajevoin.ba/public/placeholder${image}`}
                         alt={text}
                     />
