@@ -15,7 +15,7 @@ export default async function handler(
         include: {
             location: true
         }
-    })
+    });
     res.status(200).json(response);
 }
 

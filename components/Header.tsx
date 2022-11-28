@@ -5,12 +5,12 @@ import logo from '../images/sarajevo.in-logo.jpg';
 import IconPlusText from "./IconPlusText";
 import TrackImagesService from "../services/TrackImagesService";
 import { useEffect, useState } from "react";
-import Toolbar from "./Toolbar";
 import headerStyle from '../styles/Header.module.css';
+import Loading from "./Loading";
 
 
 export default function Header() {
-    const [array, setArray] = useState<CardElement[]>([]);
+    const [array, setArray] = useState<CardElement[] | undefined>(undefined);
 
     useEffect(() => {
         TrackImagesService.getTrackImages().then((data: CardElement[]) => {
@@ -22,35 +22,38 @@ export default function Header() {
         <Flex
             width={'100%'}
             flexDirection={'column'}
+            className={headerStyle['header-container']}
         >
-            <Toolbar />
-            <Flex
-                flexDirection={'row'}
-                className={headerStyle['header-container']}
-            >
+            {array == undefined ?
+                <Loading color="var(--base-color)" background="white" />
+                :
                 <Flex
-                    width={'24vw'}
-                    flexDirection={'column'}
-                    className={headerStyle['logo-container']}
+                    flexDirection={'row'}
                 >
-                    <IconPlusText image={logo.src} width={'100%'} height={'100%'} />
+                    <Flex
+                        width={'24vw'}
+                        flexDirection={'column'}
+                        className={headerStyle['logo-container']}
+                    >
+                        <IconPlusText image={logo.src} width={'100%'} height={'100%'} interactionEnabled={false} />
+                    </Flex>
+                    <Flex
+                        width={'50vw'}
+                        className={headerStyle['slideshow-container']}
+                    >
+                        <>
+                            <Slideshow items={array} />
+                        </>
+                    </Flex>
+                    <Flex
+                        width={'24vw'}
+                        flexDirection={'column'}
+                        className={headerStyle['logo-container']}
+                    >
+                        <IconPlusText image={logo.src} width={'100%'} height={'100%'} interactionEnabled={false} />
+                    </Flex>
                 </Flex>
-                <Flex
-                    width={'50vw'}
-                    className={headerStyle['slideshow-container']}
-                >
-                    <>
-                        <Slideshow items={array} />
-                    </>
-                </Flex>
-                <Flex
-                    width={'24vw'}
-                    flexDirection={'column'}
-                    className={headerStyle['logo-container']}
-                >
-                    <IconPlusText image={logo.src} width={'100%'} height={'100%'} />
-                </Flex>
-            </Flex>
+            }
         </Flex>
     );
 };

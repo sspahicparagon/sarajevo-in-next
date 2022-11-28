@@ -2,8 +2,9 @@ import { PhoneIcon } from "@chakra-ui/icons";
 import { Box, Flex } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ElementInformation from "../interfaces/ElementInformation";
-import { faGlobe, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import informationCardStyle from '../styles/InformationCard.module.css';
+import IconPlusText from "./IconPlusText";
 
 
 interface InformationCardConfing {
@@ -12,7 +13,7 @@ interface InformationCardConfing {
 }
 
 export default function InformationCard({ title, information }: InformationCardConfing) {
-
+    let locationLink: string = `https://maps.google.com/maps?ll=${information?.Latitude},${information?.Longitude}&z=19&t=h&hl=en-US&gl=US&mapclient=embed`;
     return (
         <Flex
             flexDirection={'column'}
@@ -33,7 +34,7 @@ export default function InformationCard({ title, information }: InformationCardC
                 {information?.Adresa != undefined &&
                     <Flex
                         flexDirection={'row'}
-                        className={informationCardStyle['information-row']}
+                        className={`${informationCardStyle['information-row']} link-interaction`}
                     >
                         <Flex
                             flexDirection={'column'}
@@ -46,34 +47,46 @@ export default function InformationCard({ title, information }: InformationCardC
                             flexDirection={"column"}
                             width={'85%'}
                         >
-                            <span>{information?.Adresa}</span>
+                            <a
+                                target={'_blank'}
+                                href={locationLink}
+                                rel="noopener noreferrer"
+                            >
+                                {information?.Adresa}
+                            </a>
                         </Flex>
                     </Flex>
                 }
                 {information?.Phone != undefined &&
                     <Flex
                         flexDirection={'row'}
-                        className={informationCardStyle['information-row']}
+                        className={`${informationCardStyle['information-row']} link-interaction`}
                     >
                         <Flex
                             flexDirection={'column'}
                             width={'15%'}
                             className={informationCardStyle['information-column-icon']}
                         >
-                            <PhoneIcon />
+                            <FontAwesomeIcon icon={faPhone} />
                         </Flex>
                         <Flex
                             flexDirection={'column'}
                             width={'85%'}
                         >
-                            <a href={"tel:" + information?.Phone}><span>{information?.Phone}</span></a>
+                            <a
+                                target={'_blank'}
+                                href={"tel:" + information?.Phone}
+                                rel="noopener noreferrer"
+                            >
+                                <span>{information?.Phone}</span>
+                            </a>
                         </Flex>
                     </Flex>
                 }
                 {information?.Website != undefined &&
                     <Flex
                         flexDirection={'row'}
-                        className={informationCardStyle['information-row']}
+                        className={`${informationCardStyle['information-row']} link-interaction`}
                     >
                         <Flex
                             flexDirection={'column'}
@@ -86,7 +99,13 @@ export default function InformationCard({ title, information }: InformationCardC
                             flexDirection={'column'}
                             width={'85%'}
                         >
-                            <a href={information?.Website}>{information?.Website}</a>
+                            <a
+                                target={'_blank'}
+                                href={information?.Website}
+                                rel="noopener noreferrer"
+                            >
+                                {information?.Website}
+                            </a>
                         </Flex>
                     </Flex>
                 }

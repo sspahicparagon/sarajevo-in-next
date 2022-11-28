@@ -3,6 +3,7 @@
     color: var(--color-gray);
     border: 0 !important;
     text-align: center;
+    cursor: pointer;
 }
 
 

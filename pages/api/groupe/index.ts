@@ -9,7 +9,11 @@ export default async function handler(
 ) {
     let response = await prisma.groupe.findMany({
         include: {
-            location: true
+            location: {
+                orderBy: {
+                    Name: 'asc'
+                }
+            }
         }
     })
     response.sort((first: groupe & { location: location[] }, second: groupe & { location: location[] }) => {

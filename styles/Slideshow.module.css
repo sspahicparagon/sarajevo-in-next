@@ -38,18 +38,18 @@
 @media only screen and (max-width: 400px) {
     .slide-image {
         width: 250px !important;
-        height: 375px !important;
+        height: 320px !important;
     }
 
     .slide {
         width: 250px !important;
-        height: 375px !important;
+        height: 320px !important;
     }
 
     .slider::before,
     .slide::after {
         width: 250px !important;
-        height: 375px !important;
+        height: 320px !important;
     }
 
     @keyframes scroll {

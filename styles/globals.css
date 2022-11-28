@@ -4,14 +4,23 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  overflow-x: hidden;
-  height: 100%;
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
+
+.link-interaction:hover,
+.link-interaction:hover>img,
+.link-interaction:hover>svg,
+.link-interaction:active,
+.link-interaction:active>img,
+.link-interaction:active>svg {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(61%) saturate(2903%) hue-rotate(276deg) brightness(91%) contrast(99%);
+}
+
+
 
 * {
   box-sizing: border-box;

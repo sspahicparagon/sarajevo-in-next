@@ -9,6 +9,7 @@ import Groupe from '../interfaces/Groupe'
 import GroupService from '../services/GroupeService'
 import style from '../styles/Home.module.css'
 import { withTranslation } from 'react-i18next';
+import Loading from '../components/Loading'
 
 interface HomeConfig {
   groupes?: Groupe[];
@@ -35,7 +36,7 @@ function determineDisplayItems() {
 };
 
 const Home: NextPage = () => {
-  const [array, setArray] = useState<Groupe[]>([]);
+  const [array, setArray] = useState<Groupe[] | undefined>(undefined);
   const [displayItems, setDisplayItems] = useState<number>(determineDisplayItems());
   const { t } = useTranslation();
 
@@ -57,34 +58,37 @@ const Home: NextPage = () => {
   return (
     <>
       <Header />
-      <Flex
-        flexDirection={'column'}
-        className={style.container}
-      >
-        <>
-          {array?.map((_) => {
-            return (
-              <Flex
-                flexDirection={'column'}
-                marginBlock={'3rem'}
-                width={'80%'}
-                key={_.Name}
-              >
-                <Box
-                  width={'95%'}
-                  className={style['slyder-container']}
+      {array == undefined ?
+        <Loading height='calc(100vh - 500px)' />
+        :
+        <Flex
+          flexDirection={'column'}
+          className={style.container}
+        >
+          <>
+            {array?.map((_) => {
+              return (
+                <Flex
+                  flexDirection={'column'}
+                  marginBlock={'1rem'}
+                  width={'80%'}
+                  key={_.Name}
                 >
-                  <>
-                    <div className={style['slyder-title']}>{t(_.Name!!)}</div>
-                    <ChakraCarousel items={_.location} height={'300px'} displayItems={displayItems} />
-                  </>
-                </Box>
-              </Flex>
-            )
-          })}
-        </>
-      </Flex>
-      <Footer />
+                  <Box
+                    width={'95%'}
+                    className={style['slyder-container']}
+                  >
+                    <>
+                      <div className={style['slyder-title']}>{t(_.Name!!)}</div>
+                      <ChakraCarousel items={_.location} height={'250px'} displayItems={displayItems} />
+                    </>
+                  </Box>
+                </Flex>
+              )
+            })}
+          </>
+        </Flex>
+      }
     </>
   )
 }

@@ -16,16 +16,14 @@
     width: calc((100% - var(--items-per-screen)) / var(--items-per-screen));
     flex: 0 0 calc(100% / var(--items-per-screen));
     background: var(--base-color);
-    padding-inline: 1% !important;
 }
 
 .card-image {
-    object-fit: cover;
-    float: left;
     z-index: 2;
     opacity: 0.8 !important;
     width: 100%;
     height: 100%;
+    padding-inline: 3% !important;
 }
 
 .card>.card-text {

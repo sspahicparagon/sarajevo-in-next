@@ -27,6 +27,7 @@ export default function Toolbar() {
                         width={'34px'}
                         minHeight={'30px'}
                         minWidth={'30px'}
+                        openInNewTab={true}
                     />
                 </Flex>
                 <Flex
@@ -40,6 +41,7 @@ export default function Toolbar() {
                         width={'40px'}
                         minHeight={'30px'}
                         minWidth={'30px'}
+                        openInNewTab={true}
                     />
                 </Flex>
                 <Flex
@@ -55,6 +57,7 @@ export default function Toolbar() {
                         minHeight={'30px'}
                         minWidth={'30px'}
                         text={'info@sarajevoin.ba'}
+                        openInNewTab={true}
                     />
                 </Flex>
                 <Flex

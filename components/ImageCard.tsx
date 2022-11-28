@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Image } from "@chakra-ui/react";
 import carouselStyle from '../styles/Carousel.module.css';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Loading from "./Loading";
+import Image from "next/image";
 
 interface CardConfig {
     image?: string;
@@ -18,13 +19,14 @@ export default function Card({ image = "", text = "", link = "", enableClick = t
             {enableClick ?
                 <Link href={link}>
                     <div className={carouselStyle.card} >
-                        <LazyLoadImage
+                        <Image
                             className={carouselStyle["card-image"]}
-                            src={image}
-                            width={'100%'}
-                            height={'100%'}
-                            placeholderSrc={'/placeholder' + image}
-                            effect={'blur'}
+                            src={`http://sarajevoin.ba/public${image}`}
+                            layout={'fill'}
+                            objectFit={'cover'}
+                            objectPosition={'50% 50%'}
+                            placeholder={'blur'}
+                            blurDataURL={`http://sarajevoin.ba/public/placeholder${image}`}
                             alt={text}
                         />
                         <div className={carouselStyle['card-text']}><strong>{text}</strong></div>
@@ -32,13 +34,13 @@ export default function Card({ image = "", text = "", link = "", enableClick = t
                 </Link>
                 :
                 <div className={carouselStyle.card}>
-                    <LazyLoadImage
+                    <Image
                         className={carouselStyle["card-image"]}
-                        src={image}
+                        src={`http://sarajevoin.ba/public${image}`}
                         width={'100%'}
-                        height={'100%'}
-                        placeholderSrc={'/placeholder' + image}
-                        effect={'blur'}
+                        height={'160%'}
+                        layout={'responsive'}
+                        blurDataURL={`http://sarajevoin.ba/public/placeholder${image}`}
                         alt={text}
                     />
                     <div className={carouselStyle['card-text']}><strong>{text}</strong></div>

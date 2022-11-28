@@ -4,7 +4,7 @@ import footerStyle from '../styles/Footer.module.css';
 import { InstagramLink } from '../values/GlobalValues';
 
 export default function Footer() {
-    let people: string[] = ['_goropro_', 'oljahaj', 'nera.hadzic', 'merimam', 'mirela_red'];
+    let people: string[][] = [['_goropro_', 'oljahaj', 'nera.hadzic'], ['merimam', 'mirela_red']];
     const { t } = useTranslation();
     return (
         <Flex
@@ -32,18 +32,25 @@ export default function Footer() {
                     flexDirection={'column'}
                 >
                     {
-                        people.map((person: string, index: number) => {
+                        people.map((persons: string[]) => {
                             return (
                                 <Flex
                                     flexDirection={'row'}
-                                    key={person}
+                                    margin={'auto'}
+                                    key={persons.length}
                                     className={footerStyle.names}
                                 >
-                                    <Flex
-                                        flexDirection={'column'}
-                                    >
-                                        <a href={`${InstagramLink}${person}/`}>{person}</a>
-                                    </Flex>
+                                    {persons.map((person: string) => {
+                                        return (
+                                            <Flex
+                                                flexDirection={'column'}
+                                                key={person}
+                                                className={footerStyle.name}
+                                            >
+                                                <a href={`${InstagramLink}${person}/`}>{person}</a>
+                                            </Flex>
+                                        )
+                                    })}
                                 </Flex>
                             )
                         })

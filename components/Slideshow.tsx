@@ -2,7 +2,8 @@ import CardElement from "../interfaces/CardElement";
 import slideshowStyle from '../styles/Slideshow.module.css';
 import { ReactElement, useEffect, useState } from "react";
 import Document from "next/document";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import { LazyLoadComponent, LazyLoadImage } from "react-lazy-load-image-component";
+import Image from "next/image";
 
 interface SlideshowConfig {
     width?: string;
@@ -11,7 +12,7 @@ interface SlideshowConfig {
     maxHeight?: string;
     items?: CardElement[];
 }
-export default function Slideshow({ width = '250px', height = '450px', maxHeight = '450px', maxWidth = '450px', items = [] }: SlideshowConfig) {
+export default function Slideshow({ width = '250px', height = '450px', maxHeight = '450px', maxWidth = '650px', items = [] }: SlideshowConfig) {
     const [array, setArray] = useState<CardElement[]>();
     const trueItemWidth = parseInt(width.split('px')[0]);
 
@@ -32,14 +33,16 @@ export default function Slideshow({ width = '250px', height = '450px', maxHeight
                     {
                         array?.map((card: CardElement) => {
                             if (card == undefined) return;
-                            let placeholderSrc: string = '/placeholder' + card.Image?.substring(0, card.Image.indexOf('.')) + ".jpeg";
+                            let placeholderSrc: string = 'http://sarajevoin.ba/public/placeholder' + card.Image?.substring(0, card.Image.indexOf('.')) + ".jpeg";
                             return (
                                 <div key={Math.random()} className={slideshowStyle.slide} style={{ maxWidth: maxWidth, maxHeight: maxHeight }}>
                                     <LazyLoadImage
-                                        src={card.Image!!}
+                                        src={`http://sarajevoin.ba/public${card.Image}`}
                                         // style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                                         width={width}
                                         placeholderSrc={placeholderSrc}
+                                        height={height}
+                                        effect={'black-and-white'}
                                         alt={'Image'}
                                         className={slideshowStyle['slide-image']}
                                     />

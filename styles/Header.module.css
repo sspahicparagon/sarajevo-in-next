@@ -1,6 +1,7 @@
 .header-container {
     background-color: white;
     justify-content: center;
+    height: 460px;
 }
 
 .logo-container {
@@ -10,4 +11,10 @@
 
 .slideshow-container {
     padding: 5px;
+}
+
+@media (max-width: 400px) {
+    .header-container {
+        height: 330px;
+    }
 }
