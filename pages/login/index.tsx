@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Router from "next/router";
 import JWTService from "../../services/JWTService";
 import pageStyle from '../../styles/Login.module.css';
+import { ImageStorage } from "../../values/GlobalValues";
 
 const Login: NextPage = () => {
 
@@ -22,6 +23,7 @@ const Login: NextPage = () => {
             height={'100vh'}
             flexDirection={'column'}
             className={pageStyle.container}
+            backgroundImage={`${ImageStorage}/images/track-images/track-image-8.JPG`}
         >
             <form onSubmit={handleSubmit}>
                 <FormControl
