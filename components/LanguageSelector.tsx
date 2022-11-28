@@ -31,7 +31,7 @@ export default function LanguageSelector() {
             onChange={handleLanguageChange}
             width={'80px'}
             height={'32px'}
-            className={style.container}
+            className={`${style.container}`}
             color={'lightgray'}
             variant={'unstyled'}
             name={LanguageSelector.name}

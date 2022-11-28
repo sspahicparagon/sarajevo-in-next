@@ -11,13 +11,18 @@ a {
   text-decoration: none;
 }
 
+.a-tag {
+  text-decoration: underline;
+  text-decoration-color: var(--indicator-color);
+}
+
 .link-interaction:hover,
 .link-interaction:hover>img,
 .link-interaction:hover>svg,
 .link-interaction:active,
 .link-interaction:active>img,
 .link-interaction:active>svg {
-  filter: brightness(0) saturate(100%) invert(27%) sepia(61%) saturate(2903%) hue-rotate(276deg) brightness(91%) contrast(99%);
+  filter: var(--indicator-color-filter);
 }
 
 
@@ -30,6 +35,8 @@ a {
   --slideshow-item-width: 350px;
   --slideshow-item-count: 3;
   --slideshow-item-duration: 3s;
+  --indicator-color-filter: brightness(0) saturate(100%) invert(27%) sepia(61%) saturate(2903%) hue-rotate(276deg) brightness(91%) contrast(99%);
+  --indicator-color: #be2ed6;
   --base-color: #1a2437;
   --text-color-white: white;
   --color-gray: lightgray;

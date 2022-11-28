@@ -1,10 +1,9 @@
-import { PhoneIcon } from "@chakra-ui/icons";
 import { Box, Flex } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ElementInformation from "../interfaces/ElementInformation";
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import informationCardStyle from '../styles/InformationCard.module.css';
-import IconPlusText from "./IconPlusText";
+import { GoogleMapsUrl } from "../values/GlobalValues";
 
 
 interface InformationCardConfing {
@@ -13,7 +12,7 @@ interface InformationCardConfing {
 }
 
 export default function InformationCard({ title, information }: InformationCardConfing) {
-    let locationLink: string = `https://maps.google.com/maps?ll=${information?.Latitude},${information?.Longitude}&z=19&t=h&hl=en-US&gl=US&mapclient=embed`;
+    let locationLink: string = GoogleMapsUrl(`${information?.Latitude},${information?.Longitude}`);
     return (
         <Flex
             flexDirection={'column'}
@@ -51,6 +50,7 @@ export default function InformationCard({ title, information }: InformationCardC
                                 target={'_blank'}
                                 href={locationLink}
                                 rel="noopener noreferrer"
+                                className="a-tag"
                             >
                                 {information?.Adresa}
                             </a>
@@ -77,6 +77,7 @@ export default function InformationCard({ title, information }: InformationCardC
                                 target={'_blank'}
                                 href={"tel:" + information?.Phone}
                                 rel="noopener noreferrer"
+                                className="a-tag"
                             >
                                 <span>{information?.Phone}</span>
                             </a>
@@ -103,6 +104,7 @@ export default function InformationCard({ title, information }: InformationCardC
                                 target={'_blank'}
                                 href={information?.Website}
                                 rel="noopener noreferrer"
+                                className="a-tag"
                             >
                                 {information?.Website}
                             </a>

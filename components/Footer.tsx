@@ -47,7 +47,7 @@ export default function Footer() {
                                                 key={person}
                                                 className={footerStyle.name}
                                             >
-                                                <a href={`${InstagramLink}${person}/`}>{person}</a>
+                                                <a href={`${InstagramLink}${person}/`} className={'a-tag link-interaction'}>{person}</a>
                                             </Flex>
                                         )
                                     })}

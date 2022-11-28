@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Map from "../../components/Map";
 import detailsStyle from "../../styles/Details.module.css";
 import ad from "../../images/ad-example.jpg";
@@ -13,6 +13,7 @@ import { useTranslation, withTranslation } from "react-i18next";
 import Toolbar from "../../components/Toolbar";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import Loading from "../../components/Loading";
+import Head from "next/head";
 
 const Details: NextPage = () => {
     const [information, setInformation] = useState<ElementInformation | undefined>(undefined);
@@ -48,6 +49,7 @@ const Details: NextPage = () => {
                     width={'100vw'}
                     className={detailsStyle.container}
                 >
+                    <Head key={'location-name'}><span>{information?.Name}</span></Head>
                     <Flex
                         height={'20vh'}
                         width={'100%'}

@@ -1,12 +1,18 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Box, ChakraProvider, Flex } from '@chakra-ui/react'
+import { Box, ChakraProvider } from '@chakra-ui/react'
 import '../lib/i18n/locales/config.ts';
 import Head from 'next/head';
 import Toolbar from '../components/Toolbar';
 import Router from 'next/router';
 import Footer from '../components/Footer';
 import { useEffect } from 'react';
+
+declare global {
+  interface Window {
+    initMap: () => void;
+  }
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
 
@@ -28,12 +34,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     });
   }, [Router.events]);
 
-
   return (
     <>
       <ChakraProvider>
         <Head>
-          <title>Sarajevo-in</title>
+          <title>SarajevoIN</title>
         </Head>
         <Box
           overflowX={'hidden'}
