@@ -18,7 +18,7 @@ const nextConfig = {
   },
   images: {
     minimumCacheTTL: 180,
-    domains: ['sarajevoin.ba', 'sarajevoin.ba/public/placeholder'],
+    domains: ['sarajevoin.ba'],
     loader: 'custom',
     loaderFile: './lib/imageLoader.ts'
   }

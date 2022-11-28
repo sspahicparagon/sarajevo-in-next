@@ -1,10 +1,9 @@
 import Link from "next/link";
 import carouselStyle from '../styles/Carousel.module.css';
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import Loading from "./Loading";
 import Image from "next/image";
 import imageLoader from "../lib/imageLoader";
+import { ImageStorage } from "../values/GlobalValues";
 
 interface CardConfig {
     image?: string;
@@ -28,7 +27,7 @@ export default function Card({ image = "", text = "", link = "", enableClick = t
                             objectFit={'cover'}
                             objectPosition={'50% 50%'}
                             placeholder={'blur'}
-                            blurDataURL={`http://sarajevoin.ba/public/placeholder${image}`}
+                            blurDataURL={`${ImageStorage}/placeholder${image}`}
                             alt={text}
                         />
                         <div className={carouselStyle['card-text']}><strong>{text}</strong></div>
@@ -44,7 +43,7 @@ export default function Card({ image = "", text = "", link = "", enableClick = t
                         objectFit={'cover'}
                         objectPosition={'50% 50%'}
                         placeholder={'blur'}
-                        blurDataURL={`http://sarajevoin.ba/public/placeholder${image}`}
+                        blurDataURL={`${ImageStorage}/placeholder${image}`}
                         alt={text}
                     />
                     <div className={carouselStyle['card-text']}><strong>{text}</strong></div>

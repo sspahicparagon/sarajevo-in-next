@@ -1,9 +1,9 @@
 import CardElement from "../interfaces/CardElement";
 import slideshowStyle from '../styles/Slideshow.module.css';
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Document from "next/document";
-import { LazyLoadComponent, LazyLoadImage } from "react-lazy-load-image-component";
-import Image from "next/image";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { ImageStorage } from "../values/GlobalValues";
 
 interface SlideshowConfig {
     width?: string;
@@ -33,11 +33,11 @@ export default function Slideshow({ width = '250px', height = '450px', maxHeight
                     {
                         array?.map((card: CardElement) => {
                             if (card == undefined) return;
-                            let placeholderSrc: string = 'http://sarajevoin.ba/public/placeholder' + card.Image?.substring(0, card.Image.indexOf('.')) + ".jpeg";
+                            let placeholderSrc: string = ImageStorage + '/placeholder' + card.Image?.substring(0, card.Image.indexOf('.')) + ".jpeg";
                             return (
                                 <div key={Math.random()} className={slideshowStyle.slide} style={{ maxWidth: maxWidth, maxHeight: maxHeight }}>
                                     <LazyLoadImage
-                                        src={`http://sarajevoin.ba/public${card.Image}`}
+                                        src={`${ImageStorage}${card.Image}`}
                                         // style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                                         width={width}
                                         placeholderSrc={placeholderSrc}
