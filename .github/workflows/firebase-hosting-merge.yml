@@ -17,6 +17,7 @@ jobs:
         env:
           DATABASE_URL: '${{ secrets.FIREBASE_DATABASE_URL }}'
           TOKEN_SECRET: '123456789'
+          BASE_URL: '${{ secrets.FIREBASE_BASE_URL }}'
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
