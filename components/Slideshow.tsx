@@ -33,16 +33,15 @@ export default function Slideshow({ width = '250px', height = '450px', maxHeight
                     {
                         array?.map((card: CardElement) => {
                             if (card == undefined) return;
-                            let placeholderSrc: string = ImageStorage + '/placeholder' + card.Image?.substring(0, card.Image.indexOf('.')) + ".jpeg";
+                            let placeholderSrc: string = ImageStorage + '/Eclipse-1s-200px.gif';
                             return (
                                 <div key={Math.random()} className={slideshowStyle.slide} style={{ maxWidth: maxWidth, maxHeight: maxHeight }}>
                                     <LazyLoadImage
                                         src={`${ImageStorage}${card.Image}`}
-                                        // style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                                         width={width}
                                         placeholderSrc={placeholderSrc}
                                         height={height}
-                                        effect={'black-and-white'}
+                                        effect={'blur'}
                                         alt={'Image'}
                                         className={slideshowStyle['slide-image']}
                                     />

@@ -26,8 +26,8 @@ export default function Card({ image = "", text = "", link = "", enableClick = t
                             layout={'fill'}
                             objectFit={'cover'}
                             objectPosition={'50% 50%'}
+                            blurDataURL={`${ImageStorage}/Eclipse-1s-200px.gif`}
                             placeholder={'blur'}
-                            blurDataURL={`${ImageStorage}/placeholder${image}`}
                             alt={text}
                         />
                         <div className={carouselStyle['card-text']}><strong>{text}</strong></div>
@@ -43,7 +43,7 @@ export default function Card({ image = "", text = "", link = "", enableClick = t
                         objectFit={'cover'}
                         objectPosition={'50% 50%'}
                         placeholder={'blur'}
-                        blurDataURL={`${ImageStorage}/placeholder${image}`}
+                        blurDataURL={'https://via.placeholder.com/500.webp/004E69'}
                         alt={text}
                     />
                     <div className={carouselStyle['card-text']}><strong>{text}</strong></div>

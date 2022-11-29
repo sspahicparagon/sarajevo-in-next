@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "set NODE_ENV=production npx prisma db pull && npx prisma db push && npx prisma generate && next build",
+    "build": "set NODE_ENV=production npx prisma db pull && npx prisma migrate deploy && npx prisma generate && next build",
     "start": "next start",
     "only-build": "next build && next export",
     "lint": "next lint",
