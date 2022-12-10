@@ -1,6 +1,7 @@
 import CardElement from '../interfaces/CardElement';
 import axios from 'axios';
 import { trackimage } from '@prisma/client';
+import prisma from '../lib/prisma';
 
 const TrackImagesService = {
     getTrackImages: async function () {
@@ -21,6 +22,15 @@ const TrackImagesService = {
             imageResults.push({ Image: "/images" + item.Image });
         });
         return Promise.resolve(imageResults);
+    },
+    trackImages: async function () {
+        let imageResults: CardElement[] = [];
+        const results = await prisma.trackimage.findMany();
+        results?.map((item: trackimage) => {
+            imageResults.push({ Image: "/images" + item.Image });
+        });
+
+        return imageResults;
     }
 }
 

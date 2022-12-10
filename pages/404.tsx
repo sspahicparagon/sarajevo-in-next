@@ -1,5 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import pageStyle from '../styles/Page404.module.css';
 
@@ -28,6 +29,14 @@ const Page404: NextPage = function () {
             </Flex>
         </Flex>
     )
+}
+
+export async function getStaticProps(context: any) {
+    return {
+        props: {
+            ...(await serverSideTranslations(context.locale, ['common'])),
+        }
+    };
 }
 
 export default Page404;

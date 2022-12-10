@@ -7,19 +7,19 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<(groupe & { location: location[] })[]>
 ) {
-    let response = await prisma.groupe.findMany({
-        include: {
-            location: {
-                orderBy: {
-                    Name: 'asc'
-                }
-            }
-        }
-    })
-    response.sort((first: groupe & { location: location[] }, second: groupe & { location: location[] }) => {
-        return second.location.length - first.location.length;
-    })
-    res.status(200).send(response);
+    // let response = await prisma.groupe.findMany({
+    //     include: {
+    //         location: {
+    //             orderBy: {
+    //                 Name: 'asc'
+    //             }
+    //         }
+    //     }
+    // })
+    // response.sort((first: groupe & { location: location[] }, second: groupe & { location: location[] }) => {
+    //     return second.location.length - first.location.length;
+    // })
+    res.status(200);
 }
 
 

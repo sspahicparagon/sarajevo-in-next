@@ -1,19 +1,15 @@
 import { Box, Flex } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { SSRConfig, useTranslation } from 'next-i18next'
 import ChakraCarousel from '../components/ChakraCarousel'
-import Footer from '../components/Footer'
 import Header from '../components/Header'
-import Groupe from '../interfaces/Groupe'
-import GroupService from '../services/GroupeService'
 import style from '../styles/Home.module.css'
-import { withTranslation } from 'react-i18next';
 import Loading from '../components/Loading'
-
-interface HomeConfig {
-  groupes?: Groupe[];
-}
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import GroupeService from '../services/GroupeService'
+import { groupe, location, trackimage } from '@prisma/client'
+import TrackImagesService from '../services/TrackImagesService'
 
 function debounce(fn: Function, ms: number) {
   let timeoutId: ReturnType<typeof setTimeout>
@@ -35,19 +31,15 @@ function determineDisplayItems() {
   return 6;
 };
 
-const Home: NextPage = () => {
-  const [array, setArray] = useState<Groupe[] | undefined>(undefined);
+const Home: NextPage<SSRConfig & { array: (groupe & { location: location[] })[] } & { trackImages: trackimage[] }> = (props) => {
   const [displayItems, setDisplayItems] = useState<number>(determineDisplayItems());
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     const debounceHandleResize = debounce(
       function handleResize() {
         setDisplayItems(determineDisplayItems());
       }, 250);
-    GroupService.getGroupes().then(data => {
-      setArray(data);
-    })
     window.addEventListener('resize', debounceHandleResize)
 
     return () => {
@@ -57,8 +49,8 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Header />
-      {array == undefined ?
+      <Header array={props.trackImages} />
+      {props == undefined ?
         <Loading height='calc(100vh - 500px)' />
         :
         <Flex
@@ -66,7 +58,7 @@ const Home: NextPage = () => {
           className={style.container}
         >
           <>
-            {array?.map((_) => {
+            {props.array?.map((_) => {
               return (
                 <Flex
                   flexDirection={'column'}
@@ -93,5 +85,20 @@ const Home: NextPage = () => {
   )
 }
 
-export default withTranslation()(Home);
+export async function getStaticProps(context: any) {
+  let response = await GroupeService.getGroupeWithLocationWithouthCreatedAt();
+  response.sort((first: any, second: any) => {
+    return second.location.length - first.location.length;
+  });
+  let trackImages = await TrackImagesService.trackImages();
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale, ['common'])),
+      array: response,
+      trackImages: trackImages
+    }
+  };
+}
+
+export default Home;
 

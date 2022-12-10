@@ -1,22 +1,12 @@
 import { Flex } from "@chakra-ui/react";
 import CardElement from "../interfaces/CardElement";
 import Slideshow from "./Slideshow";
-import logo from '../images/sarajevo.in-logo.jpg';
 import IconPlusText from "./IconPlusText";
-import TrackImagesService from "../services/TrackImagesService";
-import { useEffect, useState } from "react";
 import headerStyle from '../styles/Header.module.css';
 import Loading from "./Loading";
 
 
-export default function Header() {
-    const [array, setArray] = useState<CardElement[] | undefined>(undefined);
-
-    useEffect(() => {
-        TrackImagesService.getTrackImages().then((data: CardElement[]) => {
-            setArray(data);
-        })
-    }, []);
+export default function Header({ array }: { array: CardElement[] }) {
 
     return (
         <Flex
@@ -35,7 +25,7 @@ export default function Header() {
                         flexDirection={'column'}
                         className={headerStyle['logo-container']}
                     >
-                        <IconPlusText image={logo.src} width={'100%'} height={'100%'} interactionEnabled={false} />
+                        <IconPlusText image={'/sarajevo.in-logo.jpg'} width={'100%'} height={'100%'} interactionEnabled={false} />
                     </Flex>
                     <Flex
                         width={'50vw'}
@@ -50,7 +40,7 @@ export default function Header() {
                         flexDirection={'column'}
                         className={headerStyle['logo-container']}
                     >
-                        <IconPlusText image={logo.src} width={'100%'} height={'100%'} interactionEnabled={false} />
+                        <IconPlusText image={'/sarajevo.in-logo.jpg'} width={'100%'} height={'100%'} interactionEnabled={false} />
                     </Flex>
                 </Flex>
             }

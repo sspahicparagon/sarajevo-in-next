@@ -1,14 +1,14 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Flex, IconButton } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
-import CardElement from "../interfaces/CardElement";
 import carouselStyle from "../styles/Carousel.module.css";
 import Card from "./ImageCard";
+import { location } from '@prisma/client'
 
 interface CarouselConfig {
     width?: string;
     height?: string;
-    items?: CardElement[];
+    items?: location[];
     enableClick?: boolean;
     displayItems: number;
 }
@@ -63,9 +63,9 @@ export default function ChakraCarousel({
                 className={carouselStyle['chakra-carousel-slyder']}
                 ref={ref}
             >
-                {items.map((element: CardElement) => {
-                    let detailsLink: string = `details/${element.LocationID}`
-                    return (<Card key={element.LocationID} image={element.Image} text={element.Name} link={detailsLink} enableClick={enableClick} />)
+                {items?.map((_) => {
+                    let detailsLink: string = `details/${_?.LocationID}`
+                    return (<Card key={_?.LocationID} image={_?.Image} text={_?.Name!!} link={detailsLink} enableClick={enableClick} />)
                 })}
             </Flex>
             {(displayButtons) && <IconButton

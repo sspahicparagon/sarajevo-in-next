@@ -1,15 +1,15 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
-import WorkTime from "../interfaces/WorkTime"
+import { worktime } from "@prisma/client";
+import { useTranslation } from "next-i18next";
 import tableStyle from "../styles/Table.module.css";
 
 interface TableConfig {
     title?: string;
-    worktime?: WorkTime[];
+    worktime?: worktime[];
 }
 
 export default function TableCard({ title, worktime }: TableConfig) {
-    const { t } = useTranslation();
+    const { t } = useTranslation('common');
     let days: { [details: string]: string } = {
         "0": t("ponedjeljak"),
         "1": t("utorak"),
@@ -35,9 +35,19 @@ export default function TableCard({ title, worktime }: TableConfig) {
                 width={'100%'}
                 className={tableStyle.container}
             >
-                {worktime?.map((wt: WorkTime) => {
-                    let open: string = wt.OpenTime.substring(11, 16) == '00:00' && wt.CloseTime.substring(11, 16) == '00:00' ? "-" : wt.OpenTime.substring(11, 16);
-                    let close: string = wt.OpenTime.substring(11, 16) == '00:00' && wt.CloseTime.substring(11, 16) == '00:00' ? "-" : wt.CloseTime.substring(11, 16);
+                {worktime?.map((wt: worktime) => {
+                    const oHours = wt.OpenTime.getUTCHours();
+                    const oMinutes = wt.OpenTime.getUTCMinutes();
+                    const cHours = wt.CloseTime.getUTCHours();
+                    const cMinutes = wt.CloseTime.getUTCMinutes();
+
+                    let open: string = `${oHours}:${oMinutes != 0 ? oMinutes : "00"}`;
+                    let close: string = `${cHours}:${cMinutes != 0 ? cMinutes : "00"}`;
+                    if (oHours == cHours && oHours == 0) {
+                        open = '-';
+                        close = '-';
+                    }
+
                     return (
                         <Flex
                             flexDirection={'row'}

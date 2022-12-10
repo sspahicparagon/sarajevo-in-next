@@ -1,4 +1,4 @@
-import { color, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

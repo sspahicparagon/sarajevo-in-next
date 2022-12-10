@@ -1,5 +1,6 @@
 import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { NextPage } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Router from "next/router";
 import JWTService from "../../services/JWTService";
 import pageStyle from '../../styles/Login.module.css';
@@ -45,6 +46,14 @@ const Login: NextPage = () => {
 
         </Flex>
     )
+}
+
+export async function getStaticProps(context: any) {
+    return {
+        props: {
+            ...(await serverSideTranslations(context.locale, ['common']))
+        }
+    };
 }
 
 export default Login;
