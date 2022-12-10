@@ -1,11 +1,9 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Flex, IconButton } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
-// import CardElement from "../interfaces/CardElement";
 import carouselStyle from "../styles/Carousel.module.css";
 import Card from "./ImageCard";
 import { location } from '@prisma/client'
-// import { LocationWithoutCreatedAt } from "../interfaces/LocationWithoutCreatedAt";
 
 interface CarouselConfig {
     width?: string;

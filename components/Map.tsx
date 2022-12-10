@@ -1,5 +1,4 @@
 import { memo, useCallback, useState } from 'react';
-import style from '../styles/Map.module.css';
 import { google } from 'google-maps';
 import { GoogleMap, MarkerF, useJsApiLoader } from '@react-google-maps/api';
 import { GoogleMapsUrl } from '../values/GlobalValues';

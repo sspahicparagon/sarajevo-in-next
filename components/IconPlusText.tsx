@@ -1,7 +1,6 @@
 import { Image } from '@chakra-ui/react';
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { on } from 'events';
 
 interface IconPlusTextConfig {
     image?: string;
