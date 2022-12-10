@@ -51,7 +51,8 @@ const Login: NextPage = () => {
 export async function getStaticProps(context: any) {
     return {
         props: {
-            ...(await serverSideTranslations(context.locale, ['common']))
+            ...(await serverSideTranslations(context.locale, ['common'])),
+            revalidate: 3600
         }
     };
 }

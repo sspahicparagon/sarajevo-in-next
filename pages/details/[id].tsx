@@ -104,7 +104,7 @@ export async function getStaticPaths(context: any) {
     });
     return {
         paths: paths,
-        fallback: false
+        fallback: 'blocking'
     }
 }
 
@@ -114,7 +114,8 @@ export async function getStaticProps(context: any) {
     return {
         props: {
             ...(await serverSideTranslations(context.locale, ['common'])),
-            information: response
+            information: response,
+            revalidate: 3600
         }
     }
 }
