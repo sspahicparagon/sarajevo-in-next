@@ -6,6 +6,16 @@ import { CookieName } from './values/GlobalValues'
 export async function middleware(request: NextRequest) {
     if (request.url.indexOf('/login') > 0) return NextResponse.next();
 
+    const PUBLIC_FILE = /\.(.*)$/;
+    if (
+        request.destination.startsWith("/_next") || // exclude Next.js internals
+        request.destination.startsWith("/api") || //  exclude all API routes
+        request.destination.startsWith("/static") || // exclude static files
+        PUBLIC_FILE.test(request.destination) // exclude all files in the public folder
+    ) {
+        return NextResponse.next();
+    }
+
     let token: string = request.headers.get('Authorization') ?? "";
     if (token == '') token = request.cookies.get(CookieName) ?? "";
 
