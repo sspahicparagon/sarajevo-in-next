@@ -7,16 +7,16 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<groupe & { location: location[] } | null>
 ) {
-    let id: string | undefined = req.query.id?.toLocaleString();
-    let response = await prisma.groupe.findUnique({
-        where: {
-            GroupeID: parseInt(id ?? "")
-        },
-        include: {
-            location: true
-        }
-    });
-    res.status(200).json(response);
+    // let id: string | undefined = req.query.id?.toLocaleString();
+    // let response = await prisma.groupe.findUnique({
+    //     where: {
+    //         GroupeID: parseInt(id ?? "")
+    //     },
+    //     include: {
+    //         location: true
+    //     }
+    // });
+    res.status(200);
 }
 
 

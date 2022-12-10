@@ -6,9 +6,8 @@ import SplashScreen from "../components/SplashScreen";
 const Document: NextPage = () => {
 
     return (
-        <Html>
-            <Head>
-            </Head>
+        <Html lang="en">
+            <Head></Head>
             <body>
                 <SplashScreen />
                 <Main />

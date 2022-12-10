@@ -1,12 +1,12 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Box, ChakraProvider } from '@chakra-ui/react'
-import '../lib/i18n/locales/config.ts';
-import Head from 'next/head';
 import Toolbar from '../components/Toolbar';
 import Router from 'next/router';
 import Footer from '../components/Footer';
 import { useEffect } from 'react';
+import { appWithTranslation } from 'next-i18next'
+import Head from 'next/head';
 
 declare global {
   interface Window {
@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         const loader = document.getElementById('page-splash');
         if (loader)
           loader.style.display = 'none';
-      }, 5000);
+      }, 2000);
     }
 
     Router.events.on('routeChangeComplete', () => {
@@ -52,4 +52,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 };
 
-export default MyApp
+export default appWithTranslation(MyApp)

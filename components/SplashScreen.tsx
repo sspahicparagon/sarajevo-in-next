@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { faCog, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SplashScreen = () => {

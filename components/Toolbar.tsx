@@ -1,8 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import IconPlusText from "./IconPlusText";
-import Instagram from '../images/instagram-icon.svg';
-import TikTok from '../images/tiktok-icon.svg';
 import LanguageSelector from "./LanguageSelector";
 import toolbarStyle from '../styles/Toolbar.module.css';
 
@@ -22,7 +20,7 @@ export default function Toolbar() {
                 >
                     <IconPlusText
                         link={'https://www.instagram.com/sarajevo.in/'}
-                        image={Instagram.src}
+                        image={'/instagram-icon.svg'}
                         height={'34px'}
                         width={'34px'}
                         minHeight={'30px'}
@@ -36,7 +34,7 @@ export default function Toolbar() {
                 >
                     <IconPlusText
                         link={'https://www.tiktok.com/@sarajevoin'}
-                        image={TikTok.src}
+                        image={'/tiktok-icon.svg'}
                         height={'40px'}
                         width={'40px'}
                         minHeight={'30px'}
@@ -63,7 +61,7 @@ export default function Toolbar() {
                 <Flex
                     flexDirection={'column'}
                     className={toolbarStyle.column}
-                    width={'90px'}
+                    width={'110px'}
                 >
                     <LanguageSelector />
                 </Flex>

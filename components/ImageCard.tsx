@@ -4,6 +4,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import Image from "next/image";
 import imageLoader from "../lib/imageLoader";
 import { ImageStorage } from "../values/GlobalValues";
+import { useRouter } from "next/router";
 
 interface CardConfig {
     image?: string;
@@ -14,10 +15,11 @@ interface CardConfig {
 }
 
 export default function Card({ image = "", text = "", link = "", enableClick = true, index }: CardConfig) {
+    const { locale } = useRouter();
     return (
         <>
             {enableClick ?
-                <Link href={link}>
+                <Link href={link} locale={locale}>
                     <div className={carouselStyle.card} >
                         <Image
                             className={carouselStyle["card-image"]}

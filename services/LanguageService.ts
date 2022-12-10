@@ -1,6 +1,6 @@
 const LanguageService = {
     getLanguageList: function (localStorage: Storage) {
-        const languages: string[] = ['BS', 'EN', 'DE'];
+        const languages: string[] = ['bs', 'en', 'de'];
 
         const selectedLanguage: string | null = localStorage.getItem('language');
 
