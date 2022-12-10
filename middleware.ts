@@ -8,10 +8,10 @@ export async function middleware(request: NextRequest) {
 
     const PUBLIC_FILE = /\.(.*)$/;
     if (
-        request.destination.startsWith("/_next") || // exclude Next.js internals
-        request.destination.startsWith("/api") || //  exclude all API routes
-        request.destination.startsWith("/static") || // exclude static files
-        PUBLIC_FILE.test(request.destination) // exclude all files in the public folder
+        request.nextUrl?.pathname?.startsWith("/_next") || // exclude Next.js internals
+        request.nextUrl?.pathname?.startsWith("/api") || //  exclude all API routes
+        request.nextUrl?.pathname?.startsWith("/static") || // exclude static files
+        PUBLIC_FILE.test(request.nextUrl?.pathname) // exclude all files in the public folder
     ) {
         return NextResponse.next();
     }
