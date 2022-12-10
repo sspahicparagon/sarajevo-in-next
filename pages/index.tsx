@@ -34,7 +34,7 @@ function determineDisplayItems() {
 const Home: NextPage<SSRConfig & { array: (groupe & { location: location[] })[] } & { trackImages: trackimage[] }> = (props) => {
   const [displayItems, setDisplayItems] = useState<number>(determineDisplayItems());
   const { t } = useTranslation('common');
-  console.log({ arr: props });
+
   useEffect(() => {
     const debounceHandleResize = debounce(
       function handleResize() {
