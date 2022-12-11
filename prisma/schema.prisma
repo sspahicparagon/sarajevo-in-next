@@ -24,7 +24,7 @@ model location {
   Adresa      String?    @db.VarChar(255)
   Latitude    String?    @db.VarChar(255)
   Longitude   String?    @db.VarChar(255)
-  Description String?    @db.VarChar(1024)
+  Description String?    @db.VarChar(2048)
   groupe      groupe?    @relation(fields: [GroupeID], references: [GroupeID], onDelete: Cascade, map: "Location_GroupeID")
   worktime    worktime[]
 
