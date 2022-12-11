@@ -14,18 +14,19 @@ model groupe {
 }
 
 model location {
-  LocationID Int        @id @default(autoincrement())
-  Name       String?    @db.VarChar(255)
-  Phone      String?    @db.VarChar(255)
-  Website    String?    @db.VarChar(255)
-  Image      String     @db.VarChar(1023)
-  GroupeID   Int?
-  CreatedAt  DateTime   @default(now()) @db.DateTime(0)
-  Adresa     String?    @db.VarChar(255)
-  Latitude   String?    @db.VarChar(255)
-  Longitude  String?    @db.VarChar(255)
-  groupe     groupe?    @relation(fields: [GroupeID], references: [GroupeID], onDelete: Cascade, map: "Location_GroupeID")
-  worktime   worktime[]
+  LocationID  Int        @id @default(autoincrement())
+  Name        String?    @db.VarChar(255)
+  Phone       String?    @db.VarChar(255)
+  Website     String?    @db.VarChar(255)
+  Image       String     @db.VarChar(1023)
+  GroupeID    Int?
+  CreatedAt   DateTime   @default(now()) @db.DateTime(0)
+  Adresa      String?    @db.VarChar(255)
+  Latitude    String?    @db.VarChar(255)
+  Longitude   String?    @db.VarChar(255)
+  Description String?    @db.VarChar(1024)
+  groupe      groupe?    @relation(fields: [GroupeID], references: [GroupeID], onDelete: Cascade, map: "Location_GroupeID")
+  worktime    worktime[]
 
   @@index([GroupeID], map: "GroupeID")
 }

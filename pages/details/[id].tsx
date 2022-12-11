@@ -11,9 +11,11 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import Loading from "../../components/Loading";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { location, worktime } from '@prisma/client';
+import Head from "next/head";
+import imageLoader from "../../lib/imageLoader";
 
 const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
-    const { t } = useTranslation('common');
+    const { t } = useTranslation('description');
     const router = useRouter();
 
     return (
@@ -27,6 +29,14 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                     className={detailsStyle.container}
                 >
                     {/* <Head key={'location-name'}><span>{props.information?.Name}</span></Head> */}
+                    <Head>
+                        <meta property="og:title" content={props.information.Name ?? ""} />
+                        <meta property="og:description" content={t(`description-${props.information.LocationID}`) ?? ""} />
+                        <meta property="og:image" content={imageLoader({ src: props.information.Image })} />
+                        <meta property="og:image:alt" content={props.information.Name ?? ""} />
+                        <meta property="og:locale" content={props._nextI18Next?.initialLocale} />
+                        <title>{[props.information.Name]}</title>
+                    </Head>
                     <Flex
                         height={'20vh'}
                         width={'100%'}
@@ -113,7 +123,7 @@ export async function getStaticProps(context: any) {
     const response = await InformationService.getLocationWithouthCreatedAtForItem(context.params.id);
     return {
         props: {
-            ...(await serverSideTranslations(context.locale, ['common'])),
+            ...(await serverSideTranslations(context.locale, ['description', 'footer'])),
             information: response,
             revalidate: 3600
         }

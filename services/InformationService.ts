@@ -48,7 +48,8 @@ const InformationService = {
                 Latitude: true,
                 Longitude: true,
                 CreatedAt: false,
-                GroupeID: true
+                GroupeID: true,
+                Description: true
             }
         });
     },

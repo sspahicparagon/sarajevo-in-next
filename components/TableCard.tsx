@@ -9,7 +9,7 @@ interface TableConfig {
 }
 
 export default function TableCard({ title, worktime }: TableConfig) {
-    const { t } = useTranslation('common');
+    const { t } = useTranslation('description');
     let days: { [details: string]: string } = {
         "0": t("ponedjeljak"),
         "1": t("utorak"),

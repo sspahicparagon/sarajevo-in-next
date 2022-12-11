@@ -18,7 +18,7 @@ export default function Slideshow({ width = '250px', height = '450px', maxHeight
 
     useEffect(() => {
 
-        setArray([...items, items[0], items[1]]);
+        setArray([...items, items[0], items[1], items[2]]);
         if (Document !== undefined) {
             document.documentElement.style.setProperty('--slideshow-item-width', trueItemWidth + 'px');
             document.documentElement.style.setProperty('--slideshow-item-count', items.length + '');

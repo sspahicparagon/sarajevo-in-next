@@ -5,7 +5,7 @@ import { InstagramLink } from '../values/GlobalValues';
 
 export default function Footer() {
     let people: string[][] = [['_goropro_', 'oljahaj', 'nera.hadzic'], ['merimam', 'mirela_red']];
-    const { t } = useTranslation('common');
+    const { t } = useTranslation('footer');
     return (
         <Flex
             flexDirection={'column'}

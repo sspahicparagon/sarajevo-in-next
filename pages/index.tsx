@@ -10,6 +10,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import GroupeService from '../services/GroupeService'
 import { groupe, location, trackimage } from '@prisma/client'
 import TrackImagesService from '../services/TrackImagesService'
+import Head from 'next/head'
 
 function debounce(fn: Function, ms: number) {
   let timeoutId: ReturnType<typeof setTimeout>
@@ -57,6 +58,10 @@ const Home: NextPage<SSRConfig & { array: (groupe & { location: location[] })[] 
           flexDirection={'column'}
           className={style.container}
         >
+          <Head>
+            <meta property='og:image' content={`${process.env.BASE_URL}/sarajevo.in-logo.jpg`} />
+            <meta property='og:description' content={'Mail: info@sarajevoin.ba'} />
+          </Head>
           <>
             {props.array?.map((_) => {
               return (
@@ -93,7 +98,7 @@ export async function getStaticProps(context: any) {
   let trackImages = await TrackImagesService.trackImages();
   return {
     props: {
-      ...(await serverSideTranslations(context.locale, ['common'])),
+      ...(await serverSideTranslations(context.locale, ['common', 'footer'])),
       revalidate: 3600,
       array: response,
       trackImages: trackImages

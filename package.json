@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "set NODE_ENV=production npx prisma db pull && npx prisma migrate deploy && npx prisma generate && next build",
     "start": "next start",
-    "only-build": "next build && next export",
+    "only-build": "next build",
     "lint": "next lint",
     "gcp-build": "npm run build",
     "generate-local": "dotenv -e .env.local -- npx prisma generate",
@@ -15,7 +15,8 @@
     "pull-local": "dotenv -e .env.local -- npx prisma db pull",
     "migrate-local": "dotenv -e .env.local -- npx prisma migrate dev",
     "migrate-local-create": "dotenv -e .env.local -- npx prisma migrate dev --create-only",
-    "deploy": "gcloud config set project sarajevoin-next && gcloud app deploy app.yaml --version=0-1-0"
+    "deploy": "gcloud config set project sarajevoin-next && gcloud app deploy app.yaml --version=0-1-0",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.3",
@@ -46,6 +47,7 @@
     "next-compose-plugins": "^2.2.1",
     "next-i18next": "^13.0.0",
     "next-images": "^1.8.4",
+    "next-sitemap": "^3.1.32",
     "node": "^16.17.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
