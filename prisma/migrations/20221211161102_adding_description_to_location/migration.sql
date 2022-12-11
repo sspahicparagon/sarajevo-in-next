@@ -1,6 +1,6 @@
 -- This is an empty migration.
 
-ALTER TABLE `location` ADD COLUMN IF NOT EXISTS `Description` VARCHAR(1024);
+ALTER TABLE `location` ADD COLUMN IF NOT EXISTS `Description` VARCHAR(2048);
 
 UPDATE `location` SET `Description` = 'Paintball centar Jungle nalazi se nekoliko kilometara od centra grada, u sarajevskom naselju Dobroševići, na površini od oko 7000m². Ima kapacitet za 20 osoba.
 Dobrodošli su svi oni koji žele provesti dan u prirodi uz odličnu zabavu, druženje, adrenalin i avanturu.
@@ -78,11 +78,8 @@ WHERE `LocationID` = 26;
 UPDATE `location` SET `Description` = 'Muzej Gazi Husrev-beg posvećen je liku i djelu Gazi Husrev-bega (1480 - 1541), upravitelja Bosne i najvećeg vakifa (dobročinitelja) Sarajeva.
 Muzej je smješten u prostoru Kuršumli medrese, jedne od brojnih građevina koje je Gazi Husrev-beg podigao u Sarajevu.
 Muzejska postavka sastoji se od osam tematskih cjelina raspoređenih po nekadašnjim učeničkim sobama Kuršumli medrese.
-
 Posjetitelji se kroz ove cjeline mogu upoznati sa Gazi Husrev-begom kao historijskom ličnošću, sa njegovim Vakufom, kao i sa Gazi Husrev-begovom medresom.
-
 U centralnoj prostoriji Kuršumli medrese - dershani (predavaonici) smještena je kolekcija raritetnih predmeta Gazi Husrev-begovog vakufa, tu je i soba sa instrumentima za određivanje vremena (muvekkithana), soba sa starim fotografijama Gazi Husrev-begovog vakufa, kao i soba posvećena stradanju objekata Vakufa tokom opsade Sarajeva od 1992. do 1995. godine.
-
 U jednoj od prostorija može se pogledati i dokumentarni film o Gazi Husrev-begu, nastanku njegovog vakufa i vakufskim objektima izgrađenim u Sarajevu.
 '
 WHERE `LocationID` = 27;
