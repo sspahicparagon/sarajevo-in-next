@@ -43,6 +43,7 @@ export default memo(function Map({ width = "", height = "", lat = "30", long = "
                     mapContainerStyle={{ width: '100%', height: '100%' }}
                     zoom={19}
                     onLoad={onLoad}
+                    mapTypeId={google?.maps?.MapTypeId?.HYBRID ?? 'hybrid'}
                     onUnmount={onUnmount}
                 >
                     <MarkerF position={center} onClick={onMarkerClick}></MarkerF>
