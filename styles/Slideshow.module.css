@@ -4,6 +4,7 @@
     position: relative;
 }
 
+
 .slider::before,
 .slide::after {
     content: "";
@@ -25,10 +26,12 @@
 .slide-track {
     animation: scroll calc(var(--slideshow-item-count) * var(--slideshow-item-duration)) linear infinite;
     display: flex;
+    flex-direction: row;
 }
 
 .slide {
     transform: translate3d(0, 0, 0);
+    position: relative;
 }
 
 .slide-image {

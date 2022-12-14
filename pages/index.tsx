@@ -91,10 +91,7 @@ const Home: NextPage<SSRConfig & { array: (groupe & { location: location[] })[] 
 }
 
 export async function getStaticProps(context: any) {
-  let response = await GroupeService.getGroupeWithLocationWithouthCreatedAt();
-  response.sort((first: any, second: any) => {
-    return second.location.length - first.location.length;
-  });
+  let response = await GroupeService.getGroupeWithLocation();
   let trackImages = await TrackImagesService.trackImages();
   return {
     props: {
