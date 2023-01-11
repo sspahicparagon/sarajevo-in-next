@@ -18,7 +18,8 @@ import useReduceToDictionary from '../hooks/useReduceToDictionary'
 const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } & { trackImages: trackimage[] }> = (props) => {
   const displayItemsCount = useDisplayItemsCount();
   const { t } = useTranslation(props._nextI18Next?.ns);
-  let categories = useReduceToDictionary(CategoryIcons, displayItemsCount);
+  let categories = [];
+  categories = useReduceToDictionary(CategoryIcons, displayItemsCount);
 
   return (
     <>
@@ -83,7 +84,7 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
               flexDirection={'column'}
               alignItems={'center'}
             >
-              {categories.map((list: any[]) => {
+              {categories.map((list: (string | any)[]) => {
                 return (
                   <Flex
                     flexDirection={'row'}
@@ -92,7 +93,7 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
                     className={`center ${style['groupe-icons-container']}`}
                   >
                     {
-                      list.map((item: any) => {
+                      list.map((item: (string | any)) => {
                         return (
                           <Link href={'groupes/' + item[0]} key={item[0]}>
                             <Flex
@@ -116,7 +117,7 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
                                   flexDirection={'column'}
                                   className={'center'}
                                 >
-                                  <Text>
+                                  <Text textAlign={'center'}>
                                     <strong>{t(item[0])}</strong>
                                   </Text>
                                 </Flex>

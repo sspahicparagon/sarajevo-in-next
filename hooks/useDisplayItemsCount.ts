@@ -22,14 +22,13 @@ function determineDisplayItemsCount() {
 
 function useDisplayItemsCount() {
 
-    const [displayItemsCount, setDisplayItemsCount] = useState<number>(determineDisplayItemsCount());
+    const [displayItemsCount, setDisplayItemsCount] = useState<number>(6);
 
     useEffect(() => {
         const debounceHandleResize = debounce(
             function handleResize() {
                 let count: number = determineDisplayItemsCount();
-                if (count != displayItemsCount)
-                    setDisplayItemsCount(count);
+                setDisplayItemsCount(count);
             }, 250);
         window.addEventListener('resize', debounceHandleResize)
 

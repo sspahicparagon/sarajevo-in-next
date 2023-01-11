@@ -15,17 +15,16 @@ interface SlideshowConfig {
 }
 const Slideshow = ({ width = '250px', height = '450px', maxHeight = '450px', maxWidth = '90vw', items = [] }: SlideshowConfig) => {
     const [array, setArray] = useState<CardElement[]>();
-    const trueItemWidth = parseInt(width.split('px')[0]);
-    const addedElementsToEnd: CardElement[] = [...items].splice(0, Math.floor(items.length) / 3);
+    let trueItemWidth = parseInt(width.split('px')[0]);
 
     useEffect(() => {
-
-        setArray([...items, ...addedElementsToEnd]);
+        const addedElementsToEnd = [...items].splice(0, Math.floor(items.length) / 3);
         if (Document !== undefined) {
             document.documentElement.style.setProperty('--slideshow-item-width', trueItemWidth + 'px');
             document.documentElement.style.setProperty('--slideshow-item-count', items.length + '');
         }
-    }, [trueItemWidth, addedElementsToEnd]);
+        setArray([...items, ...addedElementsToEnd]);
+    }, [items]);
 
     return (
         <div className={slideshowStyle.slider}
