@@ -1,21 +1,37 @@
-.slyder-title {
-  font-size: 2rem;
-  color: lightgray;
-  width: auto;
-  margin: 1rem;
-  text-align: center;
-  align-self: center;
-}
-
-.slyder-container {
-  background-color: var(--base-color);
-  border-radius: 20px;
-  margin: auto;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-}
-
 .container {
   justify-content: center;
   align-items: center;
   background-color: var(--color-gray);
+}
+
+.hero-container {
+  margin: auto;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.logo-container {
+  box-shadow: var(--container-box-shadow);
+}
+
+.hero-title {
+  color: var(--base-color);
+  margin-bottom: 1rem;
+}
+
+.hero-text {
+  color: var(--text-color-gray);
+}
+
+.groupe-icons-container {
+  margin: 5px;
+}
+
+.groupe-icon-card {
+  box-shadow: var(--container-box-shadow);
+  border-radius: 30px;
+  margin: 5px;
+  background-color: var(--color-gray);
+  color: var(--base-color);
+  cursor: pointer;
 }

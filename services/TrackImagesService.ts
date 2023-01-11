@@ -25,7 +25,11 @@ const TrackImagesService = {
     },
     trackImages: async function () {
         let imageResults: CardElement[] = [];
-        const results = await prisma.trackimage.findMany();
+        const results = await prisma.trackimage.findMany({
+            orderBy: {
+                Image: 'asc'
+            }
+        });
         results?.map((item: trackimage) => {
             imageResults.push({ Image: "/images" + item.Image });
         });

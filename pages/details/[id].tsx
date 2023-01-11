@@ -7,15 +7,16 @@ import InformationService from "../../services/InformationService";
 import InformationCard from "../../components/InformationCard";
 import TableCard from "../../components/TableCard";
 import { SSRConfig, useTranslation } from "next-i18next";
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import Loading from "../../components/Loading";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { location, worktime } from '@prisma/client';
 import Head from "next/head";
 import imageLoader from "../../lib/imageLoader";
+import { getPagePaths } from "../../lib/pageRouter";
+import PageTitle from "../../components/PageTitle";
 
 const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
-    const { t } = useTranslation('description');
+    const { t } = useTranslation(props._nextI18Next?.ns);
     const router = useRouter();
 
     return (
@@ -28,7 +29,6 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                     width={'100vw'}
                     className={detailsStyle.container}
                 >
-                    {/* <Head key={'location-name'}><span>{props.information?.Name}</span></Head> */}
                     <Head>
                         <meta property="og:title" content={props.information.Name ?? ""} />
                         <meta property="og:description" content={t(`description-${props.information.LocationID}`) ?? ""} />
@@ -37,63 +37,42 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                         <meta property="og:locale" content={props._nextI18Next?.initialLocale} />
                         <title>{[props.information.Name]}</title>
                     </Head>
-                    <Flex
-                        height={'20vh'}
-                        width={'100%'}
-                        className={detailsStyle['title-container']}
-                        flexDirection={'row'}
-                        position={'relative'}
-                    >
+                    <PageTitle title={props.information.Name ?? ""} returnUrl={'/groupes/' + props.information.GroupeID} />
+                    <main style={{ width: '100%' }}>
                         <Flex
-                            flexDirection={'column'}
-                            position={'absolute'}
-                            onClick={() => { router.push('/') }}
-                            cursor={'pointer'}
-                            className={'link-interaction'}
-                        >
-                            <ArrowBackIcon fontSize={'4xl'} color={'var(--color-gray)'} />
-                        </Flex>
-                        <Flex
-                            className={detailsStyle['heading-text']}
                             flexDirection={'column'}
                             width={'100%'}
+                            className={detailsStyle['information-container']}
                         >
-                            {props.information?.Name}
+                            <Flex
+                                flexDirection={'row'}
+                                className={`${detailsStyle['responsive']}`}
+                            >
+                                <Flex
+                                    flexDirection={'column'}
+                                    className={detailsStyle['information-card']}
+                                    width={'300px'}
+                                    height={'315px'}
+                                >
+                                    <InformationCard title={t("kontakt-informacije").toString()} information={props.information} />
+                                </Flex>
+                                <br />
+                                <Flex
+                                    flexDirection={'column'}
+                                    className={detailsStyle['information-card']}
+                                    width={'300px'}
+                                    height={'315px'}
+                                >
+                                    <TableCard title={t("radno-vrijeme").toString()} worktime={props.information.worktime} />
+                                </Flex>
+                            </Flex>
                         </Flex>
-                    </Flex>
-                    <Flex
-                        flexDirection={'column'}
-                        width={'100%'}
-                        className={detailsStyle['information-container']}
-                    >
                         <Flex
-                            flexDirection={'row'}
-                            className={`${detailsStyle['responsive']}`}
-                        >
-                            <Flex
-                                flexDirection={'column'}
-                                className={detailsStyle['information-card']}
-                                width={'300px'}
-                                height={'315px'}
-                            >
-                                <InformationCard title={t("kontakt-informacije").toString()} information={props.information} />
-                            </Flex>
-                            <br />
-                            <Flex
-                                flexDirection={'column'}
-                                className={detailsStyle['information-card']}
-                                width={'300px'}
-                                height={'315px'}
-                            >
-                                <TableCard title={t("radno-vrijeme").toString()} worktime={props.information.worktime} />
-                            </Flex>
+                            height={'100vh'}
+                            width={'100%'}>
+                            <Map lat={props.information.Latitude} long={props.information.Longitude} />
                         </Flex>
-                    </Flex>
-                    <Flex
-                        height={'100vh'}
-                        width={'100%'}>
-                        <Map lat={props.information.Latitude} long={props.information.Longitude} />
-                    </Flex>
+                    </main>
                 </Flex>
             }
         </>
@@ -101,17 +80,9 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
 }
 
 export async function getStaticPaths(context: any) {
-    let result = await InformationService.getAllLocationsWithouthCreatedAt();
-    const paths = result.flatMap(_ => {
-        return context.locales.map((locale: string) => {
-            return {
-                params: {
-                    id: _.LocationID.toString()
-                },
-                locale: locale
-            }
-        });
-    });
+    let result = await InformationService.getLocations();
+    const paths = getPagePaths(context, result, 'LocationID');
+
     return {
         paths: paths,
         fallback: 'blocking'
@@ -120,7 +91,7 @@ export async function getStaticPaths(context: any) {
 
 
 export async function getStaticProps(context: any) {
-    const response = await InformationService.getLocationWithouthCreatedAtForItem(context.params.id);
+    const response = await InformationService.getLocationWithWorkTime(context.params.id);
     return {
         props: {
             ...(await serverSideTranslations(context.locale, ['description', 'footer'])),

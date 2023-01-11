@@ -41,8 +41,8 @@ export default function TableCard({ title, worktime }: TableConfig) {
                     const cHours = wt.CloseTime.getUTCHours();
                     const cMinutes = wt.CloseTime.getUTCMinutes();
 
-                    let open: string = `${oHours}:${oMinutes != 0 ? oMinutes : "00"}`;
-                    let close: string = `${cHours}:${cMinutes != 0 ? cMinutes : "00"}`;
+                    let open: string = `${oHours < 10 ? `0${oHours}` : oHours}:${oMinutes != 0 ? oMinutes : "00"}`;
+                    let close: string = `${cHours < 10 ? `0${cHours}` : cHours}:${cMinutes != 0 ? cMinutes : "00"}`;
                     if (oHours == cHours && oHours == 0) {
                         open = '-';
                         close = '-';

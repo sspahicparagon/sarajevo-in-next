@@ -1,97 +1,144 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Flex, Heading, Text } from '@chakra-ui/react'
 import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
 import { SSRConfig, useTranslation } from 'next-i18next'
-import ChakraCarousel from '../components/ChakraCarousel'
-import Header from '../components/Header'
+import SlideshowContainer from '../components/SlideshowContainer'
 import style from '../styles/Home.module.css'
-import Loading from '../components/Loading'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import GroupeService from '../services/GroupeService'
-import { groupe, location, trackimage } from '@prisma/client'
+import { location, trackimage } from '@prisma/client'
 import TrackImagesService from '../services/TrackImagesService'
 import Head from 'next/head'
+import IconPlusText from '../components/IconPlusText'
+import useDisplayItemsCount from '../hooks/useDisplayItemsCount'
+import { CategoryIcons, LogoImage } from '../values/GlobalValues'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
+import useReduceToDictionary from '../hooks/useReduceToDictionary'
 
-function debounce(fn: Function, ms: number) {
-  let timeoutId: ReturnType<typeof setTimeout>
-  return function (this: any, ...args: any[]) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), ms);
-  }
-};
-
-function determineDisplayItems() {
-  if (typeof window === 'undefined') return 6;
-  const windowWidth: number = window.innerWidth;
-
-  if (windowWidth <= 600) return 2;
-  else if (windowWidth <= 900) return 3;
-  else if (windowWidth <= 1200) return 4;
-  else if (windowWidth <= 1400) return 5;
-
-  return 6;
-};
-
-const Home: NextPage<SSRConfig & { array: (groupe & { location: location[] })[] } & { trackImages: trackimage[] }> = (props) => {
-  const [displayItems, setDisplayItems] = useState<number>(determineDisplayItems());
-  const { t } = useTranslation('common');
-
-  useEffect(() => {
-    const debounceHandleResize = debounce(
-      function handleResize() {
-        setDisplayItems(determineDisplayItems());
-      }, 250);
-    window.addEventListener('resize', debounceHandleResize)
-
-    return () => {
-      window.removeEventListener('resize', debounceHandleResize)
-    }
-  }, []);
+const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } & { trackImages: trackimage[] }> = (props) => {
+  const displayItemsCount = useDisplayItemsCount();
+  const { t } = useTranslation(props._nextI18Next?.ns);
+  let categories = useReduceToDictionary(CategoryIcons, displayItemsCount);
 
   return (
     <>
-      <Header array={props.trackImages} />
-      {props == undefined ?
-        <Loading height='calc(100vh - 500px)' />
-        :
-        <Flex
-          flexDirection={'column'}
-          className={style.container}
-        >
-          <Head>
-            <meta property='og:image' content={`${process.env.BASE_URL}/sarajevo.in-logo.jpg`} />
-            <meta property='og:description' content={'Mail: info@sarajevoin.ba'} />
-          </Head>
-          <>
-            {props.array?.map((_) => {
-              return (
+      <Flex
+        flexDirection={'column'}
+        className={style.container}
+      >
+        <Head>
+          <meta property='og:image' content={`${process.env.BASE_URL}/sarajevo.in-logo-removebg (1).png`} />
+          <meta property='og:description' content={'Mail: info@sarajevoin.ba'} />
+        </Head>
+        <main>
+          <section>
+            <Flex
+              flexDirection={displayItemsCount <= 4 ? 'column' : 'row'}
+              className={style['hero-container']}
+            >
+              <Flex
+                flexDirection={'column'}
+                alignItems={'flex-end'}
+                className={style['logo-container']}
+              >
+                <IconPlusText image={LogoImage} interactionEnabled={false} maxHeight={'500px'} maxWidth={'500px'} />
+              </Flex>
+              <Flex
+                flexDirection={'column'}
+                width={displayItemsCount > 4 ? '40%' : '100%'}
+              >
                 <Flex
                   flexDirection={'column'}
-                  marginBlock={'1rem'}
-                  width={'80%'}
-                  key={_.Name}
+                  alignItems={displayItemsCount <= 4 ? 'center' : 'flex-start'}
                 >
-                  <Box
-                    width={'95%'}
-                    className={style['slyder-container']}
+                  <Flex
+                    id='hero-title'
+                    flexDirection={'column'}
+                    className={style['hero-title']}
                   >
-                    <>
-                      <div className={style['slyder-title']}>{t(_.Name!!)}</div>
-                      <ChakraCarousel items={_.location} height={'250px'} displayItems={displayItems} />
-                    </>
-                  </Box>
+                    <Heading fontSize={displayItemsCount > 4 ? '4xl' : '2xl'} as={'h1'} noOfLines={1}>
+                      Sarajevo na jednom mjestu
+                    </Heading>
+                  </Flex>
+                  <Flex
+                    id='hero-text'
+                    flexDirection={'column'}
+                    height={'100%'}
+                    className={style['hero-text']}
+                  >
+                    <Text textAlign={'justify'}>
+                      SarajevoIN je stranica koji se bavi promovisanjem grada Sarajeva. Na stranici se mogu vidjeti slike i video sadržaji sa različitih lokacija u Sarajevu,
+                      kao i informacije o zanimljivim mjestima za posjetu i događajima u gradu. SarajevoIN se fokusira na promovisanje turističkih atrakcija i znamenitosti u Sarajevu.
+                    </Text>
+                  </Flex>
                 </Flex>
-              )
-            })}
-          </>
-        </Flex>
-      }
+              </Flex>
+            </Flex>
+          </section>
+          <section>
+            <SlideshowContainer array={props.trackImages} />
+          </section>
+          <section>
+            <Flex
+              flexDirection={'column'}
+              alignItems={'center'}
+            >
+              {categories.map((list: any[]) => {
+                return (
+                  <Flex
+                    flexDirection={'row'}
+                    width={'100%'}
+                    key={`${Math.random()}`}
+                    className={`center ${style['groupe-icons-container']}`}
+                  >
+                    {
+                      list.map((item: any) => {
+                        return (
+                          <Link href={'groupes/' + item[0]} key={item[0]}>
+                            <Flex
+                              flexDirection={'column'}
+                              width={`${Math.floor(100 / displayItemsCount)}%`}
+                              height={'var(--icon-container-height)'}
+                              className={`center ${style['groupe-icon-card']}`}
+                            >
+                              <Flex
+                                flexDirection={'column'}
+                                width={'100%'}
+                                className={'link-interaction center'}
+                              >
+                                <Flex
+                                  flexDirection={'column'}
+                                  className={'center'}
+                                >
+                                  <FontAwesomeIcon icon={item[1]} size={'1x'} />
+                                </Flex>
+                                <Flex
+                                  flexDirection={'column'}
+                                  className={'center'}
+                                >
+                                  <Text>
+                                    <strong>{t(item[0])}</strong>
+                                  </Text>
+                                </Flex>
+                              </Flex>
+                            </Flex>
+                          </Link>
+                        )
+                      })
+                    }
+                  </Flex>
+                )
+              })}
+            </Flex>
+          </section>
+        </main>
+      </Flex>
     </>
   )
 }
 
 export async function getStaticProps(context: any) {
-  let response = await GroupeService.getGroupeWithLocation();
+  let response = await GroupeService.getGroupesWithLocationAsDictionary();
   let trackImages = await TrackImagesService.trackImages();
   return {
     props: {

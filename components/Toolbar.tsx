@@ -9,6 +9,7 @@ export default function Toolbar() {
         <Flex
             flexDirection={'column'}
             width={'100%'}
+            className={toolbarStyle['toolbar-wrapper']}
         >
             <Flex
                 flexDirection={'row'}

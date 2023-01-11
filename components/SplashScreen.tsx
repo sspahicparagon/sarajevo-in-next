@@ -6,7 +6,7 @@ const SplashScreen = () => {
     return (
         <Flex
             width={'100%'}
-            height={'900vh'}
+            height={'150vh'}
             backgroundColor={'var(--base-color)'}
             justifyContent={'center'}
             alignItems={'start'}

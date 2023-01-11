@@ -5,3 +5,9 @@
 .column {
     justify-content: center;
 }
+
+.toolbar-wrapper {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}

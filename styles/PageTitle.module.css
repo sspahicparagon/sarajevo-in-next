@@ -1,0 +1,27 @@
+.title-container {
+    background-color: var(--base-color);
+    position: relative;
+}
+
+.back-button {
+    color: var(--color-gray);
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 0;
+}
+
+.heading-text {
+    font-size: 300%;
+    color: var(--color-gray);
+    text-align: center;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+    .heading-text {
+        font-size: x-large;
+    }
+}

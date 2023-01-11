@@ -25,10 +25,21 @@ a {
   filter: var(--indicator-color-filter);
 }
 
-
+.center {
+  justify-content: center;
+  align-items: center;
+}
 
 * {
   box-sizing: border-box;
+}
+
+section {
+  margin-block: 5rem;
+}
+
+main {
+  width: 90%;
 }
 
 :root {
@@ -37,7 +48,10 @@ a {
   --slideshow-item-duration: 3s;
   --indicator-color-filter: brightness(0) saturate(100%) invert(27%) sepia(61%) saturate(2903%) hue-rotate(276deg) brightness(91%) contrast(99%);
   --indicator-color: #be2ed6;
+  --icon-container-height: 50px;
   --base-color: #1a2437;
   --text-color-white: white;
+  --text-color-gray: gray;
   --color-gray: lightgray;
+  --container-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 }

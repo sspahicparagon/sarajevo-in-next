@@ -4,42 +4,41 @@ import { useEffect, useRef, useState } from "react";
 import carouselStyle from "../styles/Carousel.module.css";
 import Card from "./ImageCard";
 import { location } from '@prisma/client'
+import useDisplayItemsCount from "../hooks/useDisplayItemsCount";
 
 interface CarouselConfig {
     width?: string;
     height?: string;
     items?: location[];
     enableClick?: boolean;
-    displayItems: number;
 }
 
 export default function ChakraCarousel({
     width = 'auto',
     height = 'auto',
     items = [],
-    enableClick = true,
-    displayItems = 6
+    enableClick = true
 }: CarouselConfig) {
     const [index, setIndex] = useState(0);
     const [displayButtons, setDisplayButtons] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
+    const displayItemsCount = useDisplayItemsCount();
 
     useEffect(() => {
-        if (displayButtons !== items.length > displayItems)
-            setDisplayButtons(items.length > displayItems);
-    }, [displayItems]);
+        if (displayButtons !== items.length > displayItemsCount)
+            setDisplayButtons(items.length > displayItemsCount);
+    });
 
     const sliderButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         let left: boolean = event.currentTarget.classList.contains(carouselStyle['left-carousel-button']);
         let right: boolean = event.currentTarget.classList.contains(carouselStyle['right-carousel-button']);
-        var itemsPerScreen: number = parseInt(getComputedStyle(ref.current!!).getPropertyValue('--items-per-screen'));
 
         if (left) {
-            if (index - 1 < 0) setIndex(Math.ceil(items.length / itemsPerScreen) - 1);
+            if (index - 1 < 0) setIndex(Math.ceil(items.length / displayItemsCount) - 1);
             else setIndex(index - 1);
         }
         else if (right) {
-            if (index + 1 >= Math.ceil(items.length / itemsPerScreen)) setIndex(0);
+            if (index + 1 >= Math.ceil(items.length / displayItemsCount)) setIndex(0);
             else setIndex(index + 1);
         }
     };
@@ -65,7 +64,7 @@ export default function ChakraCarousel({
             >
                 {items?.map((_) => {
                     let detailsLink: string = `details/${_?.LocationID}`
-                    return (<Card key={_?.LocationID} image={_?.Image} text={_?.Name!!} link={detailsLink} enableClick={enableClick} />)
+                    return (<Card key={_?.LocationID} image={_?.Image} link={detailsLink} enableClick={enableClick} />)
                 })}
             </Flex>
             {(displayButtons) && <IconButton
