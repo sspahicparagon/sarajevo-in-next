@@ -48,7 +48,7 @@ main {
   --slideshow-item-duration: 3s;
   --indicator-color-filter: brightness(0) saturate(100%) invert(27%) sepia(61%) saturate(2903%) hue-rotate(276deg) brightness(91%) contrast(99%);
   --indicator-color: #be2ed6;
-  --icon-container-height: 70px;
+  --icon-container-height: 62px;
   --base-color: #1a2437;
   --text-color-white: white;
   --text-color-gray: gray;

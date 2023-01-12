@@ -1,4 +1,4 @@
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import { groupe, location } from "@prisma/client";
 import { NextPage } from "next";
 import { SSRConfig, useTranslation } from "next-i18next";
@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Card from "../../components/ImageCard";
 import PageTitle from "../../components/PageTitle";
-import useDisplayItemsCount from "../../hooks/useDisplayItemsCount";
 import imageLoader from "../../lib/imageLoader";
 import { getPagePaths } from "../../lib/pageRouter";
 import GroupService from "../../services/GroupeService";
@@ -16,7 +15,6 @@ import groupeStyle from "../../styles/Groupe.module.css";
 
 const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } }> = (props) => {
     const { t } = useTranslation(props._nextI18Next?.ns);
-    const displayItemsCount = useDisplayItemsCount();
     const { groupe } = props;
     const { locale } = useRouter();
 
@@ -27,10 +25,8 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
                 className={`center ${groupeStyle.container}`}
             >
                 <main>
-                    <Flex
-                        margin={'auto'}
-                        flexDirection={'column'}
-                        className={`center`}
+                    <Grid
+                        className={`center ${groupeStyle['grid-container']}`}
                     >
                         {
                             groupe.location.map((location: location) => {
@@ -40,14 +36,12 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
                                         locale={locale}
                                         key={location.Name}
                                     >
-                                        <Flex
-                                            width={displayItemsCount <= 2 ? '90%' : displayItemsCount <= 4 ? '70%' : '50%'}
+                                        <Grid
                                             height={'400px'}
-                                            flexDirection={'column'}
                                             className={groupeStyle['card-container']}
                                         >
                                             <Flex
-                                                height={'80%'}
+                                                height={'325px'}
                                                 width={'100%'}
                                                 flexDirection={'column'}
                                                 position={'relative'}
@@ -55,34 +49,25 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
                                                 <Card image={location.Image} enableClick={false} />
                                             </Flex>
                                             <Flex
-                                                flexDirection={'column'}
                                                 width={'100%'}
-                                                height={'20%'}
-                                                alignItems={'center'}
-                                                margin={'auto'}
-                                                justifyContent={'flex-end'}
+                                                height={'75px'}
+                                                flexDirection={'column'}
+                                                className={`center ${groupeStyle['card-text-container']}`}
                                             >
-                                                <Flex
-                                                    width={'100%'}
-                                                    height={'100%'}
-                                                    flexDirection={'column'}
-                                                    className={`center ${groupeStyle['card-text-container']}`}
+                                                <Heading
+                                                    as={'h2'}
+                                                    fontSize={{ 'base': '1xl' }}
+                                                    textAlign={'center'}
                                                 >
-                                                    <Heading
-                                                        as={'h2'}
-                                                        fontSize={displayItemsCount <= 3 ? '1xl' : '2xl'}
-                                                        textAlign={'center'}
-                                                    >
-                                                        {location.Name}
-                                                    </Heading>
-                                                </Flex>
+                                                    {location.Name}
+                                                </Heading>
                                             </Flex>
-                                        </Flex>
+                                        </Grid>
                                     </Link>
                                 )
                             })
                         }
-                    </Flex>
+                    </Grid>
                 </main>
             </Flex>
         </>

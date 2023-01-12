@@ -5,13 +5,26 @@
 }
 
 .hero-container {
-  margin: auto;
-  justify-content: space-evenly;
   align-items: center;
+  justify-items: center;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
 .logo-container {
   box-shadow: var(--container-box-shadow);
+  display: grid;
+  place-content: center;
+  aspect-ratio: 1;
+  max-width: 400px;
+}
+
+.hero-text-container {
+  display: grid;
+  aspect-ratio: 1;
+  place-content: center;
+  max-width: 500px;
 }
 
 .hero-title {
@@ -24,14 +37,22 @@
 }
 
 .groupe-icons-container {
-  margin: 5px;
+  justify-items: center;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
 }
 
 .groupe-icon-card {
   box-shadow: var(--container-box-shadow);
   border-radius: 30px;
-  margin: 5px;
   background-color: var(--color-gray);
   color: var(--base-color);
   cursor: pointer;
+  min-width: 220px;
+  aspect-ratio: 1;
+  display: grid;
+  place-content: center;
+  height: var(--icon-container-height);
 }

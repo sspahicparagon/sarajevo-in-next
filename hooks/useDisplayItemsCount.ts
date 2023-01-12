@@ -9,7 +9,7 @@ function debounce(fn: Function, ms: number) {
 };
 
 function determineDisplayItemsCount() {
-    if (typeof window === 'undefined') return 6;
+    if (typeof window === "undefined") return 6;
     const windowWidth: number = window.innerWidth;
 
     if (windowWidth <= 600) return 2;
@@ -22,13 +22,14 @@ function determineDisplayItemsCount() {
 
 function useDisplayItemsCount() {
 
-    const [displayItemsCount, setDisplayItemsCount] = useState<number>(6);
+    const [displayItemsCount, setDisplayItemsCount] = useState<number>(determineDisplayItemsCount());
 
     useEffect(() => {
         const debounceHandleResize = debounce(
             function handleResize() {
                 let count: number = determineDisplayItemsCount();
-                setDisplayItemsCount(count);
+                if (count != displayItemsCount)
+                    setDisplayItemsCount(count);
             }, 250);
         window.addEventListener('resize', debounceHandleResize)
 
