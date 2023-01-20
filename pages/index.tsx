@@ -25,7 +25,7 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
       >
         <Head>
           <meta property='og:image' content={`${process.env.BASE_URL}/sarajevo.in-logo-removebg (1).png`} />
-          <meta property='og:description' content={'Mail: info@sarajevoin.ba'} />
+          <meta property='og:description' content={`${t('Home-Description')}\nMail: info@sarajevoin.ba`} />
         </Head>
         <main>
           <section>
@@ -60,8 +60,7 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
                     className={style['hero-text']}
                   >
                     <Text textAlign={'justify'}>
-                      SarajevoIN je stranica koji se bavi promovisanjem grada Sarajeva. Na stranici se mogu vidjeti slike i video sadržaji sa različitih lokacija u Sarajevu,
-                      kao i informacije o zanimljivim mjestima za posjetu i događajima u gradu. SarajevoIN se fokusira na promovisanje turističkih atrakcija i znamenitosti u Sarajevu.
+                      {t('Home-Description')}
                     </Text>
                   </Flex>
                 </Flex>

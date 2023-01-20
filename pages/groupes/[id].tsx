@@ -3,6 +3,7 @@ import { groupe, location } from "@prisma/client";
 import { NextPage } from "next";
 import { SSRConfig, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -21,6 +22,12 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
     return (
         <>
             <PageTitle title={t(groupe.Name) ?? ""} />
+            <Head>
+                <meta property="og:description" content={t(`${groupe.Name}-Description`) ?? ""} />
+                <meta property="og:image" content={imageLoader({ src: groupe?.location[0]?.Image })} />
+                <meta property="og:locale" content={props._nextI18Next?.initialLocale} />
+                <meta property="og:title" content={t(`${groupe.Name}`) ?? ""} />
+            </Head>
             <Flex
                 className={`center ${groupeStyle.container}`}
             >
