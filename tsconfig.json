@@ -29,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     "next-i18next.config.js",
-    "next-sitemap.config.js"
+    "next-sitemap.config.js",
+    "global.d.ts"
   ],
   "exclude": [
     "node_modules"

@@ -13,7 +13,7 @@ const PageTitle = ({ title = "", returnUrl = "/" }: PageTitleConfig) => {
 
     return (
         <Flex
-            height={'20vh'}
+            minHeight={'var(--page-title-height)'}
             width={'100%'}
             className={pageTitleStyle['title-container']}
             flexDirection={'row'}
@@ -29,6 +29,8 @@ const PageTitle = ({ title = "", returnUrl = "/" }: PageTitleConfig) => {
                 className={pageTitleStyle['heading-text']}
                 flexDirection={'column'}
                 width={'100%'}
+                justifyContent={{ 'base': 'flex-end', 'md': 'center' }}
+                paddingBottom={{ 'base': '15px', 'md': '0' }}
             >
                 {title}
             </Flex>

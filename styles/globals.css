@@ -54,4 +54,6 @@ main {
   --text-color-gray: gray;
   --color-gray: lightgray;
   --container-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  --page-title-height: min(max(20vh, 20vw), 220px);
+  --toolbar-container-height: min(max(5vh, 5vw), 50px);
 }

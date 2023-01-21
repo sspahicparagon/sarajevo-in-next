@@ -1,7 +1,7 @@
 import CardElement from '../interfaces/CardElement';
 import axios from 'axios';
 import { trackimage } from '@prisma/client';
-import prisma from '../lib/prisma';
+import prismaClient from '../lib/prisma';
 
 const TrackImagesService = {
     getTrackImages: async function () {
@@ -25,7 +25,7 @@ const TrackImagesService = {
     },
     trackImages: async function () {
         let imageResults: CardElement[] = [];
-        const results = await prisma.trackimage.findMany({
+        const results = await prismaClient.trackimage.findMany({
             orderBy: {
                 Image: 'asc'
             }

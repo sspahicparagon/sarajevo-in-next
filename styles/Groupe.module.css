@@ -1,6 +1,7 @@
 .container {
     background-color: var(--color-gray);
     margin: auto;
+    min-height: calc(100vh - var(--page-title-height));
 }
 
 .grid-container {

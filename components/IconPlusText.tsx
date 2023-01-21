@@ -47,6 +47,7 @@ export default function IconPlusText({
                     fontSize: 'smaller'
                 }}
                 className={interactionEnabled ? 'link-interaction' : ''}
+                id={image ?? "link"}
             >
                 <>
                     {imageFa == undefined ?
@@ -62,6 +63,7 @@ export default function IconPlusText({
                             left: '0',
                             backgroundColor: backgroundColor
                         }}
+                            alt={'Image load failed.'}
                         />
                         :
                         <FontAwesomeIcon

@@ -13,4 +13,11 @@ const getPagePaths = function (context: any, array: any[], key: string) {
     return paths;
 }
 
-export { getPagePaths };
+const gaPageView = (url: string, title: string) => {
+    window.gtag('config', process.env.GA_TRACKING_ID, {
+        page_location: url,
+        page_title: title,
+    });
+};
+
+export { getPagePaths, gaPageView };

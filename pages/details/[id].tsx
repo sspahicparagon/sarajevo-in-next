@@ -1,6 +1,5 @@
 import { Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import Map from "../../components/Map";
 import detailsStyle from "../../styles/Details.module.css";
 import InformationService from "../../services/InformationService";
@@ -17,8 +16,7 @@ import PageTitle from "../../components/PageTitle";
 
 const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
     const { t } = useTranslation(props._nextI18Next?.ns);
-    const router = useRouter();
-
+    const title = "SarajevoIN - " + [props.information.Name];
     return (
         <>
             {props.information == undefined ?
@@ -35,7 +33,8 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                         <meta property="og:image" content={imageLoader({ src: props.information.Image })} />
                         <meta property="og:image:alt" content={props.information.Name ?? ""} />
                         <meta property="og:locale" content={props._nextI18Next?.initialLocale} />
-                        <title>{[props.information.Name]}</title>
+                        <meta property="description" content={t(`description-${props.information.LocationID}`) ?? props.information.Name ?? ""} />
+                        <title>{title}</title>
                     </Head>
                     <PageTitle title={props.information.Name ?? ""} returnUrl={'/groupes/' + props.information.GroupeID} />
                     <main style={{ width: '100%' }}>

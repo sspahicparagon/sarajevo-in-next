@@ -2,11 +2,12 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Box, ChakraProvider } from '@chakra-ui/react'
 import Toolbar from '../components/Toolbar';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Footer from '../components/Footer';
 import { useEffect } from 'react';
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head';
+import { gaPageView } from '../lib/pageRouter';
 
 declare global {
   interface Window {
@@ -15,6 +16,19 @@ declare global {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  let router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      gaPageView(url, document.title);
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    }
+  }, [router.events]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -37,9 +51,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ChakraProvider>
-        <Head>
-          <title>SarajevoIN</title>
-        </Head>
         <Box
           overflowX={'hidden'}
         >

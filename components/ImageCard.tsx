@@ -10,9 +10,10 @@ interface CardConfig {
     link?: string;
     enableClick?: boolean;
     index?: number;
+    alt?: string;
 }
 
-export default function Card({ image = "", link = "", enableClick = true, index }: CardConfig) {
+export default function Card({ image = "", link = "", enableClick = true, index, alt = "Image" }: CardConfig) {
     const { locale } = useRouter();
     return (
         <>
@@ -27,6 +28,7 @@ export default function Card({ image = "", link = "", enableClick = true, index 
                             objectPosition={'50% 50%'}
                             blurDataURL={`${ImageStorage}${ImageLoadSpinner}`}
                             placeholder={'blur'}
+                            alt={alt}
                         />
                     </div>
                 </Link>
@@ -40,6 +42,7 @@ export default function Card({ image = "", link = "", enableClick = true, index 
                         objectPosition={'50% 50%'}
                         placeholder={'blur'}
                         blurDataURL={`${ImageStorage}${ImageLoadSpinner}`}
+                        alt={alt}
                     />
                 </div>
             }

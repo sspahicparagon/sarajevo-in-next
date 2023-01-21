@@ -16,7 +16,7 @@ import Link from 'next/link'
 const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } & { trackImages: trackimage[] }> = (props) => {
   const { t } = useTranslation(props._nextI18Next?.ns);
   let categories = CategoryIcons;
-
+  const title = "SarajevoIN - " + t("Home-Title");
   return (
     <>
       <Flex
@@ -26,6 +26,9 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
         <Head>
           <meta property='og:image' content={`${process.env.BASE_URL}/sarajevo.in-logo-removebg (1).png`} />
           <meta property='og:description' content={`${t('Home-Description')}\nMail: info@sarajevoin.ba`} />
+          <meta property='description' content={`${t('Home-Description')}\nMail: info@sarajevoin.ba`} />
+          <meta property='og:title' content={`${t("Home-Title")}`} />
+          <title>{title}</title>
         </Head>
         <main>
           <section>
@@ -50,7 +53,7 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
                     className={style['hero-title']}
                   >
                     <Heading fontSize={{ 'lg': '4xl', 'md': '2xl', 'base': '2xl' }} as={'h1'} noOfLines={1}>
-                      Sarajevo na jednom mjestu
+                      {t("Home-Title")}
                     </Heading>
                   </Flex>
                   <Flex

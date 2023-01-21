@@ -1,10 +1,10 @@
 // import { Prisma, groupe } from '@prisma/client';
 import { location } from '@prisma/client';
-import prisma from '../lib/prisma';
+import prismaClient from '../lib/prisma';
 
 const GroupService = {
     getGroupesWithLocationAsDictionary: async () => {
-        let response = await prisma.groupe.findMany({
+        let response = await prismaClient.groupe.findMany({
             include: {
                 location: {
                     orderBy: {
@@ -25,10 +25,10 @@ const GroupService = {
         return array;
     },
     getGroupes: async () => {
-        return await prisma.groupe.findMany();
+        return await prismaClient.groupe.findMany();
     },
     getGroupeWithLocationByName: async (groupeName: string) => {
-        return await prisma.groupe.findFirst({
+        return await prismaClient.groupe.findFirst({
             where: {
                 Name: groupeName
             },
@@ -42,7 +42,7 @@ const GroupService = {
         });
     },
     getGroupeWithLocationByID: async (id: number) => {
-        return await prisma.groupe.findFirst({
+        return await prismaClient.groupe.findFirst({
             where: {
                 GroupeID: id
             },
