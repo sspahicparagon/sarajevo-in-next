@@ -44,7 +44,7 @@ const GoogleAdSquare = () => {
             {/* Sarajevoin-Ads-Normal-Square */}
             <ins className="adsbygoogle"
                 style={{ "display": "block" }}
-                data-ad-client="ca-pub-4820544241730755"
+                data-ad-client={process.env.GAD_ID}
                 data-ad-slot="6317758072"
                 data-ad-format="auto"
                 data-full-width-responsive="true"></ins>
