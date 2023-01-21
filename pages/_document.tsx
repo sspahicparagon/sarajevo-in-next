@@ -22,6 +22,12 @@ const Document: NextPage = () => {
                         gtag('config', '${process.env.GA_TRACKING_ID}');`,
                     }}
                 />
+                <Script
+                    async
+                    strategy="beforeInteractive"
+                    src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GADS_ID}`}
+                    crossOrigin="anonymous"
+                ></Script>
             </Head>
             <body>
                 <SplashScreen />
