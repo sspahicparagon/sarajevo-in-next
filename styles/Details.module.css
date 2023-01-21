@@ -25,10 +25,6 @@
 }
 
 @media (max-width: 500px) {
-    .responsive {
-        flex-direction: column !important;
-    }
-
     .heading-text {
         font-size: x-large;
     }

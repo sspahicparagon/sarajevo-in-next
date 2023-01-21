@@ -13,6 +13,7 @@ import Head from "next/head";
 import imageLoader from "../../lib/imageLoader";
 import { getPagePaths } from "../../lib/pageRouter";
 import PageTitle from "../../components/PageTitle";
+import { GoogleAdSquare } from "../../components/GoogleAd";
 
 const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
     const { t } = useTranslation(props._nextI18Next?.ns);
@@ -44,7 +45,7 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                             className={detailsStyle['information-container']}
                         >
                             <Flex
-                                flexDirection={'row'}
+                                flexDirection={{ 'base': 'column', 'lg': 'row' }}
                                 className={`${detailsStyle['responsive']}`}
                             >
                                 <Flex
@@ -54,6 +55,13 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                                     height={'315px'}
                                 >
                                     <InformationCard title={t("kontakt-informacije").toString()} information={props.information} />
+                                </Flex>
+                                <Flex
+                                    flexDirection={'column'}
+                                    width={'300px'}
+                                    height={'315px'}
+                                >
+                                    <GoogleAdSquare />
                                 </Flex>
                                 <br />
                                 <Flex

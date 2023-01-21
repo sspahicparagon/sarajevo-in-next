@@ -9,7 +9,10 @@ const Document: NextPage = () => {
         <Html lang="en">
             <Head>
                 {/* Google tag (gtag.js) */}
-                <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}></Script>
+                <Script
+                    strategy="afterInteractive"
+                    src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}
+                />
                 <Script
                     id="gtag-init"
                     strategy="afterInteractive"
@@ -27,7 +30,7 @@ const Document: NextPage = () => {
                     strategy="beforeInteractive"
                     src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GADS_ID}`}
                     crossOrigin="anonymous"
-                ></Script>
+                />
             </Head>
             <body>
                 <SplashScreen />
