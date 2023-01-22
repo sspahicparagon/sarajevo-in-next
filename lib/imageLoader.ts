@@ -6,5 +6,13 @@ interface ImageLoaderConfig {
     quality?: number;
 }
 export default function imageLoader({ src, width, quality }: ImageLoaderConfig) {
-    return `${ImageStorage}${src}?w=${width}&q=${quality || 75}`
+    let res = src?.split('.');
+    let newSrc: string = "";
+    let result: string = "";
+    if (quality) newSrc = `${res?.at(0)}-1.${res?.at(1)}`;
+
+    if (newSrc != "") result = `${ImageStorage}${newSrc}`;
+    else result = `${ImageStorage}${src}`;
+
+    return result;
 }

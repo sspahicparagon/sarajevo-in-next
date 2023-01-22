@@ -52,6 +52,7 @@ const Slideshow = ({ width = '250px', height = '450px', maxHeight = '450px', max
                                     blurDataURL={placeholderSrc}
                                     className={slideshowStyle['slide-image']}
                                     priority={index < PriorityLoadTreshold}
+                                    quality={'1'}
                                 />
                             </div>
                         )
