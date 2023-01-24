@@ -6,6 +6,7 @@ const CookieName: string = 'Sarajevoin-Auth';
 const ImageStorage: string | undefined = process.env.FILE_URL ?? "https://file.sarajevoin.ba/public";
 const GoogleMapsUrl = (location: string) => { return `https://maps.google.com/maps?ll=${location}&z=20&t=h&hl=en-US&gl=US&mapclient=embed` }
 const CategoryIcons: { item: (string | IconDefinition)[] }[] = [
+    { item: ["Restoran-Kafic", faMugSaucer] },
     { item: ["Muzej", faBuildingColumns] },
     { item: ["Bazen i Spa centar", faSpa] },
     { item: ["Bilijar", faWandSparkles] },
@@ -18,8 +19,7 @@ const CategoryIcons: { item: (string | IconDefinition)[] }[] = [
     { item: ["Paintbal", faPersonRifle] },
     { item: ["Kuglana", faBowlingBall] },
     { item: ["Escape Room", faPersonThroughWindow] },
-    { item: ["Vidikovac", faBinoculars] },
-    { item: ["Restoran-Kafic", faMugSaucer] }
+    { item: ["Vidikovac", faBinoculars] }
 ];
 const PriorityLoadTreshold: number = 10;
 const ImageLoadSpinner: string = '/Eclipse-1s-200px.gif';
