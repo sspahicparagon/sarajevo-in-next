@@ -1,4 +1,4 @@
-import { faBinoculars, faBowlingBall, faBuildingColumns, faBullseye, faCarBurst, faFilm, faMasksTheater, faMugSaucer, faPersonRifle, faPersonRunning, faPersonThroughWindow, faSpa, faTree, faWandSparkles, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faBinoculars, faBowlingBall, faBuildingColumns, faBullseye, faCarBurst, faFilm, faHotel, faMasksTheater, faMugSaucer, faPersonRifle, faPersonRunning, faPersonThroughWindow, faSpa, faTree, faWandSparkles, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 const InstagramLink: string = 'https://www.instagram.com/';
 const DetailsLink: string = 'details/';
@@ -6,6 +6,7 @@ const CookieName: string = 'Sarajevoin-Auth';
 const ImageStorage: string | undefined = process.env.FILE_URL ?? "https://file.sarajevoin.ba/public";
 const GoogleMapsUrl = (location: string) => { return `https://maps.google.com/maps?ll=${location}&z=20&t=h&hl=en-US&gl=US&mapclient=embed` }
 const CategoryIcons: { item: (string | IconDefinition)[] }[] = [
+    { item: ["Hotel", faHotel] },
     { item: ["Restoran-Kafic", faMugSaucer] },
     { item: ["Muzej", faBuildingColumns] },
     { item: ["Bazen i Spa centar", faSpa] },

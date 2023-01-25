@@ -17,16 +17,16 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
     const { t } = useTranslation(props._nextI18Next?.ns);
     const { groupe } = props;
     const { locale } = useRouter();
-    let title = "SarajevoIN - " + t(`${groupe.Name}`) ?? "";
+    let title = "SarajevoIN - " + t(`${groupe?.Name}`) ?? "";
     return (
         <>
-            <PageTitle title={t(groupe.Name) ?? ""} />
+            <PageTitle title={t(groupe?.Name) ?? ""} />
             <Head>
-                <meta property="og:description" content={t(`${groupe.Name}-Description`) ?? ""} />
+                <meta property="og:description" content={t(`${groupe?.Name}-Description`) ?? ""} />
                 <meta property="og:image" content={imageLoader({ src: groupe?.location[0]?.Image })} />
                 <meta property="og:locale" content={props._nextI18Next?.initialLocale} />
-                <meta property="og:title" content={t(`${groupe.Name}`) ?? ""} />
-                <meta property="description" content={t(`${groupe.Name}-Description`) ?? ""} />
+                <meta property="og:title" content={t(`${groupe?.Name}`) ?? ""} />
+                <meta property="description" content={t(`${groupe?.Name}-Description`) ?? ""} />
                 <title>{title}</title>
             </Head>
             <Flex
@@ -37,7 +37,7 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
                         className={`center ${groupeStyle['grid-container']}`}
                     >
                         {
-                            groupe.location.map((location: location) => {
+                            groupe?.location?.map((location: location) => {
                                 return (
                                     <Link
                                         href={{ pathname: '/details/[id]', query: { id: location.LocationID } }}
