@@ -2,11 +2,10 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Box, ChakraProvider } from '@chakra-ui/react'
 import Toolbar from '../components/Toolbar';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Footer from '../components/Footer';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { appWithTranslation } from 'next-i18next'
-import Head from 'next/head';
 import { gaPageView } from '../lib/pageRouter';
 
 declare global {
@@ -39,14 +38,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       }, 2000);
     }
 
-    Router.events.on('routeChangeComplete', () => {
+    router.events.on('routeChangeComplete', () => {
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: 'smooth'
       });
     });
-  }, [Router.events]);
+  }, [router.events]);
 
   return (
     <>

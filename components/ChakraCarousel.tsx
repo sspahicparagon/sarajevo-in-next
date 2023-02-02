@@ -3,8 +3,7 @@ import { Flex, IconButton } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import carouselStyle from "../styles/Carousel.module.css";
 import Card from "./ImageCard";
-import { location } from '@prisma/client'
-import useDisplayItemsCount from "../hooks/useDisplayItemsCount";
+import { location } from '@prisma/client';
 
 interface CarouselConfig {
     width?: string;
@@ -22,12 +21,12 @@ export default function ChakraCarousel({
     const [index, setIndex] = useState(0);
     const [displayButtons, setDisplayButtons] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
-    const displayItemsCount = useDisplayItemsCount();
+    const [displayItemsCount, setDisplayItemsCount] = useState(3);
 
     useEffect(() => {
         if (displayButtons !== items.length > displayItemsCount)
             setDisplayButtons(items.length > displayItemsCount);
-    });
+    }, []);
 
     const sliderButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         let left: boolean = event.currentTarget.classList.contains(carouselStyle['left-carousel-button']);

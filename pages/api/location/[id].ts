@@ -7,17 +7,17 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<location & { worktime: worktime[] } | null>
 ) {
-    let id: string | undefined = req.query.id?.toLocaleString();
-    let response = await prisma.location.findUnique({
-        where: {
-            LocationID: parseInt(id ?? "")
-        },
-        include: {
-            worktime: true
-        }
-    });
+    // let id: string | undefined = req.query.id?.toLocaleString();
+    // let response = await prisma.location.findUnique({
+    //     where: {
+    //         LocationID: parseInt(id ?? "")
+    //     },
+    //     include: {
+    //         worktime: true
+    //     }
+    // });
 
-    res.status(200).json(response);
+    res.status(200);
 }
 
 

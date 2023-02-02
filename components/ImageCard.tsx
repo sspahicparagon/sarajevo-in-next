@@ -19,7 +19,7 @@ export default function Card({ image = "", link = "", enableClick = true, index,
         <>
             {enableClick ?
                 <Link href={link} locale={locale}>
-                    <div>
+                    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                         <Image
                             src={`${image}`}
                             loader={imageLoader}
@@ -33,7 +33,7 @@ export default function Card({ image = "", link = "", enableClick = true, index,
                     </div>
                 </Link>
                 :
-                <div>
+                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                     <Image
                         src={`${image}`}
                         loader={imageLoader}

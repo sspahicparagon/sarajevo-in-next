@@ -6,6 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Card from "../../components/ImageCard";
 import PageTitle from "../../components/PageTitle";
 import imageLoader from "../../lib/imageLoader";
@@ -18,6 +19,21 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
     const { groupe } = props;
     const { locale } = useRouter();
     let title = "SarajevoIN - " + t(`${groupe?.Name}`) ?? "";
+
+    const handleScrollPosClick = () => {
+        sessionStorage.setItem("scrollPos", window.scrollY.toString());
+    }
+
+    useEffect(() => {
+        const scrollPos = parseInt(sessionStorage.getItem("scrollPos") ?? "0")
+        if (scrollPos != 0) {
+            setTimeout(() => {
+                window.scrollTo(0, scrollPos);
+                sessionStorage.removeItem("scrollPos");
+            }, 10);
+        }
+    }, []);
+
     return (
         <>
             <PageTitle title={t(groupe?.Name) ?? ""} />
@@ -47,6 +63,7 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
                                         <Grid
                                             height={'400px'}
                                             className={groupeStyle['card-container']}
+                                            onClick={handleScrollPosClick}
                                         >
                                             <Flex
                                                 height={'325px'}

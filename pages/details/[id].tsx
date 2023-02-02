@@ -13,7 +13,6 @@ import Head from "next/head";
 import imageLoader from "../../lib/imageLoader";
 import { getPagePaths } from "../../lib/pageRouter";
 import PageTitle from "../../components/PageTitle";
-import { GoogleAdSquare } from "../../components/GoogleAd";
 
 const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
     const { t } = useTranslation(props._nextI18Next?.ns);
@@ -55,13 +54,6 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                                     height={'315px'}
                                 >
                                     <InformationCard title={t("kontakt-informacije").toString()} information={props.information} />
-                                </Flex>
-                                <Flex
-                                    flexDirection={'column'}
-                                    width={'300px'}
-                                    height={'315px'}
-                                >
-                                    <GoogleAdSquare />
                                 </Flex>
                                 <br />
                                 <Flex
@@ -123,8 +115,7 @@ export async function getStaticPaths(context: any) {
 
 export async function getStaticProps(context: any) {
     const response = await InformationService.getLocationWithWorkTime(context.params.id);
-    // console.log({ response });
-    // if (!response) return { notFound: true };
+
     return {
         props: {
             ...(await serverSideTranslations(context.locale, ['description', 'footer'])),

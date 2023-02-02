@@ -12,7 +12,6 @@ import IconPlusText from '../components/IconPlusText'
 import { CategoryIcons, LogoImage } from '../values/GlobalValues'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import { GoogleAdHorizontal } from '../components/GoogleAd'
 
 const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } & { trackImages: trackimage[] }> = (props) => {
   const { t } = useTranslation(props._nextI18Next?.ns);
@@ -73,9 +72,6 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
           </section>
           <section>
             <SlideshowContainer array={props.trackImages} />
-          </section>
-          <section>
-            <GoogleAdHorizontal />
           </section>
           <section>
             <Grid

@@ -17,7 +17,8 @@ export default memo(function Map({ width = "", height = "", lat = "30", long = "
         id: 'google-maps-script',
         googleMapsApiKey: process.env.GOOGLE_MAPS_KEY ?? ""
     });
-    const center = { lat: parseFloat(lat ?? '30'), lng: parseFloat(long ?? '30') };
+    const [center, setCenter] = useState({ lat: parseFloat(lat ?? '30'), lng: parseFloat(long ?? '30') })
+
     const [map, setMap] = useState<google.maps.Map<Element> | undefined | null>(null);
 
     const onLoad = useCallback((map: google.maps.Map<Element>) => {
@@ -25,7 +26,7 @@ export default memo(function Map({ width = "", height = "", lat = "30", long = "
         map.fitBounds(bounds);
 
         setMap(map);
-    }, []);
+    }, [center]);
 
     const onUnmount = useCallback((map: google.maps.Map<Element>) => {
         setMap(null);
