@@ -1,4 +1,4 @@
-import { faBinoculars, faBowlingBall, faBuildingColumns, faBullseye, faCarBurst, faFilm, faHotel, faMasksTheater, faMugSaucer, faPersonRifle, faPersonRunning, faPersonThroughWindow, faSpa, faTree, faWandSparkles, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faBeerMugEmpty, faBinoculars, faBowlingBall, faBuildingColumns, faBullseye, faCarBurst, faFilm, faHotel, faMasksTheater, faMugSaucer, faPersonRifle, faPersonRunning, faPersonThroughWindow, faSpa, faTree, faWandSparkles, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 const InstagramLink: string = 'https://www.instagram.com/';
 const DetailsLink: string = 'details/';
@@ -20,7 +20,8 @@ const CategoryIcons: { item: (string | IconDefinition)[] }[] = [
     { item: ["Paintbal", faPersonRifle] },
     { item: ["Kuglana", faBowlingBall] },
     { item: ["Escape Room", faPersonThroughWindow] },
-    { item: ["Vidikovac", faBinoculars] }
+    { item: ["Vidikovac", faBinoculars] },
+    { item: ["Pub", faBeerMugEmpty] }
 ];
 const PriorityLoadTreshold: number = 10;
 const ImageLoadSpinner: string = '/Eclipse-1s-200px.gif';
