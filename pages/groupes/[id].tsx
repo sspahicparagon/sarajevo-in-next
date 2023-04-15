@@ -58,7 +58,7 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
                                     <Link
                                         href={{ pathname: '/details/[id]', query: { id: location.LocationID } }}
                                         locale={locale}
-                                        key={location.Name}
+                                        key={Math.random()}
                                     >
                                         <Grid
                                             height={'400px'}

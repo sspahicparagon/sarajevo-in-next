@@ -8,6 +8,7 @@ const GoogleMapsUrl = (location: string) => { return `https://maps.google.com/ma
 const CategoryIcons: { item: (string | IconDefinition)[] }[] = [
     { item: ["Hotel", faHotel] },
     { item: ["Restoran-Kafic", faMugSaucer] },
+    { item: ["Pub", faBeerMugEmpty] },
     { item: ["Muzej", faBuildingColumns] },
     { item: ["Bazen i Spa centar", faSpa] },
     { item: ["Bilijar", faWandSparkles] },
@@ -21,9 +22,22 @@ const CategoryIcons: { item: (string | IconDefinition)[] }[] = [
     { item: ["Kuglana", faBowlingBall] },
     { item: ["Escape Room", faPersonThroughWindow] },
     { item: ["Vidikovac", faBinoculars] },
-    { item: ["Pub", faBeerMugEmpty] }
 ];
 const PriorityLoadTreshold: number = 10;
 const ImageLoadSpinner: string = '/Eclipse-1s-200px.gif';
 const LogoImage: string = '/sarajevo.in-logo-removebg (1).png';
-export { InstagramLink, DetailsLink, CookieName, ImageStorage, GoogleMapsUrl, CategoryIcons, PriorityLoadTreshold, ImageLoadSpinner, LogoImage };
+const NumberOfSentencesInParagraph: number = 4;
+const MinimumLengthToCreateNewParagraph: number = 6;
+export { 
+    InstagramLink, 
+    DetailsLink, 
+    CookieName, 
+    ImageStorage, 
+    GoogleMapsUrl, 
+    CategoryIcons, 
+    PriorityLoadTreshold, 
+    ImageLoadSpinner, 
+    LogoImage,
+    NumberOfSentencesInParagraph,
+    MinimumLengthToCreateNewParagraph 
+};

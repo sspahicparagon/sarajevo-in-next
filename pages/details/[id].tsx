@@ -13,10 +13,38 @@ import Head from "next/head";
 import imageLoader from "../../lib/imageLoader";
 import { getPagePaths } from "../../lib/pageRouter";
 import PageTitle from "../../components/PageTitle";
+import { MinimumLengthToCreateNewParagraph, NumberOfSentencesInParagraph } from "../../values/GlobalValues";
+
 
 const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
     const { t } = useTranslation(props._nextI18Next?.ns);
     const title = "SarajevoIN - " + [props.information?.Name];
+
+    const handleDisplayedText = (text: string): string[] => { 
+        let textSplitOnPunctuation: string[]= text.split('.').filter(ele => ele != "" && ele != " ");
+        let stringThatHoldsSentences: string = "";
+        let resultParagraphArray: string[] = [];
+        let numberOfSentences: number = 0;
+
+        textSplitOnPunctuation.forEach((sentence: string, index: number) => {
+            stringThatHoldsSentences += sentence + ".";
+            numberOfSentences++;
+
+            //Check so that there are no occurences where there is only one sentence in the paragraph
+            if((numberOfSentences == NumberOfSentencesInParagraph && index + numberOfSentences < textSplitOnPunctuation.length) 
+                //Check if there are remaining sentences to be added
+                || index == textSplitOnPunctuation?.length - 1) {
+
+                resultParagraphArray.push(stringThatHoldsSentences);
+                //Reset
+                stringThatHoldsSentences = "";
+                numberOfSentences = 0;
+            }
+        });
+
+        return resultParagraphArray;
+    }
+
     return (
         <>
             {props.information == undefined ?
@@ -90,6 +118,29 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                                 </Flex>
                             </Flex>
                         </Flex>
+                        {(t(`description-${props.information?.LocationID}`) != `description-${props.information?.LocationID}` 
+                            // Hotels have their own location where the description is shown
+                            && props.information.GroupeID != 16 ) &&
+                            <Flex
+                                flexDirection={'column'}
+                                maxWidth={'1440px'}
+                                justifyContent={'center'}
+                                alignItems={'center'}
+                                textAlign={'justify'}
+                                margin={'auto'}
+                                paddingInline={'2rem'}
+                            >
+                                {
+                                    handleDisplayedText(t(`description-${props.information?.LocationID}`))?.map((element: string, index: number) => {
+                                        return (
+                                            <Text as="p" key={`DisplayTextIndex-${index}`} marginBlock="1rem">
+                                                {element}
+                                            </Text>
+                                        )
+                                    })
+                                }
+                            </Flex>
+                        }
                         <Flex
                             height={'100vh'}
                             width={'100%'}>
