@@ -1,4 +1,4 @@
-import { Flex, Text, Box } from "@chakra-ui/react";
+import { Flex, Text, Box, Heading } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Map from "../../components/Map";
 import detailsStyle from "../../styles/Details.module.css";
@@ -101,7 +101,12 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                                                 display={'block'}
                                                 alignSelf={'center'}
                                             >
-                                                <span><b>{t('Description')}</b></span>
+                                                <Heading
+                                                    as={'h2'}
+                                                    fontSize={'large'}
+                                                >
+                                                    <b>{t('Description')}</b>
+                                                </Heading>
                                             </Box>
                                             <hr />
                                             <Flex
@@ -110,7 +115,7 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                                                 margin={'auto'}
                                             >
                                                 <Text textAlign={'center'}>
-                                                    {t(`description-${props.information?.LocationID}`)}
+                                                    {t(`description-short-${props.information?.LocationID}`)}
                                                 </Text>
                                             </Flex>
                                         </Flex>

@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ElementInformation from "../interfaces/ElementInformation";
 import { faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +21,12 @@ export default function InformationCard({ title, information }: InformationCardC
             <Box
                 className={informationCardStyle['title-container']}
             >
-                <span><b>{title}</b></span>
+                <Heading
+                    as={'h2'}
+                    fontSize={'large'}
+                >
+                    <b>{title}</b>
+                </Heading>
             </Box>
             <hr />
             <Flex

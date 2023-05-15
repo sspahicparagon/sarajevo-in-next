@@ -1,5 +1,5 @@
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import pageTitleStyle from "../styles/PageTitle.module.css";
 
@@ -32,7 +32,12 @@ const PageTitle = ({ title = "", returnUrl = "/" }: PageTitleConfig) => {
                 justifyContent={{ 'base': 'flex-end', 'md': 'center' }}
                 paddingBottom={{ 'base': '15px', 'md': '0' }}
             >
-                {title}
+                <Heading
+                    as={'h1'}
+                    fontSize={{'base': 'x-large', 'sm': 'x-large', 'md': 'xx-large'}}
+                >
+                    {title}
+                </Heading>
             </Flex>
         </Flex>
     )
