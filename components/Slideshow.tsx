@@ -37,7 +37,7 @@ const Slideshow = ({ width = '250px', height = '450px', maxHeight = '450px', max
                 {
                     array?.map((card: CardElement, index: number) => {
                         if (card == undefined) return;
-                        let placeholderSrc: string = ImageStorage + ImageLoadSpinner;
+                        let placeholderSrc: string = ImageStorage + '/public' + ImageLoadSpinner;
                         return (
                             <div key={Math.random()} className={slideshowStyle.slide}
                                 style={{ width: width, height: height }}

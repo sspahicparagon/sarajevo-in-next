@@ -15,7 +15,8 @@ import Link from 'next/link'
 
 const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } & { trackImages: trackimage[] }> = (props) => {
   const { t } = useTranslation(props._nextI18Next?.ns);
-  let categories = CategoryIcons;
+  let categories = Object.keys(CategoryIcons);
+
   const title = "SarajevoIN - " + t("Home-Title");
   return (
     <>
@@ -77,11 +78,11 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
             <Grid
               className={`${style['groupe-icons-container']}`}
             >
-              {categories.map((list: { item: (string | any)[] }) => {
+              {categories.map((key: string) => {
                 return (
                   <Link
-                    href={'groupes/' + list.item[0]}
-                    key={list.item[0]}
+                    href={'groupes/' + key}
+                    key={key}
                   >
                     <Grid
                       className={`center ${style['groupe-icon-card']}`}
@@ -95,14 +96,14 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
                           flexDirection={'column'}
                           className={'center'}
                         >
-                          <FontAwesomeIcon icon={list.item[1]} size={'1x'} />
+                          <FontAwesomeIcon icon={CategoryIcons[key]} size={'1x'} />
                         </Flex>
                         <Flex
                           flexDirection={'column'}
                           className={'center'}
                         >
                           <Text textAlign={'center'}>
-                            <strong>{t(list.item[0])}</strong>
+                            <strong>{t(key)}</strong>
                           </Text>
                         </Flex>
                       </Flex>

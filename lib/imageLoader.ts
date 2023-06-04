@@ -11,8 +11,8 @@ export default function imageLoader({ src, width, quality }: ImageLoaderConfig) 
     let result: string = "";
     if (quality) newSrc = `${res?.at(0)}-1.${res?.at(1)}`;
 
-    if (newSrc != "") result = `${ImageStorage}${newSrc}`;
-    else result = `${ImageStorage}${src}`;
+    if (newSrc != "") result = `${ImageStorage}/public${newSrc}`;
+    else result = `${ImageStorage}/public${src}`;
 
     return result;
 }

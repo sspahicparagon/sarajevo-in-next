@@ -1,0 +1,30 @@
+.nav-icon:hover {
+    background: var(--color-gray) !important;
+    color: var(--base-color);
+}
+
+.nav-icon {
+    color: var(--base-color);
+}
+
+.mobile-nav-subitem {
+    padding-block: 2;
+}
+
+.desktop-nav-item {
+    padding: 2;
+    font-weight: 500;
+    font-size: medium;
+    color: var(--color-gray);
+}
+
+.desktop-nav-subitem {
+    border-radius: 5px;
+    padding: 2%;
+    display: block;
+}
+
+.desktop-nav-subitem:hover {
+    background-color: var(--color-gray);
+    color: var(--indicator-color);
+}

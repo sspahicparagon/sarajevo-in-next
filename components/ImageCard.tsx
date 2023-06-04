@@ -26,7 +26,7 @@ export default function Card({ image = "", link = "", enableClick = true, index,
                             layout={'fill'}
                             objectFit={'cover'}
                             objectPosition={'50% 50%'}
-                            blurDataURL={`${ImageStorage}${ImageLoadSpinner}`}
+                            blurDataURL={`${ImageStorage}/public${ImageLoadSpinner}`}
                             placeholder={'blur'}
                             alt={alt}
                         />
@@ -41,7 +41,7 @@ export default function Card({ image = "", link = "", enableClick = true, index,
                         objectFit={'cover'}
                         objectPosition={'50% 50%'}
                         placeholder={'blur'}
-                        blurDataURL={`${ImageStorage}${ImageLoadSpinner}`}
+                        blurDataURL={`${ImageStorage}/public${ImageLoadSpinner}`}
                         alt={alt}
                     />
                 </div>

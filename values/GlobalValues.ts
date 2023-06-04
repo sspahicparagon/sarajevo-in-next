@@ -3,31 +3,53 @@ import { faBeerMugEmpty, faBinoculars, faBowlingBall, faBuildingColumns, faBulls
 const InstagramLink: string = 'https://www.instagram.com/';
 const DetailsLink: string = 'details/';
 const CookieName: string = 'Sarajevoin-Auth';
-const ImageStorage: string | undefined = process.env.FILE_URL ?? "https://file.sarajevoin.ba/public";
+const ImageStorage: string | undefined = process.env.FILE_URL ?? "https://file.sarajevoin.ba";
 const GoogleMapsUrl = (location: string) => { return `https://maps.google.com/maps?ll=${location}&z=20&t=h&hl=en-US&gl=US&mapclient=embed` }
-const CategoryIcons: { item: (string | IconDefinition)[] }[] = [
-    { item: ["Hotel", faHotel] },
-    { item: ["Restoran-Kafic", faMugSaucer] },
-    { item: ["Pub", faBeerMugEmpty] },
-    { item: ["Muzej", faBuildingColumns] },
-    { item: ["Bazen i Spa centar", faSpa] },
-    { item: ["Bilijar", faWandSparkles] },
-    { item: ["Rekreacija i Sportski teren", faPersonRunning] },
-    { item: ["Pikado", faBullseye] },
-    { item: ["Park", faTree] },
-    { item: ["Pozorište", faMasksTheater] },
-    { item: ["Kino", faFilm] },
-    { item: ["Karting", faCarBurst] },
-    { item: ["Paintbal", faPersonRifle] },
-    { item: ["Kuglana", faBowlingBall] },
-    { item: ["Escape Room", faPersonThroughWindow] },
-    { item: ["Vidikovac", faBinoculars] },
-];
+const CategoryIcons: { [key: string]: IconDefinition } = {
+    "Hotel": faHotel,
+    "Restoran-Kafic": faMugSaucer,
+    "Pub": faBeerMugEmpty,
+    "Muzej": faBuildingColumns,
+    "Bazen i Spa centar": faSpa,
+    "Bilijar": faWandSparkles,
+    "Rekreacija i Sportski teren": faPersonRunning,
+    "Pikado": faBullseye,
+    "Park": faTree,
+    "Pozorište": faMasksTheater,
+    "Kino": faFilm,
+    "Karting": faCarBurst,
+    "Paintbal": faPersonRifle,
+    "Kuglana": faBowlingBall,
+    "Escape Room": faPersonThroughWindow,
+    "Vidikovac": faBinoculars,
+};
+
+const CategoryIconsJson: {[key: number]: IconDefinition} = {
+    16: faHotel,
+    15: faMugSaucer,
+    17: faBeerMugEmpty,
+    7: faBuildingColumns,
+    11: faSpa,
+    1: faWandSparkles,
+    12: faPersonRunning,
+    3: faBullseye,
+    6: faTree,
+    8: faMasksTheater,
+    9: faFilm,
+    2: faCarBurst,
+    5: faPersonRifle,
+    10: faBowlingBall,
+    13: faPersonThroughWindow,
+    14: faBinoculars
+};
+
+
 const PriorityLoadTreshold: number = 10;
 const ImageLoadSpinner: string = '/Eclipse-1s-200px.gif';
 const LogoImage: string = '/sarajevo.in-logo-removebg (1).png';
 const NumberOfSentencesInParagraph: number = 4;
 const MinimumLengthToCreateNewParagraph: number = 6;
+const ImageUploadKeyValue = 'image-media';
 export { 
     InstagramLink, 
     DetailsLink, 
@@ -39,5 +61,7 @@ export {
     ImageLoadSpinner, 
     LogoImage,
     NumberOfSentencesInParagraph,
-    MinimumLengthToCreateNewParagraph 
+    MinimumLengthToCreateNewParagraph,
+    ImageUploadKeyValue,
+    CategoryIconsJson
 };

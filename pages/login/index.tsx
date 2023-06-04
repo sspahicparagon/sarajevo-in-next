@@ -3,9 +3,10 @@ import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import Router from "next/router";
-import JWTService from "../../services/JWTService";
+import { JWTService } from "../../services/JWTService";
 import pageStyle from '../../styles/Login.module.css';
 import { ImageStorage } from "../../values/GlobalValues";
+import { signIn } from "next-auth/react";
 
 const Login: NextPage = () => {
 
@@ -14,10 +15,7 @@ const Login: NextPage = () => {
         let form = event?.target;
         let username = form.elements[0].value;
         let password = form.elements[1].value
-        JWTService.login(username, password).then((result: { success: boolean }) => {
-            if (result.success) Router.push('/');
-            else Router.push('/login');
-        })
+        signIn('credentials', {username, password, redirect: true, callbackUrl: '/'});
     }
 
     return (
@@ -25,10 +23,10 @@ const Login: NextPage = () => {
             height={'100vh'}
             flexDirection={'column'}
             className={pageStyle.container}
-            backgroundImage={`${ImageStorage}/images/track-images/track-image-8.webp`}
+            backgroundImage={`${ImageStorage}/public/images/track-images/track-image-8.webp`}
         >
             <Head>
-                <meta property="og:image" content={`${ImageStorage}/images/track-images/track-image-8.webp`} />
+                <meta property="og:image" content={`${ImageStorage}/public/images/track-images/track-image-8.webp`} />
                 <title>SarajevoIN - Log In</title>
             </Head>
             <form onSubmit={handleSubmit}>
@@ -56,7 +54,7 @@ const Login: NextPage = () => {
 export async function getStaticProps(context: any) {
     return {
         props: {
-            ...(await serverSideTranslations(context.locale, ['footer'])),
+            ...(await serverSideTranslations(context.locale, ['footer', 'common'])),
             revalidate: 3600
         }
     };

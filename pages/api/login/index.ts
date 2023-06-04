@@ -1,8 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import JWTService from '../../../services/JWTService';
+import { JWTService } from '../../../services/JWTService';
 import { serialize } from "cookie";
 import { CookieName } from '../../../values/GlobalValues';
+import { glob } from "glob";
 
 export default async function handler(
     req: NextApiRequest,
@@ -11,21 +12,17 @@ export default async function handler(
     let validUsers = [
         { username: 'sabahudin', password: 'Darklord35421337' },
         { username: 'tester', password: 'hO6BeJ2$W6k7' },
-        { username: 'hasan', password: '*OIfAkMo5g09' },
-        { username: 'lejla', password: 'AmT3uU9n55F!' }
+        { username: 'hasan', password: 'HasanSarajevoIN!' },
+        { username: 'lejla', password: 'LejlaSarajevoIN!' }
     ];
     let resultData: { success: boolean } = { success: false };
     const { username, password } = req.body;
 
     const token = req.cookies[CookieName];
 
-    try {
-        let verified = await JWTService.verify(token ?? "");
-        return res.status(200).send({ success: true });
-    }
-    catch (e) { }
+    resultData.success = await JWTService.verify(token ?? "");
 
-    if (username != '' && password != '') {
+    if (username != '' && password != '' && !resultData.success) {
         let newToken = await JWTService.sign();
         validUsers.map(user => {
             if (user.username == username && user.password == password) {
@@ -36,7 +33,8 @@ export default async function handler(
             }
         })
     }
-    if (res.statusCode != 200) res.status(401);
+    let pages = await glob('pages/**/*.js', { cwd: __dirname });
+    console.log({pages});
 
     res.send(resultData);
 }

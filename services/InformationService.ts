@@ -1,10 +1,22 @@
-// import { Prisma } from "@prisma/client";
-import axios from "axios";
 import prismaClient from '../lib/prisma'
 
 const InformationService = {
     getLocations: async () => {
-        return await prismaClient.location.findMany();
+        return await prismaClient.location.findMany({
+            orderBy: [
+                {
+                    'groupe': {
+                        'Name': 'asc'
+                    },
+                },
+                {
+                    'Name': 'asc'
+                }
+            ],
+            include: {
+                groupe: true
+            }
+        });
     },
     getLocationWithWorkTime: async function (id: string) {
         let response = await prismaClient.location.findUnique({

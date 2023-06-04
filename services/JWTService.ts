@@ -1,8 +1,11 @@
 import axios from 'axios';
-import { SignJWT, jwtVerify } from 'jose';
+import { JWTVerifyResult, SignJWT, jwtVerify } from 'jose';
+import { useCookies } from 'react-cookie';
+import { CookieName } from '../values/GlobalValues';
 
-const JWTService = {
-    sign: async function () {
+function JWTServiceFunction() {
+
+    const sign = async function () {
         const iat = Math.floor(Date.now() / 1000);
         const exp = iat + 60 * 60; // one hour
         let newToken = await new SignJWT({ id: 1 })
@@ -13,11 +16,17 @@ const JWTService = {
             .sign(new TextEncoder().encode(process.env.TOKEN_SECRET));
 
         return newToken;
-    },
-    verify: function (token: string) {
-        return jwtVerify(token, new TextEncoder().encode(process.env.TOKEN_SECRET));
-    },
-    login: async function (username: string, password: string) {
+    };
+    const verify = async function (token: string): Promise<boolean> {
+        let success = false;
+        try {
+            await jwtVerify(token, new TextEncoder().encode(process.env.TOKEN_SECRET));
+            success = true;
+        }
+        catch(e) { console.log({e}) }
+        return success;
+    };
+    const login = async function (username: string, password: string) {
         let result;
 
         try {
@@ -38,7 +47,13 @@ const JWTService = {
             return Promise.resolve({ success: false });
         }
         return result.data;
+    };
+
+    return {
+        sign,
+        verify,
+        login
     }
 }
 
-export default JWTService;
+export const JWTService = JWTServiceFunction();

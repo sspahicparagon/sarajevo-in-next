@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { worktime } from "@prisma/client";
 import { useTranslation } from "next-i18next";
 import tableStyle from "../styles/Table.module.css";
@@ -27,7 +27,12 @@ export default function TableCard({ title, worktime }: TableConfig) {
             <Box
                 className={tableStyle['table-title']}
             >
-                <span><b>{title}</b></span>
+                <Heading
+                    as={'h2'}
+                    fontSize={'large'}
+                >
+                    <b>{title}</b>
+                </Heading>
             </Box>
             <hr />
             <Flex

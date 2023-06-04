@@ -26,6 +26,7 @@ model location {
   Longitude   String?    @db.VarChar(255)
   Description String?    @db.VarChar(2048)
   groupe      groupe?    @relation(fields: [GroupeID], references: [GroupeID], onDelete: Cascade, map: "Location_GroupeID")
+  event       event[]
   worktime    worktime[]
 
   @@index([GroupeID], map: "GroupeID")
@@ -45,4 +46,29 @@ model worktime {
   location   location @relation(fields: [LocationID], references: [LocationID], onDelete: Cascade, map: "WorkTime_LocationID")
 
   @@index([LocationID], map: "LocationID")
+}
+
+model event {
+  EventID           Int                 @id @default(autoincrement())
+  Name              String?             @db.VarChar(255)
+  Time              String?             @db.VarChar(255)
+  Date              DateTime            @default(now()) @db.DateTime(0)
+  Price             Decimal             @default(0.00) @db.Decimal(5, 2)
+  Image             String              @db.VarChar(1023)
+  LocationID        Int?
+  location          location?           @relation(fields: [LocationID], references: [LocationID], onDelete: Cascade, map: "Event_LocationID")
+  event_translation event_translation[]
+
+  @@index([LocationID], map: "LocationID")
+}
+
+model event_translation {
+  EventTranslationID Int    @id @default(autoincrement())
+  EventID            Int
+  Language           String @db.VarChar(5)
+  Key                String @db.VarChar(255)
+  Translation        String @db.VarChar(2048)
+  event              event  @relation(fields: [EventID], references: [EventID], onDelete: Cascade, map: "EventTranslation_EventID")
+
+  @@index([EventID], map: "EventTranslation_EventID")
 }

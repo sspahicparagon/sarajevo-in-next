@@ -13,7 +13,7 @@ import Head from "next/head";
 import imageLoader from "../../lib/imageLoader";
 import { getPagePaths } from "../../lib/pageRouter";
 import PageTitle from "../../components/PageTitle";
-import { MinimumLengthToCreateNewParagraph, NumberOfSentencesInParagraph } from "../../values/GlobalValues";
+import { NumberOfSentencesInParagraph } from "../../values/GlobalValues";
 
 
 const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
@@ -174,7 +174,7 @@ export async function getStaticProps(context: any) {
 
     return {
         props: {
-            ...(await serverSideTranslations(context.locale, ['description', 'footer'])),
+            ...(await serverSideTranslations(context.locale, ['common', 'description', 'footer'])),
             information: response,
             revalidate: 3600,
             notFound: !response

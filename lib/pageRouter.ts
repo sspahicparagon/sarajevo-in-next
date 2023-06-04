@@ -3,7 +3,7 @@ const getPagePaths = function (context: any, array: any[], key: string) {
         return context.locales.map((locale: string) => {
             return {
                 params: {
-                    id: _[key].toString()
+                    id: encodeURIComponent(_[key].toString())
                 },
                 locale: locale
             }

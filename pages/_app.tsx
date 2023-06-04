@@ -7,6 +7,12 @@ import Footer from '../components/Footer';
 import { useEffect, useRef } from 'react';
 import { appWithTranslation } from 'next-i18next'
 import { gaPageView } from '../lib/pageRouter';
+import '../styles/Calendar.css';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+// Prevent fontawesome from adding its CSS since we did it manually above:
+import { config } from '@fortawesome/fontawesome-svg-core';
 
 declare global {
   interface Window {
@@ -14,10 +20,9 @@ declare global {
   }
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
-
+function MyApp({ Component, pageProps, session }: AppProps & { session: Session }) {
+  config.autoAddCss = false;
   let router = useRouter();
-
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       gaPageView(url, document.title);
@@ -49,6 +54,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
+    <SessionProvider session={session}>
       <ChakraProvider>
         <Box
           overflowX={'hidden'}
@@ -58,6 +64,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Footer />
         </Box>
       </ChakraProvider>
+      </SessionProvider>
     </>
   );
 };

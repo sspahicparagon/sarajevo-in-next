@@ -37,3 +37,10 @@ yarn-error.log*
 # sitemap
 /public/robots.txt
 /public/sitemap*
+public/
+
+# uploaded images
+uploads/
+
+# translations
+*.json
