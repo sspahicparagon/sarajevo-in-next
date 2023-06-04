@@ -61,7 +61,7 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                         <meta property="og:image" content={imageLoader({ src: props.information?.Image })} />
                         <meta property="og:image:alt" content={props.information?.Name ?? ""} />
                         <meta property="og:locale" content={props._nextI18Next?.initialLocale} />
-                        <meta property="description" content={t(`description-${props.information?.LocationID}`) ?? props.information?.Name ?? ""} />
+                        <meta property="description" content={t(`description-${props.information.LocationID}`) ?? ""}/>
                         <title>{title}</title>
                     </Head>
                     <PageTitle title={props.information?.Name ?? ""} returnUrl={'/groupes/' + props.information?.GroupeID} />
@@ -123,9 +123,7 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                                 </Flex>
                             </Flex>
                         </Flex>
-                        {(t(`description-${props.information?.LocationID}`) != `description-${props.information?.LocationID}` 
-                            // Hotels have their own location where the description is shown
-                            && props.information.GroupeID != 16 ) &&
+                        {(t(`description-${props.information.LocationID}`) != `description-${props.information?.LocationID}`) &&
                             <Flex
                                 flexDirection={'column'}
                                 maxWidth={'1440px'}
@@ -136,7 +134,7 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                                 paddingInline={'2rem'}
                             >
                                 {
-                                    handleDisplayedText(t(`description-${props.information?.LocationID}`))?.map((element: string, index: number) => {
+                                    handleDisplayedText(t(`description-${props.information.LocationID}`))?.map((element: string, index: number) => {
                                         return (
                                             <Text as="p" key={`DisplayTextIndex-${index}`} marginBlock="1rem">
                                                 {element}
@@ -174,7 +172,7 @@ export async function getStaticProps(context: any) {
 
     return {
         props: {
-            ...(await serverSideTranslations(context.locale, ['common', 'description', 'footer'])),
+            ...(await serverSideTranslations(context.locale, ['description', 'common', 'footer'])),
             information: response,
             revalidate: 3600,
             notFound: !response
