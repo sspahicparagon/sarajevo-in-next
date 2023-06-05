@@ -170,7 +170,7 @@ const MobileNavItem = ({ label, children, href, checkCondition }: NavItem) => {
     const { isOpen, onToggle } = useDisclosure();
     const { t } = useTranslation('common');
     const { data } = useSession();
-
+    if(checkCondition && !data) return;
     return (
         <Stack spacing={4} onClick={onToggle}>
         <Flex
@@ -179,26 +179,25 @@ const MobileNavItem = ({ label, children, href, checkCondition }: NavItem) => {
             p={2}
             rounded={'md'}
         >
-            {checkCondition && data &&
-                <>
-                    <Text
+            <>
+                <Text
                     fontWeight={600}
-                    color={'var(--color-gray)'}>
-                    {label}
-                    </Text>
-                    {children && (
-                    <Icon
-                        as={ChevronDownIcon}
-                        transition={'all .25s ease-in-out'}
-                        transform={isOpen ? 'rotate(180deg)' : ''}
-                        color={'var(--color-gray)'}
-                        paddingTop={'2px'}
-                        w={6}
-                        h={6}
-                    />
-                    )}
-                </> 
-            }
+                    color={'var(--color-gray)'}
+                >
+                {label}
+                </Text>
+                {children && (
+                <Icon
+                    as={ChevronDownIcon}
+                    transition={'all .25s ease-in-out'}
+                    transform={isOpen ? 'rotate(180deg)' : ''}
+                    color={'var(--color-gray)'}
+                    paddingTop={'2px'}
+                    w={6}
+                    h={6}
+                />
+                )}
+            </>
         </Flex>
 
         <Collapse in={isOpen} animateOpacity>
