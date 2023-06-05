@@ -170,7 +170,7 @@ const MobileNavItem = ({ label, children, href, checkCondition }: NavItem) => {
     const { isOpen, onToggle } = useDisclosure();
     const { t } = useTranslation('common');
     const { data } = useSession();
-    if(checkCondition && !data) return;
+    if(checkCondition && !data) return null;
     return (
         <Stack spacing={4} onClick={onToggle}>
         <Flex
