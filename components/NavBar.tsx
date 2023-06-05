@@ -69,7 +69,7 @@ export default function WithSubnavigation() {
 
 const DesktopNav = () => {
     const { data } = useSession();
-    console.log({data});
+    
     const popoverContentBgColor = 'var(--base-color)';
     return (
         <Stack direction={'row'} spacing={4}>

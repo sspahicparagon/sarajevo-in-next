@@ -14,10 +14,7 @@ import imageLoader from "../../lib/imageLoader";
 const EventModalPage: NextPage<{selectedEvent: EventHTMLSafe}> = (props) => {
   const router = useRouter();
   const description = TranslationService.getEventTranslation(props.selectedEvent?.event_translation ?? [], 'description', router.locale ?? 'en');
-  // useEffect(() => {
-  //   router.prefetch('/event');
-  // }, [])
-  console.log({route: process.env.BASE_URL});
+
   return (
     <>
       <Head>
