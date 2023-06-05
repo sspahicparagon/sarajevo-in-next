@@ -7,7 +7,7 @@ function JWTServiceFunction() {
 
     const sign = async function () {
         const iat = Math.floor(Date.now() / 1000);
-        const exp = iat + 60 * 60; // one hour
+        const exp = iat + 60; // one hour
         let newToken = await new SignJWT({ id: 1 })
             .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
             .setExpirationTime(exp)

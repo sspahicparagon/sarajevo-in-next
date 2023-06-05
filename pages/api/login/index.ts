@@ -15,28 +15,11 @@ export default async function handler(
         { username: 'hasan', password: 'HasanSarajevoIN!' },
         { username: 'lejla', password: 'LejlaSarajevoIN!' }
     ];
-    let resultData: { success: boolean } = { success: false };
     const { username, password } = req.body;
 
-    const token = req.cookies[CookieName];
-
-    resultData.success = await JWTService.verify(token ?? "");
-
-    if (username != '' && password != '' && !resultData.success) {
-        let newToken = await JWTService.sign();
-        validUsers.map(user => {
-            if (user.username == username && user.password == password) {
-                let cookie = serialize(CookieName, newToken, { path: '/' });
-                res.setHeader('Set-Cookie', cookie);
-                res.status(200);
-                resultData.success = true;
-            }
-        })
-    }
-    let pages = await glob('pages/**/*.js', { cwd: __dirname });
-    console.log({pages});
-
-    res.send(resultData);
+    let validUser = validUsers.find(user => user.username == username && user.password == password);
+        
+    res.send({user: validUser?.username});
 }
 
 

@@ -69,11 +69,12 @@ export default function WithSubnavigation() {
 
 const DesktopNav = () => {
     const { data } = useSession();
+    console.log({data});
     const popoverContentBgColor = 'var(--base-color)';
     return (
         <Stack direction={'row'} spacing={4}>
             {NAV_ITEMS.map((navItem) => {
-                if(navItem.checkCondition && !data) return;
+                if(navItem.checkCondition && data == null) return;
                 return (
                 <Box key={navItem.label}>
                     <Popover trigger={'hover'} placement={'bottom-start'}>
@@ -153,66 +154,69 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 };
 
 const MobileNav = () => {
-return (
-    <Stack
-    bg={'var(--base-color)'}
-    p={4}
-    display={{ md: 'none' }}>
-    {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-    ))}
-    </Stack>
-);
+    return (
+        <Stack
+        bg={'var(--base-color)'}
+        p={4}
+        display={{ md: 'none' }}>
+        {NAV_ITEMS.map((navItem) => (
+            <MobileNavItem key={navItem.label} {...navItem} />
+        ))}
+        </Stack>
+    );
 };
 
-const MobileNavItem = ({ label, children, href }: NavItem) => {
-const { isOpen, onToggle } = useDisclosure();
-const { t } = useTranslation('common');
+const MobileNavItem = ({ label, children, href, checkCondition }: NavItem) => {
+    const { isOpen, onToggle } = useDisclosure();
+    const { t } = useTranslation('common');
+    const { data } = useSession();
 
-return (
-    <Stack spacing={4} onClick={onToggle}>
-    <Flex
-        href={href ?? '#'}
-        as={ChakraNextLink}
-        p={2}
-        rounded={'md'}
-    >
-        <>
-            <Text
-            fontWeight={600}
+    return (
+        <Stack spacing={4} onClick={onToggle}>
+        <Flex
+            href={href ?? '#'}
+            as={ChakraNextLink}
+            p={2}
+            rounded={'md'}
+        >
+            {checkCondition && data &&
+                <>
+                    <Text
+                    fontWeight={600}
+                    color={'var(--color-gray)'}>
+                    {label}
+                    </Text>
+                    {children && (
+                    <Icon
+                        as={ChevronDownIcon}
+                        transition={'all .25s ease-in-out'}
+                        transform={isOpen ? 'rotate(180deg)' : ''}
+                        color={'var(--color-gray)'}
+                        paddingTop={'2px'}
+                        w={6}
+                        h={6}
+                    />
+                    )}
+                </> 
+            }
+        </Flex>
+
+        <Collapse in={isOpen} animateOpacity>
+            <Stack
+            mt={2}
+            pl={4}
+            align={'start'}
             color={'var(--color-gray)'}>
-            {label}
-            </Text>
-            {children && (
-            <Icon
-                as={ChevronDownIcon}
-                transition={'all .25s ease-in-out'}
-                transform={isOpen ? 'rotate(180deg)' : ''}
-                color={'var(--color-gray)'}
-                paddingTop={'2px'}
-                w={6}
-                h={6}
-            />
-            )}
-        </>
-    </Flex>
-
-    <Collapse in={isOpen} animateOpacity>
-        <Stack
-        mt={2}
-        pl={4}
-        align={'start'}
-        color={'var(--color-gray)'}>
-        {children &&
-            children.map((child) => (
-            <ChakraNextLink key={child.label} className={navStyle['mobile-nav-subitem']} href={child.href ?? '#'}>
-                {t(child.label)}
-            </ChakraNextLink>
-            ))}
+            {children &&
+                children.map((child) => (
+                <ChakraNextLink key={child.label} className={navStyle['mobile-nav-subitem']} href={child.href ?? '#'}>
+                    {t(child.label)}
+                </ChakraNextLink>
+                ))}
+            </Stack>
+        </Collapse>
         </Stack>
-    </Collapse>
-    </Stack>
-);
+    );
 };
 
 interface NavItem {

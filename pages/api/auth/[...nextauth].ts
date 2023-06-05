@@ -33,6 +33,7 @@ const authOptions: NextAuthOptions = {
 
         // If no error and we have user data, return it
         if (res.ok && data) {
+          console.log({message: 'User has been authenticated and authorized.', token: data});
           return data
         }
         // Return null if user data could not be retrieved
@@ -44,7 +45,8 @@ const authOptions: NextAuthOptions = {
     signIn: '/login'
   },
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
+    maxAge: 60 * 60
   },
   callbacks: {
     jwt: async ({token, user}) => {
@@ -52,7 +54,8 @@ const authOptions: NextAuthOptions = {
       return token;
     },
     session: async ({ session, token }) => {
-      session.user = token;
+      if(token)
+        session.user = token;
       return session;
     }
   }
