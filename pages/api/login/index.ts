@@ -18,6 +18,8 @@ export default async function handler(
     const { username, password } = req.body;
 
     let validUser = validUsers.find(user => user.username == username && user.password == password);
+
+    if(!validUser) res.status(400);
         
     res.send({user: validUser?.username});
 }
