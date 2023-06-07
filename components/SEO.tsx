@@ -22,12 +22,18 @@ const SEO = ({ canonicalRelativeRoute, title = '', description = '', imageUrl = 
 
   return (
     <Head>
+      <meta name="title" content={title} />
       <meta property="og:title" content={title} />
+      <meta name="description" content={description} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={imageUrl} />
       <meta property="og:image:alt" content={'SarajevoIN Image'} />
       <meta property="og:locale" content={locale} />
-      <meta property="description" content={description} />
+      <meta name="robots" content="index, follow" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="icon" href="/favicon.ico" />
+      <meta property="og:site_name" content={'SarajevoIN'} />
+      <meta charSet="utf-8"/>
       {
         supportedLanguages.map(languageObj => {
           let url: string = `${process.env.BASE_URL}${languageObj.canonical ? "" : `/${languageObj.lang}`}${canonicalRelativeRoute}`;

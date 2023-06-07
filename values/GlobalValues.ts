@@ -8,7 +8,7 @@ const GoogleMapsUrl = (location: string) => { return `https://maps.google.com/ma
 const CategoryIcons: { [key: string]: IconDefinition } = {
     "Hotel": faHotel,
     "Restoran-Kafic": faMugSaucer,
-    "Pub": faBeerMugEmpty,
+    "Pub i klub": faBeerMugEmpty,
     "Muzej": faBuildingColumns,
     "Bazen i Spa centar": faSpa,
     "Bilijar": faWandSparkles,
