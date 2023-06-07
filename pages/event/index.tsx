@@ -8,9 +8,9 @@ import { EventHTMLSafe } from "../../interfaces/EventOverride";
 import EventService from "../../services/EventService";
 import eventStyle from '../../styles/Event.module.css';
 import { LanguageHelper } from "../../helpers/LanguageHelper";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EventWithDateContainer from "../../components/EventWithDateContainer";
-import Head from "next/head";
+import SEO from "../../components/SEO";
 
 const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] } }> = (props) => {
     const [eventKeys, setEventKeys] = useState<string[]>(Object.keys(props.events));
@@ -27,10 +27,12 @@ const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] } }>
             flexDirection={'column'}
             alignItems={'center'}
         >
-            <Head>
-                <meta property="og:title" content='SarajevoIN - Event' />
-                <title>SarajevoIN - Event</title>
-            </Head>
+            <SEO
+                title={'SarajevoIN Events'}
+                canonicalRelativeRoute={'event'}
+                description={''}
+                imageUrl={''}
+            />
             <EventCalendar locale={LanguageHelper.languageCodeBeingUsed(props)} markDates={Object.keys(props.events)} onChange={dateWasSelected}/>
             <Flex
                 flexDirection={'column'}

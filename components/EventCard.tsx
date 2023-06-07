@@ -10,7 +10,6 @@ import Card from "./ImageCard";
 import ChakraNextLink from "./ChakraNextLink";
 
 const EventCard = (props: { event: EventHTMLSafe }) => {
-    const { onOpen } = useDisclosure();
 
     return (
         <Flex key={props.event?.EventID + 'Container'}>
@@ -75,7 +74,6 @@ const EventCard = (props: { event: EventHTMLSafe }) => {
                                     </Text>
                                 </Flex>
                                 <Flex
-                                    // justifyContent={'flex-end'}  
                                     height={{'base':'25px', 'md': '35px'}}
                                     className={eventStyle['single-event-time']}
                                 >

@@ -3,7 +3,6 @@ import { groupe, location } from "@prisma/client";
 import { NextPage } from "next";
 import { SSRConfig, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -13,6 +12,7 @@ import imageLoader from "../../lib/imageLoader";
 import { getPagePaths } from "../../lib/pageRouter";
 import GroupService from "../../services/GroupeService";
 import groupeStyle from "../../styles/Groupe.module.css";
+import SEO from "../../components/SEO";
 
 const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } }> = (props) => {
     const { t } = useTranslation(props._nextI18Next?.ns);
@@ -37,14 +37,12 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
     return (
         <>
             <PageTitle title={t(groupe?.Name) ?? ""} />
-            <Head>
-                <meta property="og:description" content={t(`${groupe?.Name}-Description`) ?? ""} />
-                <meta property="og:image" content={imageLoader({ src: groupe?.location[0]?.Image })} />
-                <meta property="og:locale" content={props._nextI18Next?.initialLocale} />
-                <meta property="og:title" content={t(`${groupe?.Name}`) ?? ""} />
-                <meta property="description" content={t(`${groupe?.Name}-Description`) ?? ""} />
-                <title>{title}</title>
-            </Head>
+            <SEO 
+                title={title}
+                description={t(`${groupe?.Name}-Description`)}
+                imageUrl={imageLoader({ src: groupe?.location[0]?.Image })}
+                canonicalRelativeRoute={`/groupes/${groupe.GroupeID}`}
+            />
             <Flex
                 className={`center ${groupeStyle.container}`}
             >
@@ -101,7 +99,6 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
 
 export async function getStaticPaths(context: any) {
     let groupes = await GroupService.getGroupes();
-
     let pathsForName = getPagePaths(context, groupes, 'Name');
     let paths = [...pathsForName, ...getPagePaths(context, groupes, 'GroupeID')];
     return {
@@ -112,7 +109,6 @@ export async function getStaticPaths(context: any) {
 
 export async function getStaticProps(context: any) {
     let result: number = parseInt(context.params.id);
-
     let groupe = isNaN(result) ? await GroupService.getGroupeWithLocationByName(context.params.id) : await GroupService.getGroupeWithLocationByID(result);
 
     return {

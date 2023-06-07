@@ -7,7 +7,7 @@ interface PageTitleConfig {
     returnUrl?: string;
 }
 
-const PageTitle = ({ title = "", returnUrl = "/" }: PageTitleConfig) => {
+const PageTitle = ({ title = ""}: PageTitleConfig) => {
     const router = useRouter();
 
     return (

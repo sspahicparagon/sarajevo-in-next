@@ -12,6 +12,7 @@ import IconPlusText from '../components/IconPlusText'
 import { CategoryIcons, LogoImage } from '../values/GlobalValues'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
+import SEO from '../components/SEO'
 
 const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } & { trackImages: trackimage[] }> = (props) => {
   const { t } = useTranslation(props._nextI18Next?.ns);
@@ -24,13 +25,12 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
         flexDirection={'column'}
         className={style.container}
       >
-        <Head>
-          <meta property='og:image' content={`${process.env.BASE_URL}/sarajevo.in-logo-removebg (1).png`} />
-          <meta property='og:description' content={`${t('Home-Description')}\nMail: info@sarajevoin.ba`} />
-          <meta property='description' content={`${t('Home-Description')}\nMail: info@sarajevoin.ba`} />
-          <meta property='og:title' content={`${t("Home-Title")}`} />
-          <title>{title}</title>
-        </Head>
+        <SEO
+          title={title}
+          imageUrl={''}
+          description={`${t('Home-Description')}\nMail: info@sarajevoin.ba`}
+          canonicalRelativeRoute={''}
+        />
         <main>
           <section>
             <Grid

@@ -14,6 +14,7 @@ import imageLoader from "../../lib/imageLoader";
 import { getPagePaths } from "../../lib/pageRouter";
 import PageTitle from "../../components/PageTitle";
 import { NumberOfSentencesInParagraph } from "../../values/GlobalValues";
+import SEO from "../../components/SEO";
 
 
 const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
@@ -55,16 +56,13 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                     width={'100vw'}
                     className={detailsStyle.container}
                 >
-                    <Head>
-                        <meta property="og:title" content={props.information?.Name ?? ""} />
-                        <meta property="og:description" content={t(`description-${props.information?.LocationID}`) ?? ""} />
-                        <meta property="og:image" content={imageLoader({ src: props.information?.Image })} />
-                        <meta property="og:image:alt" content={props.information?.Name ?? ""} />
-                        <meta property="og:locale" content={props._nextI18Next?.initialLocale} />
-                        <meta property="description" content={t(`description-${props.information.LocationID}`) ?? ""}/>
-                        <title>{title}</title>
-                    </Head>
-                    <PageTitle title={props.information?.Name ?? ""} returnUrl={'/groupes/' + props.information?.GroupeID} />
+                    <SEO
+                        title={title}
+                        description={t(`description-${props.information?.LocationID}`)} 
+                        imageUrl={imageLoader({ src: props.information?.Image })}
+                        canonicalRelativeRoute={`/details/${props.information.LocationID}`}
+                    />
+                    <PageTitle title={props.information?.Name ?? ""} />
                     <main style={{ width: '100%' }}>
                         <Flex
                             flexDirection={'column'}
