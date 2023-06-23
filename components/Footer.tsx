@@ -2,10 +2,11 @@ import { Flex } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import footerStyle from '../styles/Footer.module.css';
 import { InstagramLink } from '../values/GlobalValues';
+import { TranslationType } from "../interfaces/TranslationType";
 
 export default function Footer() {
     let people: string[][] = [['_goropro_', 'oljahaj', 'nera.hadzic'], ['merimam', 'mirela_red']];
-    const { t } = useTranslation('footer');
+    const { t } = useTranslation<TranslationType>('footer');
     return (
         <Flex
             flexDirection={'column'}

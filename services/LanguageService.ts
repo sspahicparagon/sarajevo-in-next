@@ -1,5 +1,6 @@
-const LanguageService = {
-    getLanguageList: function (localStorage: Storage) {
+function LanguageServiceFunction() {
+
+    const getLanguageList = function (localStorage: Storage) {
         const languages: string[] = ['bs', 'en', 'de'];
 
         const selectedLanguage: string | null = localStorage.getItem('language');
@@ -10,10 +11,15 @@ const LanguageService = {
         }
 
         return languages;
-    },
-    setLanguage: function (language: string, localStorage: Storage) {
+    };
+    const setLanguage = function (language: string, localStorage: Storage) {
         localStorage.setItem('language', language);
+    };
+
+    return {
+        getLanguageList,
+        setLanguage
     }
 }
 
-export default LanguageService;
+export const LanguageService = LanguageServiceFunction();

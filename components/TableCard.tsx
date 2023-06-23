@@ -2,6 +2,7 @@ import { Box, Flex, Heading } from "@chakra-ui/react";
 import { worktime } from "@prisma/client";
 import { useTranslation } from "next-i18next";
 import tableStyle from "../styles/Table.module.css";
+import { TranslationType } from "../interfaces/TranslationType";
 
 interface TableConfig {
     title?: string;
@@ -9,7 +10,7 @@ interface TableConfig {
 }
 
 export default function TableCard({ title, worktime }: TableConfig) {
-    const { t } = useTranslation('description');
+    const { t } = useTranslation<TranslationType>('description');
     let days: { [details: string]: string } = {
         "0": t("ponedjeljak"),
         "1": t("utorak"),

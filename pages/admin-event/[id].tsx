@@ -11,6 +11,7 @@ import InformationService from "../../services/InformationService";
 import { SSRConfig, useTranslation } from "next-i18next";
 import { location, groupe } from "@prisma/client";
 import { useRouter } from "next/router";
+import { TranslationType } from "../../interfaces/TranslationType";
 
 const Calendar: NextPage<SSRConfig & { locations: (location & { groupe: groupe | null })[] } > = (props) => {
     const [image, setImage] = useState<File>();
@@ -23,7 +24,7 @@ const Calendar: NextPage<SSRConfig & { locations: (location & { groupe: groupe |
     const priceRef = useRef<HTMLInputElement>(null);
     const englishTextRef = useRef<HTMLTextAreaElement>(null);
     const router = useRouter();
-    const { t } = useTranslation(props._nextI18Next?.ns);
+    const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
 
     const createFormData = (): FormData => {
         const formData = new FormData();

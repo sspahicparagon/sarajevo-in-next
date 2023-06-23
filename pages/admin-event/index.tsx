@@ -11,10 +11,11 @@ import { CategoryIconsJson } from "../../values/GlobalValues";
 import { useRouter } from "next/router";
 import { EventFactory } from "../../factory/EventFactory";
 import { EventHTMLSafe } from "../../interfaces/EventOverride";
+import { TranslationType } from "../../interfaces/TranslationType";
 
 const Calendar: NextPage<SSRConfig & { events: EventHTMLSafe[] }> = (props) => {
     const router = useRouter();
-    const { t } = useTranslation(props._nextI18Next?.ns);
+    const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
     return (
         <>
             <Flex

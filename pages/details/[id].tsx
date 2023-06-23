@@ -15,10 +15,11 @@ import { getPagePaths } from "../../lib/pageRouter";
 import PageTitle from "../../components/PageTitle";
 import { NumberOfSentencesInParagraph } from "../../values/GlobalValues";
 import SEO from "../../components/SEO";
+import { TranslationType } from "../../interfaces/TranslationType";
 
 
 const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
-    const { t } = useTranslation(props._nextI18Next?.ns);
+    const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
     const title = "SarajevoIN - " + [props.information?.Name];
 
     const handleDisplayedText = (text: string): string[] => { 

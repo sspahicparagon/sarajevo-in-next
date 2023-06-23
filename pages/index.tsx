@@ -1,21 +1,25 @@
 import { Flex, Grid, Heading, Text } from '@chakra-ui/react'
-import type { NextPage } from 'next'
-import { SSRConfig, useTranslation } from 'next-i18next'
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
+import { SSRConfig, UserConfig, useTranslation } from 'next-i18next'
 import SlideshowContainer from '../components/SlideshowContainer'
 import style from '../styles/Home.module.css'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import GroupeService from '../services/GroupeService'
-import { location, trackimage } from '@prisma/client'
 import TrackImagesService from '../services/TrackImagesService'
-import Head from 'next/head'
 import IconPlusText from '../components/IconPlusText'
 import { CategoryIcons, LogoImage } from '../values/GlobalValues'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import SEO from '../components/SEO'
+import { LanguageHelper } from '../helpers/LanguageHelper'
+import CardElement from '../interfaces/CardElement'
+import { TranslationType } from '../interfaces/TranslationType'
 
-const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } & { trackImages: trackimage[] }> = (props) => {
-  const { t } = useTranslation(props._nextI18Next?.ns);
+interface HomeTypes {
+  trackImages: CardElement[];
+}
+
+const Home = ({ trackImages, _nextI18Next  }: HomeTypes & SSRConfig) => {
+  const { t } = useTranslation<TranslationType>(_nextI18Next?.ns);
   let categories = Object.keys(CategoryIcons);
 
   const title = "SarajevoIN - " + t("Home-Title");
@@ -72,7 +76,7 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
             </Grid>
           </section>
           <section>
-            <SlideshowContainer array={props.trackImages} />
+            <SlideshowContainer array={trackImages} />
           </section>
           <section>
             <Grid
@@ -119,14 +123,13 @@ const Home: NextPage<SSRConfig & { array: { [category: string]: location[] } } &
   )
 }
 
-export async function getStaticProps(context: any) {
-  let response = await GroupeService.getGroupesWithLocationAsDictionary();
+export const getStaticProps:GetStaticProps<HomeTypes> = async (context) => {
   let trackImages = await TrackImagesService.trackImages();
+
   return {
     props: {
-      ...(await serverSideTranslations(context.locale, ['common', 'footer'])),
+      ...(await serverSideTranslations(LanguageHelper.getLanguageSafe(context.locale), ['common', 'footer'])),
       revalidate: 3600,
-      array: response,
       trackImages: trackImages
     }
   };

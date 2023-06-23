@@ -1,4 +1,5 @@
 import { event_translation } from "@prisma/client";
+import prismaClient from "../lib/prisma";
 
 const TranslationServiceFunction = () => {
   const saveEventTranslation = async (eventID:number, params: {[key: string]: string}) => {
@@ -13,7 +14,7 @@ const TranslationServiceFunction = () => {
         Translation: params[key]
       };
 
-      await prisma.event_translation.create({ data: data });
+      await prismaClient.event_translation.create({ data: data });
     });
   };
 

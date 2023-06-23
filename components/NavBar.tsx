@@ -23,6 +23,7 @@ import { CategoryIcons, CookieName } from '../values/GlobalValues';
 import { useTranslation } from 'next-i18next';
 import ChakraNextLink from './ChakraNextLink';
 import { useSession } from 'next-auth/react';
+import { TranslationType } from '../interfaces/TranslationType';
 
 export default function WithSubnavigation() {
     const { isOpen, onToggle } = useDisclosure();
@@ -121,7 +122,7 @@ const DesktopNav = () => {
 };
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
-    const { t } = useTranslation('common');
+    const { t } = useTranslation<TranslationType>('common');
     return (
         <ChakraNextLink
             href={href ?? '#'}
@@ -168,7 +169,7 @@ const MobileNav = () => {
 
 const MobileNavItem = ({ label, children, href, checkCondition }: NavItem) => {
     const { isOpen, onToggle } = useDisclosure();
-    const { t } = useTranslation('common');
+    const { t } = useTranslation<TranslationType>('common');
     const { data } = useSession();
     if(checkCondition && !data) return null;
     return (

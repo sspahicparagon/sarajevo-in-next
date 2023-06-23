@@ -1,17 +1,16 @@
 import { Select } from "@chakra-ui/react";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
-import { useTranslation } from "next-i18next";
 import style from '../styles/LanguageSelector.module.css';
 import { useRouter } from "next/router";
+import { LanguageHelper } from "../helpers/LanguageHelper";
 
 function capitalize(lang: string) {
     return lang.slice(0, 1).toUpperCase() + lang.slice(1);
 }
 
 export default function LanguageSelector({ onChange }: { onChange?: (locale: string) => unknown }) {
-    const { i18n } = useTranslation('common');
-    const { language: currentLanguage } = i18n;
     const router = useRouter();
+    const currentLanguage = LanguageHelper.getLanguageSafe(router.locale);
 
     const getLanguages = () => {
         let locales = router.locales ?? [currentLanguage]
@@ -28,7 +27,7 @@ export default function LanguageSelector({ onChange }: { onChange?: (locale: str
     }, [currentLanguage]);
 
     const [value, setValue] = useState({
-        value: i18n.language,
+        value: currentLanguage,
         label: capitalize(languageNames.of(currentLanguage) ?? currentLanguage)
     })
 

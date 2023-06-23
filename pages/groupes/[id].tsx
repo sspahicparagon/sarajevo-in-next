@@ -13,9 +13,10 @@ import { getPagePaths } from "../../lib/pageRouter";
 import GroupService from "../../services/GroupeService";
 import groupeStyle from "../../styles/Groupe.module.css";
 import SEO from "../../components/SEO";
+import { TranslationType } from "../../interfaces/TranslationType";
 
 const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } }> = (props) => {
-    const { t } = useTranslation(props._nextI18Next?.ns);
+    const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
     const { groupe } = props;
     const { locale } = useRouter();
     let title = "SarajevoIN - " + t(`${groupe?.Name}`) ?? "";
