@@ -38,7 +38,6 @@ export default function Card({ image = "", link = "", enableClick = true, index,
                         src={`${image}`}
                         loader={imageLoader}
                         layout={'fill'}
-                        objectFit={'cover'}
                         objectPosition={'50% 50%'}
                         placeholder={'blur'}
                         blurDataURL={`${ImageStorage}/public${ImageLoadSpinner}`}

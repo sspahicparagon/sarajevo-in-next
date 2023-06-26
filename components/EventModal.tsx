@@ -6,11 +6,11 @@ import { CategoryIconsJson } from "../values/GlobalValues";
 import Card from "./ImageCard";
 import eventStyle from '../styles/Event.module.css';
 import { useRouter } from "next/router";
-import { TranslationService } from "../services/TranslationService";
 
 const EventModal = (props: { selectedEvent: EventHTMLSafe | undefined }) => {
     const { locale, push } = useRouter();
-    const eventText: string = TranslationService.getEventTranslation(props.selectedEvent?.event_translation ?? [], 'description', locale ?? 'en');
+    const eventText: string = props.selectedEvent?.event_translation?.find(translation => translation.Key == 'description' && translation.Language == locale)?.Translation ?? '';
+
 
     return (
         <Modal 
@@ -84,7 +84,7 @@ const EventModal = (props: { selectedEvent: EventHTMLSafe | undefined }) => {
                         display={{'base': 'block', 'xl': 'inline-flex'}}
                         top={{'base':'-210px', 'md': '-270px', 'xl': '0'}}
                         fontSize={{'base': '24px', 'md': '32px'}}
-                        left={{'base': '25px', 'md': '44px', 'xl': '0'}}
+                        left={{'base': '35px', 'md': '44px', 'xl': '0'}}
                         className={eventStyle['modal-information-time-right']}
                     >{props.selectedEvent?.Time?.split(':')[1]}</Text>
                     <Text
@@ -125,7 +125,3 @@ const EventModal = (props: { selectedEvent: EventHTMLSafe | undefined }) => {
 };
 
 export default EventModal;
-
-function getEventTranslation(arg0: import(".prisma/client").event_translation[], arg1: string, locale: string | undefined): string {
-    throw new Error("Function not implemented.");
-}
