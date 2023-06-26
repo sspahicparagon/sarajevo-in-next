@@ -45,7 +45,7 @@ export default function WithSubnavigation() {
                     <IconButton
                         onClick={onToggle}
                         icon={
-                            isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+                            isOpen ? <CloseIcon w={3} h={3} color={'var(--color-gray)'}/> : <HamburgerIcon w={5} h={5} color={'var(--color-gray)'}/>
                         }
                         variant={'ghost'}
                         aria-label={'Toggle Navigation'}
@@ -174,47 +174,49 @@ const MobileNavItem = ({ label, children, href, checkCondition }: NavItem) => {
     if(checkCondition && !data) return null;
     return (
         <Stack spacing={4} onClick={onToggle}>
-        <Flex
-            href={href ?? '#'}
-            as={ChakraNextLink}
-            p={2}
-            rounded={'md'}
-        >
-            <>
-                <Text
-                    fontWeight={600}
-                    color={'var(--color-gray)'}
-                >
-                {label}
-                </Text>
-                {children && (
-                <Icon
-                    as={ChevronDownIcon}
-                    transition={'all .25s ease-in-out'}
-                    transform={isOpen ? 'rotate(180deg)' : ''}
-                    color={'var(--color-gray)'}
-                    paddingTop={'2px'}
-                    w={6}
-                    h={6}
-                />
-                )}
-            </>
-        </Flex>
-
-        <Collapse in={isOpen} animateOpacity>
-            <Stack
-            mt={2}
-            pl={4}
-            align={'start'}
-            color={'var(--color-gray)'}>
-            {children &&
-                children.map((child) => (
-                <ChakraNextLink key={child.label} className={navStyle['mobile-nav-subitem']} href={child.href ?? '#'}>
-                    {t(child.label)}
-                </ChakraNextLink>
-                ))}
-            </Stack>
-        </Collapse>
+            <Flex
+                href={href ?? '#'}
+                as={ChakraNextLink}
+                p={2}
+                rounded={'md'}
+            >
+                <>
+                    <Text
+                        fontWeight={600}
+                        color={'var(--color-gray)'}
+                    >
+                    {label}
+                    </Text>
+                    {children && (
+                    <Icon
+                        as={ChevronDownIcon}
+                        transition={'all .25s ease-in-out'}
+                        transform={isOpen ? 'rotate(180deg)' : ''}
+                        color={'var(--color-gray)'}
+                        paddingTop={'2px'}
+                        w={6}
+                        h={6}
+                    />
+                    )}
+                </>
+            </Flex>
+            {children && 
+            <Collapse in={isOpen} animateOpacity>
+                <Stack
+                mt={2}
+                pl={4}
+                align={'start'}
+                color={'var(--color-gray)'}>
+                {
+                    children.map((child) => (
+                    <ChakraNextLink key={child.label} className={navStyle['mobile-nav-subitem']} href={child.href ?? '#'}>
+                        {t(child.label)}
+                    </ChakraNextLink>
+                    ))
+                }
+                </Stack>
+            </Collapse>
+            }
         </Stack>
     );
 };

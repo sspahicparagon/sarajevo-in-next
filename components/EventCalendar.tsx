@@ -40,7 +40,7 @@ const EventCalendar = (props: {locale: string} & {markDates: string[]} & {onChan
                 prev2Label={null}
                 prevLabel={leftArrow()}
                 tileClassName={({date}) => {
-                    if(props.markDates.find(x => x === date.toString())) {
+                    if(props.markDates.find(x => x === date.toLocaleDateString('en'))) {
                         return 'react-calendar__tile--mark';
                     }
                 }}

@@ -64,7 +64,7 @@ export async function getServerSideProps(context: any) {
     let eventsGroupedByDate: { [key: string]: EventHTMLSafe[] } = {};
 
     events.map(event => {
-        let dateString = event.Date!.toString();
+        let dateString = event.Date!.toLocaleDateString('en');
         if(eventsGroupedByDate[dateString] == undefined) eventsGroupedByDate[dateString] = []
 
         eventsGroupedByDate[dateString].push(EventFactory.prepareEventForHTML(event))
