@@ -104,6 +104,7 @@ const EventModal = (props: { selectedEvent: EventHTMLSafe | undefined }) => {
                     >
                         <Flex
                             className={eventStyle['modal-header-icon']}
+                            justifyContent={'start'}
                         >
                             <FontAwesomeIcon size={'1x'} icon={faLocationDot} color={'var(--color-gray)'} />
                         </Flex>

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import imageLoader from "../lib/imageLoader";
 
 interface SEOProps {
   canonicalRelativeRoute: string;
@@ -16,6 +17,7 @@ const SEO = ({ canonicalRelativeRoute, title = '', description = '', imageUrl = 
   if(!title || title == '') title = "SarajevoIN Page";
   if(!description || description == '') description = "SarajevoIN";
   if(!imageUrl || imageUrl == '') imageUrl = `${process.env.BASE_URL}/sarajevo.in-logo-removebg (1).png`;
+  else imageUrl = imageLoader({src: imageUrl});
 
   const { locale } = useRouter();
   const supportedLanguages = [{ lang: 'en', canonical: true }, { lang: 'bs', canonical: false }, { lang: 'de', canonical: false }]

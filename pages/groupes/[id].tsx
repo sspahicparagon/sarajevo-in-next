@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Card from "../../components/ImageCard";
 import PageTitle from "../../components/PageTitle";
-import imageLoader from "../../lib/imageLoader";
 import { getPagePaths } from "../../lib/pageRouter";
 import GroupService from "../../services/GroupeService";
 import groupeStyle from "../../styles/Groupe.module.css";
@@ -41,7 +40,7 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
             <SEO 
                 title={title}
                 description={t(`${groupe?.Name}-Description`)}
-                imageUrl={imageLoader({ src: groupe?.location[0]?.Image })}
+                imageUrl={groupe?.location[0]?.Image}
                 canonicalRelativeRoute={`/groupes/${groupe.GroupeID}`}
             />
             <Flex

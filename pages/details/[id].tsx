@@ -9,8 +9,6 @@ import { SSRConfig, useTranslation } from "next-i18next";
 import Loading from "../../components/Loading";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { location, worktime } from '@prisma/client';
-import Head from "next/head";
-import imageLoader from "../../lib/imageLoader";
 import { getPagePaths } from "../../lib/pageRouter";
 import PageTitle from "../../components/PageTitle";
 import { NumberOfSentencesInParagraph } from "../../values/GlobalValues";
@@ -60,7 +58,7 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                     <SEO
                         title={title}
                         description={t(`description-${props.information?.LocationID}`)} 
-                        imageUrl={imageLoader({ src: props.information?.Image })}
+                        imageUrl={props.information?.Image}
                         canonicalRelativeRoute={`/details/${props.information.LocationID}`}
                     />
                     <PageTitle title={props.information?.Name ?? ""} />
