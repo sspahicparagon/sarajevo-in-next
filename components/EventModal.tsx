@@ -6,6 +6,8 @@ import { CategoryIconsJson } from "../values/GlobalValues";
 import Card from "./ImageCard";
 import eventStyle from '../styles/Event.module.css';
 import { useRouter } from "next/router";
+import ChakraNextLink from "./ChakraNextLink";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const EventModal = (props: { selectedEvent: EventHTMLSafe | undefined }) => {
     const { locale, push } = useRouter();
@@ -100,12 +102,19 @@ const EventModal = (props: { selectedEvent: EventHTMLSafe | undefined }) => {
                         direction={'row'}
                         alignItems={'center'}
                     >
-                        <Heading
-                            as={'h2'}
-                            className={eventStyle['modal-header-location-name']}
+                        <Flex
+                            className={eventStyle['modal-header-icon']}
                         >
-                            {props.selectedEvent?.location?.Name}
-                        </Heading>
+                            <FontAwesomeIcon size={'1x'} icon={faLocationDot} color={'var(--color-gray)'} />
+                        </Flex>
+                            <Heading
+                                as={'h2'}
+                                className={eventStyle['modal-header-location-name']}
+                            >
+                                <ChakraNextLink href={`/details/${props.selectedEvent?.LocationID}`} locale={locale}>
+                                    {props.selectedEvent?.location?.Name}
+                                </ChakraNextLink>
+                            </Heading>
                         <Flex
                             className={eventStyle['modal-header-icon']}
                         >
