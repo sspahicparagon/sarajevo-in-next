@@ -51,7 +51,7 @@ const EventCalendar = (props: {locale: string} & {markDates: string[]} & {onChan
                     return date.toLocaleDateString(locale, {month: 'long'})
                 }}
                 onClickDay={(date: Date, event) => {
-                    props.onChange(date, date.toString());
+                    props.onChange(date, date.toLocaleDateString('en'));
                 }}
             />
         </Flex>
