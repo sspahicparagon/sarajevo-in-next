@@ -24,6 +24,10 @@ const CategoryIcons: { [key: string]: IconDefinition } = {
     "Vidikovac": faBinoculars,
 };
 
+const RedisKeys: { FilteredEventsForNextTwoMonths:'FilteredEventsForNextTwoMonths' } = {
+    FilteredEventsForNextTwoMonths: 'FilteredEventsForNextTwoMonths'
+};
+
 const CategoryIconsJson: {[key: number]: IconDefinition} = {
     16: faHotel,
     15: faMugSaucer,
@@ -63,5 +67,6 @@ export {
     NumberOfSentencesInParagraph,
     MinimumLengthToCreateNewParagraph,
     ImageUploadKeyValue,
-    CategoryIconsJson
+    CategoryIconsJson,
+    RedisKeys
 };

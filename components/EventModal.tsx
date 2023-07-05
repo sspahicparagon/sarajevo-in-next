@@ -29,8 +29,9 @@ const EventModal = (props: { selectedEvent: EventHTMLSafe | undefined }) => {
             />
             <ModalContent
                 className={eventStyle['modal-content']}
-                height={{'base': '455px', 'md': '475px'}}
-                marginTop={{'base': '300px', 'md': '350px', 'xl': '100px !important'}}
+                height={{'base': '50%', 'md': '475px'}}
+                maxHeight={{'base': '300px', 'md': '350px',  'xl': '475px !important'}}
+                marginTop={{'base': '300px', 'xl': 'auto'}}
                 paddingBlock={{'base': '0', 'xl': '20px'}}
                 paddingInline={{'base': '0', 'xl': '100px'}}
             >

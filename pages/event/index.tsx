@@ -1,16 +1,19 @@
 import { Flex } from "@chakra-ui/react";
-import { NextPage } from "next";
+import { GetServerSidePropsContext, NextPage } from "next";
 import { SSRConfig } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import EventCalendar from "../../components/EventCalendar";
 import { EventFactory } from "../../factory/EventFactory";
-import { EventHTMLSafe } from "../../interfaces/EventOverride";
+import { EventFull, EventHTMLSafe } from "../../interfaces/EventOverride";
 import EventService from "../../services/EventService";
 import eventStyle from '../../styles/Event.module.css';
 import { LanguageHelper } from "../../helpers/LanguageHelper";
 import { useState } from "react";
 import EventWithDateContainer from "../../components/EventWithDateContainer";
 import SEO from "../../components/SEO";
+import cache from "../../lib/cache";
+import { normalizeDateToDate } from "../../helpers/DateHelper";
+import { RedisKeys } from "../../values/GlobalValues";
 
 const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] } }> = (props) => {
     const [eventKeys, setEventKeys] = useState<string[]>(Object.keys(props.events));
@@ -57,14 +60,17 @@ const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] } }>
     );
 }
 
-export async function getServerSideProps(context: any) {
-
-    const events = await EventService.getEventsFiltered();
+export async function getServerSideProps({ locale = 'en', req, res }: GetServerSidePropsContext) {
+    res.setHeader(
+        'Cache-Control',
+        'public, max-age=600, s-maxage=600, stale-while-revalidate=1200'
+    )
+    const events = await cache.fetchCache<EventFull[]>(RedisKeys.FilteredEventsForNextTwoMonths, EventService.getEventsFiltered, 60 * 60) ;
 
     let eventsGroupedByDate: { [key: string]: EventHTMLSafe[] } = {};
 
     events.map(event => {
-        let dateString = event.Date!.toLocaleDateString('en');
+        let dateString = normalizeDateToDate(event.Date!).toLocaleDateString('en');
         if(eventsGroupedByDate[dateString] == undefined) eventsGroupedByDate[dateString] = []
 
         eventsGroupedByDate[dateString].push(EventFactory.prepareEventForHTML(event))
@@ -73,7 +79,7 @@ export async function getServerSideProps(context: any) {
 
     return {
         props: {
-            ...(await serverSideTranslations(context.locale, ['common', 'footer'])),
+            ...(await serverSideTranslations(locale, ['common', 'footer'])),
             events: eventsGroupedByDate,
         }
     };

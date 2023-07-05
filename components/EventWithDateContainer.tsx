@@ -1,5 +1,5 @@
 import { Flex, Heading } from "@chakra-ui/react";
-import { convertDateToString } from "../helpers/DateHelper";
+import { convertDateToString2DigitsShortMonth } from "../helpers/DateHelper";
 import { EventHTMLSafe } from "../interfaces/EventOverride";
 import EventCard from "./EventCard";
 
@@ -30,7 +30,7 @@ const EventWithDateContainer = (props: {eventKey: string} & {events: { [key: str
                     fontWeight={'700'}
                     flexGrow={1}
                 >
-                    {convertDateToString(new Date(props.eventKey), props.locale)}
+                    {convertDateToString2DigitsShortMonth(new Date(props.eventKey), props.locale)}
                 </Heading>
             </Flex>
         { 
