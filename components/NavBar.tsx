@@ -233,6 +233,7 @@ const MobileNavItem = ({ label, children, href, checkCondition, onToggle }: NavI
                         p={3}
                         justify={'center'}
                         onClick={child.href ? onToggle : undefined}
+                        key={child.label}
                     >
                         <FontAwesomeIcon icon={CategoryIcons[child.label]} size={'sm'}/>
                         <ChakraNextLink 
