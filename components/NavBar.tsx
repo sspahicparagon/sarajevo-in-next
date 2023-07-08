@@ -10,6 +10,15 @@ import {
     PopoverTrigger,
     PopoverContent,
     useDisclosure,
+    Drawer,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerCloseButton,
+    DrawerHeader,
+    DrawerBody,
+    VStack,
+    HStack,
+    Grid,
 } from '@chakra-ui/react';
 import {
     HamburgerIcon,
@@ -24,9 +33,10 @@ import { useTranslation } from 'next-i18next';
 import ChakraNextLink from './ChakraNextLink';
 import { useSession } from 'next-auth/react';
 import { TranslationType } from '../interfaces/TranslationType';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function WithSubnavigation() {
-    const { isOpen, onToggle } = useDisclosure();
+    const { isOpen, onToggle, onClose } = useDisclosure();
 
     return (
         <Box marginTop={'var(--toolbar-container-height)'}>
@@ -36,34 +46,32 @@ export default function WithSubnavigation() {
                 minH={'60px'}
                 py={{ base: 2 }}
                 px={{ base: 4 }}
-                align={'center'}
+                alignItems={'end'}
+                justifyContent={'flex-end'}
+                margin={'auto'}
             >
                 <Flex
-                    flex={'auto'}
                     display={{ base: 'flex', md: 'none' }}
+                    alignItems={'center'}
+                    justifyContent={'end'}
                 >
                     <IconButton
                         onClick={onToggle}
                         icon={
-                            isOpen ? <CloseIcon w={3} h={3} color={'var(--color-gray)'}/> : <HamburgerIcon w={5} h={5} color={'var(--color-gray)'}/>
+                            <HamburgerIcon w={5} h={5}/>
                         }
                         variant={'ghost'}
                         aria-label={'Toggle Navigation'}
                         className={navStyle['nav-icon']}
                     />
                 </Flex>
-                <Flex flex={{ base: 1 }} justify={'center'}>
-                    <Flex 
-                        display={{ base: 'none', md: 'flex' }}
-                    >
+                <Flex flex={{ base: 1 }} justify={'center'} display={{ base: 'none', md: 'flex' }}>
+                    <Flex>
                         <DesktopNav />
                     </Flex>
                 </Flex>
             </Flex>
-
-            <Collapse in={isOpen} animateOpacity>
-                <MobileNav />
-            </Collapse>
+            {isOpen && <MobileNav isOpen={isOpen} onToggle={onClose}/>}
         </Box>
     );
 }
@@ -154,70 +162,92 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
     );
 };
 
-const MobileNav = () => {
+const MobileNav = ({ isOpen, onToggle }: {isOpen: boolean, onToggle: () => void}) => {
     return (
-        <Stack
-        bg={'var(--base-color)'}
-        p={4}
-        display={{ md: 'none' }}>
-        {NAV_ITEMS.map((navItem) => (
-            <MobileNavItem key={navItem.label} {...navItem} />
-        ))}
-        </Stack>
+        <Collapse in={!isOpen} animateOpacity animate>
+            <Drawer placement={'top'} onClose={onToggle} isOpen={isOpen} size={'full'} returnFocusOnClose={false}>
+            <DrawerOverlay animate={true} />
+            <DrawerContent backgroundColor={'var(--base-color)'} color={'var(--color-gray)'}>
+            <DrawerCloseButton onClick={onToggle}/>
+            <DrawerHeader>Navigation</DrawerHeader>
+            <DrawerBody>
+            {
+                    NAV_ITEMS.map((navItem) => (
+                        <MobileNavItem key={navItem.label} onToggle={onToggle} {...navItem} />
+                    ))
+                }
+            </DrawerBody>
+            </DrawerContent>
+        </Drawer>
+      </Collapse>
     );
 };
 
-const MobileNavItem = ({ label, children, href, checkCondition }: NavItem) => {
-    const { isOpen, onToggle } = useDisclosure();
+const MobileNavItem = ({ label, children, href, checkCondition, onToggle }: NavItem & { onToggle: () => void }) => {
     const { t } = useTranslation<TranslationType>('common');
     const { data } = useSession();
     if(checkCondition && !data) return null;
     return (
-        <Stack spacing={4} onClick={onToggle}>
+        <VStack spacing={2}>
             <Flex
                 href={href ?? '#'}
                 as={ChakraNextLink}
+                onClick={href ? onToggle : undefined}
                 p={2}
                 rounded={'md'}
+                align={'center'}
             >
                 <>
                     <Text
                         fontWeight={600}
-                        color={'var(--color-gray)'}
+                        fontSize={'3xl'}
                     >
                     {label}
                     </Text>
-                    {children && (
-                    <Icon
-                        as={ChevronDownIcon}
-                        transition={'all .25s ease-in-out'}
-                        transform={isOpen ? 'rotate(180deg)' : ''}
-                        color={'var(--color-gray)'}
-                        paddingTop={'2px'}
-                        w={6}
-                        h={6}
-                    />
-                    )}
+                    {/* {
+                        children && 
+                        <Icon
+                            as={ChevronDownIcon}
+                            color={'var(--color-gray)'}
+                            w={6}
+                            h={6}
+                            mt={1.5}
+                        />
+                    } */}
                 </>
             </Flex>
             {children && 
-            <Collapse in={isOpen} animateOpacity>
                 <Stack
-                mt={2}
-                pl={4}
-                align={'start'}
-                color={'var(--color-gray)'}>
+                p={2}
+                align={'center'}
+                dir='row'
+                fontSize={'xl'}
+                w={'100%'}
+                justifyContent={'center'}>
                 {
                     children.map((child) => (
-                    <ChakraNextLink key={child.label} className={navStyle['mobile-nav-subitem']} href={child.href ?? '#'}>
-                        {t(child.label)}
-                    </ChakraNextLink>
+                    <VStack                             
+                        borderTop={'1px solid var(--color-gray)'} 
+                        w={'100%'}
+                        textAlign={'center'}
+                        p={3}
+                        justify={'center'}
+                        onClick={child.href ? onToggle : undefined}
+                    >
+                        <FontAwesomeIcon icon={CategoryIcons[child.label]} size={'sm'}/>
+                        <ChakraNextLink 
+                            key={child.label} 
+                            className={navStyle['mobile-nav-subitem']} 
+                            href={child.href ?? '#'}
+                            textAlign={'center'}>
+                            {t(child.label)}
+                        </ChakraNextLink>
+                    </VStack>
                     ))
                 }
                 </Stack>
-            </Collapse>
             }
-        </Stack>
+        </VStack>
     );
 };
 
@@ -239,12 +269,12 @@ const NAV_ITEMS: Array<NavItem> = [
         href: '/event'
     },
     {
-        label: 'Category',
-        children: Object.keys(CategoryIcons).map(key => { return { label: key, href: "/groupes/" + encodeURIComponent(key) }; })
-    },
-    {
         label: 'Admin',
         href: '/admin-event',
         checkCondition: true
+    },
+    {
+        label: 'Category',
+        children: Object.keys(CategoryIcons).map(key => { return { label: key, href: "/groupes/" + encodeURIComponent(key) }; })
     }
 ];

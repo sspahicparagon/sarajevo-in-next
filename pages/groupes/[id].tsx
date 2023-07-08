@@ -3,16 +3,17 @@ import { groupe, location } from "@prisma/client";
 import { NextPage } from "next";
 import { SSRConfig, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import Card from "../../components/ImageCard";
 import PageTitle from "../../components/PageTitle";
 import { getPagePaths } from "../../lib/pageRouter";
 import GroupService from "../../services/GroupeService";
 import groupeStyle from "../../styles/Groupe.module.css";
 import SEO from "../../components/SEO";
 import { TranslationType } from "../../interfaces/TranslationType";
+import DynamicGrid from "../../components/Grid/DynamicGrid";
+import { GridAdapter } from "../../adapter/GridAdapter";
+import LocationGrid from "../../components/Grid/LocationGrid";
 
 const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } }> = (props) => {
     const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
@@ -47,50 +48,12 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
                 className={`center ${groupeStyle.container}`}
             >
                 <main>
-                    <Grid
-                        className={`center ${groupeStyle['grid-container']}`}
-                    >
-                        {
-                            groupe?.location?.map((location: location) => {
-                                return (
-                                    <Link
-                                        href={{ pathname: '/details/[id]', query: { id: location.LocationID } }}
-                                        locale={locale}
-                                        key={Math.random()}
-                                    >
-                                        <Grid
-                                            height={'400px'}
-                                            className={groupeStyle['card-container']}
-                                            onClick={handleScrollPosClick}
-                                        >
-                                            <Flex
-                                                height={'325px'}
-                                                width={'100%'}
-                                                flexDirection={'column'}
-                                                position={'relative'}
-                                            >
-                                                <Card image={location.Image} enableClick={false} alt={location.Name ?? ""} />
-                                            </Flex>
-                                            <Flex
-                                                width={'100%'}
-                                                height={'75px'}
-                                                flexDirection={'column'}
-                                                className={`center ${groupeStyle['card-text-container']}`}
-                                            >
-                                                <Heading
-                                                    as={'h2'}
-                                                    fontSize={{ 'base': '1xl' }}
-                                                    textAlign={'center'}
-                                                >
-                                                    {location.Name}
-                                                </Heading>
-                                            </Flex>
-                                        </Grid>
-                                    </Link>
-                                )
-                            })
-                        }
-                    </Grid>
+                    <DynamicGrid 
+                        array={GridAdapter.adaptFromLocationArray(groupe.location)}
+                        linkEndpoint={'details'}
+                        handleScrollPosClick={handleScrollPosClick}
+                        child={<LocationGrid />}
+                    />
                 </main>
             </Flex>
         </>
