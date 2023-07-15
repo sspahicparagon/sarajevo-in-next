@@ -6,7 +6,7 @@ module.exports = {
         policies: [
             {
                 userAgent: "*",
-                disallow: ["*/404", "*/login", "*/500", "*/api/auth", "*/admin-event"]
+                disallow: ["*/404", "*/login", "*/500", "*/api/auth", "*/admin-event", "*/images/*"]
             }
         ]
     }
