@@ -1,17 +1,21 @@
-import { Button, Flex, Grid, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import groupeStyle from '../../styles/Groupe.module.css';
 import 'react-calendar/dist/Calendar.css';
 import { SSRConfig, useTranslation } from "next-i18next";
 import EventService from "../../services/EventService";
-import Card from "../../components/ImageCard";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CategoryIconsJson } from "../../values/GlobalValues";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { EventFactory } from "../../factory/EventFactory";
 import { EventHTMLSafe } from "../../interfaces/EventOverride";
 import { TranslationType } from "../../interfaces/TranslationType";
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import { EventClickArg, EventContentArg, EventInput, EventSourceInput } from "@fullcalendar/core";
+import listPlugin from '@fullcalendar/list';
+import rrulePlugin from '@fullcalendar/rrule';
+import { RRuleSet, rrulestr } from "rrule";
+import axios, { HttpStatusCode } from "axios";
 
 const Calendar: NextPage<SSRConfig & { events: EventHTMLSafe[] }> = (props) => {
     const router = useRouter();
@@ -36,122 +40,132 @@ const Calendar: NextPage<SSRConfig & { events: EventHTMLSafe[] }> = (props) => {
                         {t('Add Event')}
                     </Button>
                 </Flex>
-                <Flex
-                    flexDirection={'column'}
-                    margin={'auto'}
-                    width={'100%'}
-                    justifyContent={'center'}
-                    alignItems={'center'}
-                >
                     <main>
-                        <Grid
-                            className={`center ${groupeStyle['grid-container']}`}
-                            marginTop={'5rem'}
-                        >
-                            {
-                                props.events.map((event: EventHTMLSafe) => {
-                                    return (
-                                        // <Link
-                                        //     href={{ pathname: '/admin/event/[id]', query: { id: event.LocationID } }}
-                                        //     locale={locale}
-                                        //     key={Math.random()}
-                                        // >
-                                            <Grid
-                                                height={'400px'}
-                                                className={groupeStyle['card-container']}
-                                                key={event.EventID}
-                                            >
-                                                <Flex
-                                                    height={'250px'}
-                                                    width={'100%'}
-                                                    flexDirection={'column'}
-                                                    position={'relative'}
-                                                >
-                                                    <Card image={event.Image} enableClick={false} alt={event.Name ?? ""} />
-                                                </Flex>
-                                                <Flex
-                                                    width={'100%'}
-                                                    height={'150px'}
-                                                    flexDirection={'column'}
-                                                    className={`center ${groupeStyle['card-text-container']}`}
-                                                >
-                                                    <Flex
-                                                        flexDirection={'column'}
-                                                        justifyContent={'center'}
-                                                        alignItems={'center'}
-                                                    >
-                                                        <Flex
-                                                            flexDirection={'row'}
-                                                        >
-                                                            <Flex
-                                                                flexDirection={'column'}
-                                                                height={'100%'}
-                                                                margin={'auto'}
-                                                                justifyContent={'center'}
-                                                            >
-                                                                <Text>{event.Name}</Text>
-                                                            </Flex>
-                                                            <Flex
-                                                                flexDirection={'column'}
-                                                                height={'100%'}
-                                                                margin={'auto'}
-                                                                justifyContent={'center'}
-                                                            >
-                                                                <Text>{event.Price.toString()}</Text>
-                                                            </Flex>
-                                                        </Flex>
-                                                        <Flex
-                                                            flexDirection={'column'}
-                                                            height={'100%'}
-                                                            margin={'auto'}
-                                                            justifyContent={'center'}
-                                                        >
-                                                            <Flex
-                                                                flexDirection={'row'}
-                                                            >
-                                                                <Flex
-                                                                    flexDirection={'column'}
-                                                                    height={'100%'}
-                                                                    margin={'auto'}
-                                                                    justifyContent={'center'}
-                                                                >
-                                                                    <Text>{event.Date?.toLocaleDateString('bs') ?? ""}</Text>
-                                                                </Flex>
-                                                                <Flex
-                                                                    flexDirection={'column'}
-                                                                    height={'100%'}
-                                                                    margin={'auto'}
-                                                                    justifyContent={'center'}
-                                                                >
-                                                                    <Text>&nbsp;{event.Time}</Text>
-                                                                </Flex>
-                                                            </Flex>
-                                                        </Flex>
-                                                        <Flex
-                                                            flexDirection={'column'}
-                                                            height={'100%'}
-                                                            margin={'auto'}
-                                                            justifyContent={'center'}
-                                                        >
-                                                            <FontAwesomeIcon size={'1x'} icon={CategoryIconsJson[event.location?.GroupeID ?? -1]} />
-                                                        </Flex>
-                                                    </Flex>
-                                                </Flex>
-                                            </Grid>
-                                        // </Link>
-                                    )
-                                })
-                            }
-                        </Grid>
+                    <Box display={{ 'base': 'none', 'lg': 'block'}} mb={'1.5em'}>
+                        <FullCalendar 
+                            plugins={[rrulePlugin, dayGridPlugin]}
+                            weekends={true}
+                            initialView={'dayGridMonth'}
+                            events={parseEvents(props.events)}
+                            eventContent={renderEventContent}
+                            height={'100vh'}
+                            eventClick={handle}
+                        />
+                    </Box>
+                    <Box display={{ 'base': 'block', 'lg': 'none' }} h={'100vh'} marginBlock={'1.5em'}>
+                        <FullCalendar 
+                            plugins={[rrulePlugin, listPlugin]}
+                            events={parseEvents(props.events)}
+                            initialView={'listMonth'}
+                            eventContent={renderEventContent}
+                            height={'100vh'}
+                            eventClick={handle}
+                        />
+                    </Box>
                     </main>
-                </Flex>
             </Flex>
         </>
     )
 };
 
+async function handle(arg: EventClickArg) {
+    if(!arg.event.extendedProps.recurring) return router.push(`/admin-event/${arg.event._def.extendedProps.eventID}`);
+
+    let rrule: RRuleSet = arg.event.extendedProps.rrule;
+    let eventDate = arg.event.start as Date;
+    let originalEventStartDate = rrule?.dtstart() as Date;
+
+    // Original event is being edited
+    if(eventDate.toDateString() == originalEventStartDate.toDateString()) return router.push(`/admin-event/${arg.event._def.extendedProps.eventID}`);
+
+    let result = await axios({ 
+        url: '/api/event/edit_recurring', 
+        data: { date: arg.event.start?.toDateString(), eventID: arg.event._def.extendedProps.eventID },
+        method: 'PUT'
+    })
+    if(result.status != HttpStatusCode.Ok) return; // Display Toast message that something failed
+    router.push(`/admin-event/-1?date=${eventDate.toDateString()}&locationID=${arg.event.extendedProps.locationID}`)
+}
+
+function renderEventContentList(content: EventContentArg) {
+    // Pristupa se preko content.event._def
+    // Ovako izgleda struktura
+    // PublicId je EventID
+    // {
+    //     "title": "1 - Recurring",
+    //     "groupId": "",
+    //     "publicId": "10",
+    //     "url": "",
+    //     "recurringDef": null,
+    //     "defId": "295",
+    //     "sourceId": "291",
+    //     "allDay": false,
+    //     "hasEnd": false,
+    //     "ui": {
+    //         "display": null,
+    //         "constraints": [],
+    //         "overlap": null,
+    //         "allows": [],
+    //         "backgroundColor": "blue",
+    //         "borderColor": "blue",
+    //         "textColor": "",
+    //         "classNames": []
+    //     },
+    //     "extendedProps": {
+    //         "color": "var(--indicator-color)"
+    //     }
+    // }
+    // <Flex
+    //     flexDirection={'row'}
+
+    // >
+
+    // </Flex>
+}
+
+function renderEventContent(content: EventContentArg) {
+    return (
+        <Flex flexDirection={'row'} color={content.event.extendedProps.color}>
+            <Text 
+                as={'p'} 
+                overflow={'hidden'} 
+                textOverflow={'ellipsis'} 
+                whiteSpace={'nowrap'} 
+                w={'150px'}
+                h={'30px'}
+            >
+                {content.event.title}
+            </Text>
+        </Flex>
+    )
+}
+
+
+function parseEvents(events: EventHTMLSafe[]): EventInput[] {
+    let es = events.map((event) => {
+        let rrule: RRuleSet | undefined = undefined;
+        if(event.recurring_rule) {
+            rrule = rrulestr(event.recurring_rule!!, { 'forceset': true }) as RRuleSet;
+        };
+        return {
+            id:`${Math.random()}`,
+            start: event.Date,
+            end: event.Date,
+            title: `${event.Name} - ${event.Time}`,
+            extendedProps: { 
+                color: event.recurring_rule ? 'var(--indicator-color)' : 'var(--base-color)', 
+                recurring: event.recurring_rule != null && event.recurring_rule != undefined,
+                locationID: event.LocationID,
+                eventID: event.EventID,
+                rrule: rrule
+            },
+        }
+    })
+    return es;
+}
+
 export async function getServerSideProps(context: any) {
-    const events = await EventService.getEvents();
+    const events = await EventService.getAllEvents();
     return {
         props: {
             ...(await serverSideTranslations(context.locale, ['common', 'footer'])),

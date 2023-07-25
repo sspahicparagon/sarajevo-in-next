@@ -36,7 +36,7 @@ const EventWithDateContainer = (props: {eventKey: string} & {events: { [key: str
         { 
             props.events[props.eventKey]?.map(event => {
                 return (
-                    <EventCard event={event} key={event.EventID}/>
+                    <EventCard event={event} key={event.EventID ?? "-1" + event.Date }/>
                 )
                 
             })

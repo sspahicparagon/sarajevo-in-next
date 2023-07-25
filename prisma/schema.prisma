@@ -56,6 +56,7 @@ model event {
   Price             Decimal             @default(0.00) @db.Decimal(5, 2)
   Image             String              @db.VarChar(1023)
   LocationID        Int?
+  recurring_rule    String?             @db.Text
   location          location?           @relation(fields: [LocationID], references: [LocationID], onDelete: Cascade, map: "Event_LocationID")
   event_translation event_translation[]
 

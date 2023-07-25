@@ -65,8 +65,7 @@ export async function getServerSideProps({ locale = 'en', req, res }: GetServerS
         'Cache-Control',
         'public, max-age=600, s-maxage=600, stale-while-revalidate=1200'
     )
-    const events = await cache.fetchCache<EventFull[]>(RedisKeys.FilteredEventsForNextTwoMonths, EventService.getEventsFiltered, 60 * 60) ;
-
+    const events = await cache.fetchCache<EventFull[]>(RedisKeys.FilteredEventsForNextTwoMonths, EventService.getEventsFilteredNextTwoMonths, 60 * 60);
     let eventsGroupedByDate: { [key: string]: EventHTMLSafe[] } = {};
 
     events.map(event => {
