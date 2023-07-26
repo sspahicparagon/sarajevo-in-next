@@ -13,4 +13,4 @@ export default withAuth({
   },
 })
 
-export const config = { matcher: ["/admin-event", "/admin-event/:id*"] }
+export const config = { matcher: ["/admin-event", "/admin-event/:id*", "/api/:path*"] }
