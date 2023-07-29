@@ -16,6 +16,7 @@ import { RRule, RRuleSet, rrulestr } from "rrule";
 import { convertDateValueToDate, convertDateValueToString } from "../../../helpers/DateHelper";
 import EventService from "../../../services/EventService";
 import imageLoader from "../../../lib/imageLoader";
+import { LocationService } from "../../../services/LocationService";
 
 var initialValues: { [key: string]: any } = {
     eventName: '',
@@ -256,7 +257,7 @@ export async function getServerSideProps(context: any) {
             event.event_translation?.map((translation) => values![`${translation.Key}_${translation.Language}`] = translation.Translation);
         }
     }
-    const locations = await InformationService.getLocations();
+    const locations = await LocationService.getAllLocations();
     return {
         props: {
             ...(await serverSideTranslations(context.locale, ['common', 'footer', 'admin'])),
