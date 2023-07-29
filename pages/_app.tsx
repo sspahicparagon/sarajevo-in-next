@@ -25,7 +25,8 @@ function MyApp({ Component, pageProps, session }: AppProps & { session: Session 
   let router = useRouter();
   useEffect(() => {
     const handleRouteChange = (url: string) => {
-      gaPageView(url, document.title);
+      if(!url.includes('admin'))
+        gaPageView(url, document.title);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);

@@ -87,7 +87,7 @@ const EventService = {
     },
     getEventsFilteredNextTwoMonths: async (): Promise<EventFull[]> => {
         const date: Date = new Date();
-        let firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        let firstDay = new Date(date.getFullYear(), date.getMonth(), 0);
         let lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
 
         let result = await prismaClient.event.findMany({

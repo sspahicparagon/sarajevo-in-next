@@ -10,6 +10,7 @@ datasource db {
 model groupe {
   GroupeID Int        @id @default(autoincrement())
   Name     String     @db.VarChar(255)
+  Visible  Boolean    @default(dbgenerated("(b'1')")) @db.Bit(1)
   location location[]
 }
 

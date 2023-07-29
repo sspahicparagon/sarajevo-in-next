@@ -15,10 +15,15 @@ import DynamicGrid from "../../components/Grid/DynamicGrid";
 import { GridAdapter } from "../../adapter/GridAdapter";
 import LocationGrid from "../../components/Grid/LocationGrid";
 
-const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } }> = (props) => {
+const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } | null }> = (props) => {
     const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
     const { groupe } = props;
-    const { locale } = useRouter();
+    const router = useRouter();
+
+    useEffect(() => {
+        if(groupe == null) router.push('/404');
+    })
+
     let title = "SarajevoIN - " + t(`${groupe?.Name}`) ?? "";
 
     const handleScrollPosClick = () => {
@@ -37,19 +42,19 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
 
     return (
         <>
-            <PageTitle title={t(groupe?.Name) ?? ""} />
+            <PageTitle title={t(groupe?.Name!) ?? ""} />
             <SEO 
                 title={title}
                 description={t(`${groupe?.Name}-Description`)}
                 imageUrl={groupe?.location[0]?.Image}
-                canonicalRelativeRoute={`/groupes/${groupe.GroupeID}`}
+                canonicalRelativeRoute={`/groupes/${groupe?.GroupeID}`}
             />
             <Flex
                 className={`center ${groupeStyle.container}`}
             >
                 <main>
                     <DynamicGrid 
-                        array={GridAdapter.adaptFromLocationArray(groupe.location)}
+                        array={GridAdapter.adaptFromLocationArray(groupe?.location) ?? []}
                         linkEndpoint={'details'}
                         handleScrollPosClick={handleScrollPosClick}
                         child={<LocationGrid />}

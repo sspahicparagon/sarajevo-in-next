@@ -55,3 +55,14 @@ export const parseForm = async (
       });
     });
 };
+
+export const parseOnlyFields = async (req: NextApiRequest): Promise<{ fields: formidable.Fields; }> => {
+  return new Promise(async (resolve, reject) => {
+    const form = formidable();
+
+    form.parse(req, (err, fields) => {
+      if(err) reject({err});
+      resolve({ fields });
+    });
+  });
+}

@@ -1,4 +1,4 @@
-import { faBeerMugEmpty, faBinoculars, faBowlingBall, faBuildingColumns, faBullseye, faCarBurst, faFilm, faHotel, faMasksTheater, faMugSaucer, faPersonRifle, faPersonRunning, faPersonThroughWindow, faSpa, faTree, faWandSparkles, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faBeerMugEmpty, faBinoculars, faBowlingBall, faBuildingColumns, faBullseye, faCarBurst, faFilm, faHotel, faMasksTheater, faMugSaucer, faPersonRifle, faPersonRunning, faPersonThroughWindow, faSpa, faTag, faTree, faWandSparkles, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 const InstagramLink: string = 'https://www.instagram.com/';
 const DetailsLink: string = 'details/';
@@ -44,7 +44,8 @@ const CategoryIconsJson: {[key: number]: IconDefinition} = {
     5: faPersonRifle,
     10: faBowlingBall,
     13: faPersonThroughWindow,
-    14: faBinoculars
+    14: faBinoculars,
+    18: faTag
 };
 
 

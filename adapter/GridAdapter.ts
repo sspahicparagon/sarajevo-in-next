@@ -11,8 +11,8 @@ const GridAdapterFunction = () => {
     return item;
   }
 
-  const adaptFromLocationArray = (locations: location[]): LocationGridItem[] => {
-    return locations.map(location => adaptFromLocation(location));
+  const adaptFromLocationArray = (locations: location[] | undefined): LocationGridItem[] | undefined => {
+    return locations != undefined ? locations.map(location => adaptFromLocation(location)) : undefined;
   }
 
   return {

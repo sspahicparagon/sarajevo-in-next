@@ -5,6 +5,9 @@ import prismaClient from '../lib/prisma';
 const GroupService = {
     getGroupesWithLocationAsDictionary: async () => {
         let response = await prismaClient.groupe.findMany({
+            where: {
+                Visible: true
+            },
             include: {
                 location: {
                     orderBy: {
@@ -25,12 +28,27 @@ const GroupService = {
         return array;
     },
     getGroupes: async () => {
-        return await prismaClient.groupe.findMany();
+        return await prismaClient.groupe.findMany({
+            where: {
+                Visible: true
+            },
+            orderBy: {
+                Name: 'asc'
+            }
+        });
+    },
+    getGroupesAll: async () => {
+        return await prismaClient.groupe.findMany({
+            orderBy: {
+                Name: 'asc'
+            }
+        });
     },
     getGroupeWithLocationByName: async (groupeName: string) => {
         return await prismaClient.groupe.findFirst({
             where: {
-                Name: groupeName
+                Name: groupeName,
+                Visible: true
             },
             include: {
                 location: {
@@ -44,7 +62,8 @@ const GroupService = {
     getGroupeWithLocationByID: async (id: number) => {
         return await prismaClient.groupe.findFirst({
             where: {
-                GroupeID: id
+                GroupeID: id,
+                Visible: true
             },
             include: {
                 location: {

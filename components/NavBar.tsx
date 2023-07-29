@@ -202,18 +202,8 @@ const MobileNavItem = ({ label, children, href, checkCondition, onToggle }: NavI
                         fontWeight={600}
                         fontSize={'3xl'}
                     >
-                    {label}
+                        {label}
                     </Text>
-                    {/* {
-                        children && 
-                        <Icon
-                            as={ChevronDownIcon}
-                            color={'var(--color-gray)'}
-                            w={6}
-                            h={6}
-                            mt={1.5}
-                        />
-                    } */}
                 </>
             </Flex>
             {children && 
@@ -271,8 +261,9 @@ const NAV_ITEMS: Array<NavItem> = [
     },
     {
         label: 'Admin',
-        href: '/admin-event',
-        checkCondition: true
+        href: '#',
+        checkCondition: true,
+        children: [{ label: 'Event', href: '/admin-event' }, { label: 'Location', href: '/admin-location' }]
     },
     {
         label: 'Category',

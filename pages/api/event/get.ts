@@ -14,7 +14,6 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    console.log({q: req.query})
     let startDateString: string | undefined = '';
     let endDateString: string | undefined = '';
     let startDate: Date = new Date();

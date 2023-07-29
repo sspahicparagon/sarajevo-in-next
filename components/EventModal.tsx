@@ -2,7 +2,7 @@ import { Box, CloseButton, Flex, Heading, Modal, ModalBody, ModalContent, ModalF
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EventFactory } from "../factory/EventFactory";
 import { EventHTMLSafe } from "../interfaces/EventOverride";
-import { CategoryIconsJson } from "../values/GlobalValues";
+import { CategoryIconsJson, GoogleMapsUrl } from "../values/GlobalValues";
 import Card from "./ImageCard";
 import eventStyle from '../styles/Event.module.css';
 import { useRouter } from "next/router";
@@ -113,9 +113,19 @@ const EventModal = (props: { selectedEvent: EventHTMLSafe | undefined }) => {
                                 as={'h2'}
                                 className={eventStyle['modal-header-location-name']}
                             >
-                                <ChakraNextLink href={`/details/${props.selectedEvent?.LocationID}`} locale={locale}>
-                                    {props.selectedEvent?.location?.Name}
-                                </ChakraNextLink>
+                                {
+                                    props.selectedEvent?.location?.GroupeID != 18 ?
+                                        <ChakraNextLink href={`/details/${props.selectedEvent?.LocationID}`} locale={locale}>
+                                            {props.selectedEvent?.location?.Name}
+                                        </ChakraNextLink>
+                                    :
+                                        <ChakraNextLink 
+                                            href={GoogleMapsUrl(`${props.selectedEvent.location?.Latitude},${props.selectedEvent.location?.Longitude}`)} 
+                                            locale={locale}
+                                        >
+                                            {props.selectedEvent?.location?.Name}
+                                        </ChakraNextLink>
+                                }
                             </Heading>
                         <Flex
                             className={eventStyle['modal-header-icon']}
