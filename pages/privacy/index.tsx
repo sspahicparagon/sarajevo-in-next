@@ -27,7 +27,7 @@ const Privacy: NextPage = () => {
       <Text>Last updated: July 29, 2023</Text>
       <Text>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</Text>
       <Text>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the
-        <a href="https://www.privacypolicies.com/privacy-policy-generator/" target="_blank">Privacy Policy Generator</a>.</Text>
+        <Link href="https://www.privacypolicies.com/privacy-policy-generator/" target="_blank">Privacy Policy Generator</Link>.</Text>
       <Heading as={'h2'}
         fontSize={'3xl'}>Interpretation and Definitions</Heading>
       <Heading as={'h3'}
@@ -113,7 +113,7 @@ const Privacy: NextPage = () => {
       <Heading as={'h4'}
         fontSize={'larger'}>Usage Data</Heading>
       <Text>Usage Data is collected automatically when using the Service.</Text>
-      <Text>Usage Data may include information such as Your Device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</Text>
+      <Text>Usage Data may include information such as Your Device&apos;s Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</Text>
       <Text>When You access the Service by or through a mobile device, We may collect certain information automatically, including, but not limited to, the type of mobile device You use, Your mobile device unique ID, the IP address of Your mobile device, Your mobile operating system, the type of mobile Internet browser You use, unique device identifiers and other diagnostic data.</Text>
       <Text>We may also collect information that Your browser sends whenever You visit our Service or when You access the Service by or through a mobile device.</Text>
       <Heading as={'h4'}
@@ -179,7 +179,7 @@ const Privacy: NextPage = () => {
         <ListItem>
           <Text>
             <strong>To contact You:</strong>
-            To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application's push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.</Text>
+            To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application&apos;s push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.</Text>
         </ListItem>
         <ListItem>
           <Text>
@@ -227,7 +227,7 @@ const Privacy: NextPage = () => {
       <Text>The Company will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period of time, except when this data is used to strengthen the security or to improve the functionality of Our Service, or We are legally obligated to retain this data for longer time periods.</Text>
       <Heading as={'h3'}
         fontSize={'2xl'}>Transfer of Your Personal Data</Heading>
-      <Text>Your information, including Personal Data, is processed at the Company's operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to — and maintained on — computers located outside of Your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.</Text>
+      <Text>Your information, including Personal Data, is processed at the Company&apos;s operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to — and maintained on — computers located outside of Your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.</Text>
       <Text>Your consent to this Privacy Policy followed by Your submission of such information represents Your agreement to that transfer.</Text>
       <Text>The Company will take all steps reasonably necessary to ensure that Your data is treated securely and in accordance with this Privacy Policy and no transfer of Your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of Your data and other personal information.</Text>
       <Heading as={'h3'}
@@ -258,12 +258,12 @@ const Privacy: NextPage = () => {
         fontSize={'3xl'}>Security of Your Personal Data</Heading>
       <Text>The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your Personal Data, We cannot guarantee its absolute security.</Text>
       <Heading as={'h3'}
-        fontSize={'2xl'}>Children's Privacy</Heading>
+        fontSize={'2xl'}>Children&apos;s Privacy</Heading>
       <Text>Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age of 13 without verification of parental consent, We take steps to remove that information from Our servers.</Text>
-      <Text>If We need to rely on consent as a legal basis for processing Your information and Your country requires consent from a parent, We may require Your parent's consent before We collect and use that information.</Text>
+      <Text>If We need to rely on consent as a legal basis for processing Your information and Your country requires consent from a parent, We may require Your parent&apos;s consent before We collect and use that information.</Text>
       <Heading as={'h3'}
         fontSize={'2xl'}>Links to Other Websites</Heading>
-      <Text>Our Service may contain links to other websites that are not operated by Us. If You click on a third party link, You will be directed to that third party's site. We strongly advise You to review the Privacy Policy of every site You visit.</Text>
+      <Text>Our Service may contain links to other websites that are not operated by Us. If You click on a third party link, You will be directed to that third party&apos;s site. We strongly advise You to review the Privacy Policy of every site You visit.</Text>
       <Text>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</Text>
       <Heading as={'h3'}
         fontSize={'2xl'}>Changes to this Privacy Policy</Heading>

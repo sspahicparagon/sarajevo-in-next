@@ -31,7 +31,7 @@ const Document: NextPage = () => {
                     crossOrigin="anonymous"
                 />
                 {/* <!-- Start cookieyes banner -->  */}
-                <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/b268ae0794b933d674632154/script.js"></script> 
+                <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/b268ae0794b933d674632154/script.js" async></script> 
                 {/* <!-- End cookieyes banner --> */}
             </Head>
             <body>
