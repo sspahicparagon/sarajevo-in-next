@@ -1,3 +1,5 @@
+import { NextRouter } from "next/router";
+
 const getPagePaths = function (context: any, array: any[], key: string) {
     const paths = array.flatMap(_ => {
         return context.locales.map((locale: string) => {
@@ -20,4 +22,9 @@ const gaPageView = (url: string, title: string) => {
     });
 };
 
-export { getPagePaths, gaPageView };
+const redirectTo404IfNotProvided = (data: any | null | undefined, router: NextRouter) => {
+    if((!data || data == null) && typeof window !== 'undefined')
+        router.push('/404');
+}   
+
+export { getPagePaths, gaPageView, redirectTo404IfNotProvided };
