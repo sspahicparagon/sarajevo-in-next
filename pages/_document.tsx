@@ -30,6 +30,9 @@ const Document: NextPage = () => {
                     src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GADS_ID}`}
                     crossOrigin="anonymous"
                 />
+                {/* <!-- Start cookieyes banner -->  */}
+                <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/b268ae0794b933d674632154/script.js"></script> 
+                {/* <!-- End cookieyes banner --> */}
             </Head>
             <body>
                 <Main />

@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 import footerStyle from '../styles/Footer.module.css';
 import { InstagramLink } from '../values/GlobalValues';
 import { TranslationType } from "../interfaces/TranslationType";
+import NavBar from './NavBar';
 
 export default function Footer() {
     let people: string[][] = [['_goropro_', 'oljahaj', 'nera.hadzic'], ['merimam', 'mirela_red']];
@@ -57,6 +58,9 @@ export default function Footer() {
                         })
                     }
                 </Flex>
+            </Flex>
+            <Flex justify={'center'} align={'center'}>
+                <NavBar />
             </Flex>
         </Flex>
     )

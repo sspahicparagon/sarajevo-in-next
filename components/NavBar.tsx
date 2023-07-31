@@ -266,6 +266,10 @@ const NAV_ITEMS: Array<NavItem> = [
         children: [{ label: 'Event', href: '/admin-event' }, { label: 'Location', href: '/admin-location' }]
     },
     {
+        label: 'Privacy',
+        href: '/privacy'
+    },
+    {
         label: 'Category',
         children: Object.keys(CategoryIcons).map(key => { return { label: key, href: "/groupes/" + encodeURIComponent(key) }; })
     }
