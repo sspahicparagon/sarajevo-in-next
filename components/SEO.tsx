@@ -20,7 +20,7 @@ const SEO = ({ canonicalRelativeRoute, title = '', description = '', imageUrl = 
   else imageUrl = imageLoader({src: imageUrl});
 
   const { locale } = useRouter();
-  const supportedLanguages = [{ lang: 'en', canonical: true }, { lang: 'bs', canonical: false }, { lang: 'de', canonical: false }]
+  const supportedLanguages = [{ lang: 'x-default', canonical: true }, { lang: 'bs', canonical: false }, { lang: 'de', canonical: false }]
 
   return (
     <Head>

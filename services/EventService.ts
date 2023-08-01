@@ -3,6 +3,26 @@ import { EventFull, EventBase } from '../interfaces/EventOverride';
 import prismaClient from '../lib/prisma';
 import { RRule, RRuleSet, rrulestr } from 'rrule';
 
+const getEventsFilteredNextTwoMonthsSelect = {
+    Name: true,
+    Image: true,
+    location: true,
+    Time: true,
+    Date: true,
+    EventID: true,
+    recurring_rule: true
+}
+
+const appendRecurrancesSelect = {
+    Name: true,
+    Image: true,
+    location: true,
+    Time: true,
+    Date: true,
+    EventID: true,
+    recurring_rule: true
+}
+
 const EventService = {
     saveEvent: async (name: string, time: string, date: Date, image: string, locationID: number, price: number, rrule: string | null, eventID:number | string = -1): Promise<EventBase> => {
         const id = typeof(eventID) === 'string' ? parseInt(eventID) : eventID;
@@ -81,29 +101,26 @@ const EventService = {
                 'location': true
             }
         });
-
+        
         let todaysDate = new Date();
         return await EventService.appendRecurrances(result, new Date(todaysDate.getFullYear(), 0, 0), new Date(todaysDate.getFullYear() + 1, 0, 0))
     },
     getEventsFilteredNextTwoMonths: async (): Promise<EventFull[]> => {
         const date: Date = new Date();
-        let firstDay = new Date(date.getFullYear(), date.getMonth(), 0);
+        let firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
         let lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
 
         let result = await prismaClient.event.findMany({
-            select: {
-                Name: true,
-                Image: true,
-                location: true,
-                Time: true,
-                Date: true,
-                EventID: true,
-                recurring_rule: true
-            },
+            select: getEventsFilteredNextTwoMonthsSelect,
             where: {
-                Date: {
-                    gte: firstDay,
-                    lte: lastDay
+                AND: {
+                    Date: {
+                        gte: firstDay,
+                        lte: lastDay
+                    },
+                    recurring_rule: {
+                        equals: null
+                    }
                 }
             },
             orderBy: {
@@ -114,24 +131,28 @@ const EventService = {
     },
     appendRecurrances: async (events: EventFull[], firstDay: Date, lastDay: Date): Promise<EventFull[]> => {
         let recurringEvents: typeof events = [];
-        events.map((event) => {
-            if(event.recurring_rule != null) {
 
-                let rruleSet = rrulestr(event.recurring_rule, { 'forceset': true })
+        let onlyRecurrances = await prismaClient.event.findMany({
+            select: appendRecurrancesSelect,
+            where: {
+                recurring_rule: {
+                    not: null
+                }
+            },
+        });
 
-                let repeatDates = rruleSet.between(firstDay, lastDay, true);
-                repeatDates.map((date) => date = new Date(date.getTime() - date.getTimezoneOffset()*6000))
-                
-                repeatDates.map((date, index) => {
-                    if(index == 0) return;
-                    let rEvent = {...event, Date: date};
-                    recurringEvents.push(rEvent);
-                })
-            }
-        })
+        onlyRecurrances.map((event) => {
+            let rruleSet = rrulestr(event.recurring_rule!, { 'forceset': true })
 
+            let repeatDates = rruleSet.between(firstDay, lastDay, true);
+            repeatDates.map((date, index) => {
+                let offsetDate = new Date(date.getTime() - date.getTimezoneOffset()*6000);
+                let rEvent = {...event, Date: offsetDate};
+                recurringEvents.push(rEvent);
+            })
+        });
         if(recurringEvents.length > 0)
-        events.push.apply(events, recurringEvents);
+            events.push.apply(events, recurringEvents);
         
         events = events.sort((event1, event2) => {
             let date1 = event1.Date!.getTime();
