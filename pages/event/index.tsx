@@ -2,14 +2,14 @@ import { Flex } from "@chakra-ui/react";
 import { GetServerSidePropsContext, NextPage } from "next";
 import { SSRConfig } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import EventCalendar from "../../components/EventCalendar";
+import EventCalendar from "../../components/event/EventCalendar";
 import { EventFactory } from "../../factory/EventFactory";
 import { EventFull, EventHTMLSafe } from "../../interfaces/EventOverride";
 import EventService from "../../services/EventService";
 import eventStyle from '../../styles/Event.module.css';
 import { LanguageHelper } from "../../helpers/LanguageHelper";
 import { useState } from "react";
-import EventWithDateContainer from "../../components/EventWithDateContainer";
+import EventWithDateContainer from "../../components/event/EventWithDateContainer";
 import SEO from "../../components/SEO";
 import cache from "../../lib/cache";
 import { normalizeDateToDate } from "../../helpers/DateHelper";
@@ -66,6 +66,7 @@ export async function getServerSideProps({ locale = 'en', req, res }: GetServerS
         'public, max-age=600, s-maxage=600, stale-while-revalidate=1200'
     )
     const events = await cache.fetchCache<EventFull[]>(RedisKeys.FilteredEventsForNextTwoMonths, EventService.getEventsFilteredNextTwoMonths, 60 * 60);
+
     let eventsGroupedByDate: { [key: string]: EventHTMLSafe[] } = {};
 
     events.map(event => {

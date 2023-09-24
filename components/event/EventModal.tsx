@@ -1,12 +1,12 @@
 import { Box, CloseButton, Flex, Heading, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { EventFactory } from "../factory/EventFactory";
-import { EventHTMLSafe } from "../interfaces/EventOverride";
-import { CategoryIconsJson, GoogleMapsUrl } from "../values/GlobalValues";
-import Card from "./ImageCard";
-import eventStyle from '../styles/Event.module.css';
+import { EventFactory } from "../../factory/EventFactory";
+import { EventHTMLSafe } from "../../interfaces/EventOverride";
+import { CategoryIconsJson, GoogleMapsUrl } from "../../values/GlobalValues";
+import Card from "../ImageCard";
+import eventStyle from '../../styles/Event.module.css';
 import { useRouter } from "next/router";
-import ChakraNextLink from "./ChakraNextLink";
+import ChakraNextLink from "../ChakraNextLink";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const EventModal = (props: { selectedEvent: EventHTMLSafe | undefined }) => {

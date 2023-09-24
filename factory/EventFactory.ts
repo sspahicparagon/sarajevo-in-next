@@ -1,5 +1,8 @@
 import path from "path";
 import { EventFull, EventHTMLSafe } from "../interfaces/EventOverride";
+import formidable from "formidable";
+import { SaveEventProps } from "../services/EventService";
+import { createRRuleStringFromForm } from "../helpers/RecurringHelper";
 
 function EventFactoryFunction() {
 
@@ -24,11 +27,29 @@ function EventFactoryFunction() {
         return events.map(event => prepareEventForHTML(event));
     }
 
+    const createEventFromFormFields = (fields: formidable.Fields) => {
+        let event: SaveEventProps = {
+            name: fields.eventName.toString(), 
+            time: fields.time.toString(), 
+            date: new Date(fields.date.toString()), 
+            image: fields.uploadedImage.toString() == '' ? 'TEMPORARY' : fields.uploadedImage.toString(), 
+            locationID: parseInt(fields.location.toString()),
+            price: parseFloat(fields.price.toString()),
+            rrule: createRRuleStringFromForm(fields.repeatFrequency, fields.date),
+            eventID: fields.eventID.toString()
+        }
+
+        return event;
+    }
+
+    // const createFormEventFromEvent = (event: )
+
     return {
         getLesserQualityImage,
         prepareEventForHTML,
         getFullQualityImage,
-        prepareEventForHTMLMultiple
+        prepareEventForHTMLMultiple,
+        createEventFromFormFields
     }
 }
 

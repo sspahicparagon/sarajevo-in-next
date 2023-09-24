@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import EventService from '../../../services/EventService';
+import { FileService } from '../../../services/FileService';
 
 
 export const config = {
@@ -22,7 +23,13 @@ export default async function handler(
   }
   const { eventID }: { eventID: string } = req.body;
   
-  let result = await EventService.deleteEvent(eventID)
+  let existingEvent = await EventService.getEvent(eventID);
+
+  if(!existingEvent || existingEvent == null) return res.status(400).json("No such event exists.");
+  let result = await EventService.deleteEvent(eventID);
+
+  if(existingEvent.Image != 'TEMPORARY')
+    await FileService.removeImageFromRemoteServer(existingEvent.Image!);
 
   return res.status(200).json(result);
 }

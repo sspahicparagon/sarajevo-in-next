@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, CloseButton, Flex, HStack, Heading, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Text, useDisclosure } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import groupeStyle from '../../styles/Groupe.module.css';
@@ -16,12 +16,78 @@ import listPlugin from '@fullcalendar/list';
 import rrulePlugin from '@fullcalendar/rrule';
 import { RRuleSet, rrulestr } from "rrule";
 import axios, { HttpStatusCode } from "axios";
+import { useState } from "react";
 
 const Calendar: NextPage<SSRConfig & { events: EventHTMLSafe[] }> = (props) => {
     const router = useRouter();
     const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
+    const [selectedEvent, setSelectedEvent] = useState<EventHTMLSafe | null>(null);    
+    const { onOpen, isOpen } = useDisclosure();
+
+    const handleEdit = () => router.push(`/admin-event/${selectedEvent?.EventID}/edit`);
+
+    const handleAddException = async() => {
+        let result = await axios({ 
+            url: '/api/event/edit_recurring', 
+            data: { date: selectedEvent?.Date?.toDateString(), eventID: selectedEvent?.EventID },
+            method: 'PUT'
+        });
+
+        if(result.status != HttpStatusCode.Ok) return; // Display Toast message that something failed
+        router.push(`/admin-event/${selectedEvent?.EventID}/edit_recurring?date=${selectedEvent?.Date?.toDateString()}&locationID=${selectedEvent?.location?.LocationID}`);
+    };
+
+    const handleDelete = async() => {
+        let result = await axios({
+            url: '/api/event/delete',
+            data: { eventID: selectedEvent?.EventID },
+            method: 'DELETE'
+        });
+
+        if(result.status != HttpStatusCode.Ok) return; // Display Toast message that something failed
+        setSelectedEvent(null);
+        router.push('/admin-event');
+    };
+
+    const handle = async (arg: EventClickArg) => {
+        const event = arg.event.extendedProps.event as EventHTMLSafe;
+        if(event.recurring_rule == null || event.recurring_rule == undefined) return router.push(`/admin-event/${event.EventID}/edit`);
+        else {
+            onOpen();
+            setSelectedEvent(event);
+        }
+    }
     return (
         <>
+            { selectedEvent &&
+                <Modal
+                    isOpen={isOpen}
+                    onClose={() => setSelectedEvent(null)}
+                    size={{'base': 'full', 'md': 'lg'}}
+                >
+                    <ModalContent>
+                        <CloseButton 
+                            size='lg' 
+                            onClick={() => setSelectedEvent(null)}
+                        />
+                        <ModalHeader>
+                            <Heading as={'h2'}>Edit event</Heading>
+                        </ModalHeader>
+                        <ModalBody>
+                            <Text>Suggested actions for your event.</Text>
+                        </ModalBody>
+                        <ModalFooter>
+                            <HStack
+                                gap={3}
+                            >
+                                <Button colorScheme="blue" onClick={handleEdit}>Edit</Button>
+                                <Button colorScheme="teal" onClick={handleAddException}>Add exception</Button>
+                                <Button colorScheme="red" onClick={handleDelete}>Delete</Button>
+                            </HStack>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+            }
             <Flex
                 className={`center ${groupeStyle.container}`}
                 margin={'auto'}
@@ -35,7 +101,7 @@ const Calendar: NextPage<SSRConfig & { events: EventHTMLSafe[] }> = (props) => {
                     paddingTop={'5rem'}
                     width={'100%'}
                 >
-                    <Button onClick={(e) => router.push('/admin-event/-1')}
+                    <Button onClick={(e) => router.push('/admin-event/-1/add')}
                     >
                         {t('Add Event')}
                     </Button>
@@ -68,64 +134,9 @@ const Calendar: NextPage<SSRConfig & { events: EventHTMLSafe[] }> = (props) => {
     )
 };
 
-async function handle(arg: EventClickArg) {
-    if(!arg.event.extendedProps.recurring) return router.push(`/admin-event/${arg.event._def.extendedProps.eventID}`);
-
-    let rrule: RRuleSet = arg.event.extendedProps.rrule;
-    let eventDate = arg.event.start as Date;
-    let originalEventStartDate = rrule?.dtstart() as Date;
-
-    // Original event is being edited
-    if(eventDate.toDateString() == originalEventStartDate.toDateString()) return router.push(`/admin-event/${arg.event._def.extendedProps.eventID}`);
-
-    let result = await axios({ 
-        url: '/api/event/edit_recurring', 
-        data: { date: arg.event.start?.toDateString(), eventID: arg.event._def.extendedProps.eventID },
-        method: 'PUT'
-    })
-    if(result.status != HttpStatusCode.Ok) return; // Display Toast message that something failed
-    router.push(`/admin-event/-1?date=${eventDate.toDateString()}&locationID=${arg.event.extendedProps.locationID}`)
-}
-
-function renderEventContentList(content: EventContentArg) {
-    // Pristupa se preko content.event._def
-    // Ovako izgleda struktura
-    // PublicId je EventID
-    // {
-    //     "title": "1 - Recurring",
-    //     "groupId": "",
-    //     "publicId": "10",
-    //     "url": "",
-    //     "recurringDef": null,
-    //     "defId": "295",
-    //     "sourceId": "291",
-    //     "allDay": false,
-    //     "hasEnd": false,
-    //     "ui": {
-    //         "display": null,
-    //         "constraints": [],
-    //         "overlap": null,
-    //         "allows": [],
-    //         "backgroundColor": "blue",
-    //         "borderColor": "blue",
-    //         "textColor": "",
-    //         "classNames": []
-    //     },
-    //     "extendedProps": {
-    //         "color": "var(--indicator-color)"
-    //     }
-    // }
-    // <Flex
-    //     flexDirection={'row'}
-
-    // >
-
-    // </Flex>
-}
-
 function renderEventContent(content: EventContentArg) {
     return (
-        <Flex flexDirection={'row'} color={content.event.extendedProps.color}>
+        <Flex flexDirection={'row'}>
             <Text 
                 as={'p'} 
                 overflow={'hidden'} 
@@ -153,11 +164,7 @@ function parseEvents(events: EventHTMLSafe[]): EventInput[] {
             end: event.Date,
             title: `${event.Name} - ${event.Time}`,
             extendedProps: { 
-                color: event.recurring_rule ? 'var(--indicator-color)' : 'var(--base-color)', 
-                recurring: event.recurring_rule != null && event.recurring_rule != undefined,
-                locationID: event.LocationID,
-                eventID: event.EventID,
-                rrule: rrule
+                event: event
             },
         }
     })

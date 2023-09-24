@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import EventModal from "../../components/EventModal";
+import EventModal from "../../components/event/EventModal";
 import { EventHTMLSafe } from "../../interfaces/EventOverride";
 import { Flex } from "@chakra-ui/react";
 import EventService from "../../services/EventService";

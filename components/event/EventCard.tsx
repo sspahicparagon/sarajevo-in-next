@@ -1,13 +1,13 @@
 import { Flex, Box, Text, useDisclosure } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { EventFactory } from "../factory/EventFactory";
-import { CategoryIconsJson } from "../values/GlobalValues";
+import { EventFactory } from "../../factory/EventFactory";
+import { CategoryIconsJson } from "../../values/GlobalValues";
 import EventModal from "./EventModal";
-import { EventHTMLSafe } from "../interfaces/EventOverride";
+import { EventHTMLSafe } from "../../interfaces/EventOverride";
 import { useState } from "react";
-import eventStyle from '../styles/Event.module.css';
-import Card from "./ImageCard";
-import ChakraNextLink from "./ChakraNextLink";
+import eventStyle from '../../styles/Event.module.css';
+import Card from "../ImageCard";
+import ChakraNextLink from "../ChakraNextLink";
 
 const EventCard = (props: { event: EventHTMLSafe }) => {
 

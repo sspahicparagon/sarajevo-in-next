@@ -22,7 +22,6 @@ export default async function handler(
       }); 
   }
   const { date, eventID }: { date: string, eventID: string } = req.body;
-  
   let dateWithOffset = new Date(new Date(date).getTime() - new Date(date).getTimezoneOffset()*60000);
   let result = await EventService.editEventRecurring(dateWithOffset, eventID)
 

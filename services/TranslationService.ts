@@ -1,34 +1,39 @@
 import { event_translation } from "@prisma/client";
 import prismaClient from "../lib/prisma";
 
+export type SaveTranslationProps = {
+  eventID: number;
+  translations: {[key: string]: string};
+}
+
 const TranslationServiceFunction = () => {
-  const saveEventTranslation = async (eventID:number, params: {[key: string]: string}) => {
-    Object.keys(params).map(async (key:string) => {
+  const saveEventTranslation = async (props: SaveTranslationProps) => {
+    Object.keys(props.translations).map(async (key:string) => {
       let keyWithNoLanguage = key.split('_')[0];
       let language = key.split('_')[1];
 
       const data = {
-        EventID: eventID,
+        EventID: props.eventID,
         Language: language,
         Key: keyWithNoLanguage,
-        Translation: params[key]
+        Translation: props.translations[key]
       };
 
       await prismaClient.event_translation.create({ data: data });
     });
   };
 
-  const updateEventTranslation = async (eventID: number, params: {[key:string]: string}) => {
-    await prismaClient.event_translation.deleteMany({ where: { EventID: eventID } });
-    Object.keys(params).map(async (key:string) => {
+  const updateEventTranslation = async (props: SaveTranslationProps) => {
+    await prismaClient.event_translation.deleteMany({ where: { EventID: props.eventID } });
+    Object.keys(props.translations).map(async (key:string) => {
       let keyWithNoLanguage = key.split('_')[0];
       let language = key.split('_')[1];
 
       const data = {
-        EventID: eventID,
+        EventID: props.eventID,
         Language: language,
         Key: keyWithNoLanguage,
-        Translation: params[key]
+        Translation: props.translations[key]
       };
 
       await prismaClient.event_translation.create({ data: data });

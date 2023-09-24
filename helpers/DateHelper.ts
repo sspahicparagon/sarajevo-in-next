@@ -24,10 +24,20 @@ function convertDateValueToDate(date: Value) {
     return new Date(date?.toLocaleString());
 }
 
+function sortDatesAsc(firstDate: number, secondDate: number) {
+    return firstDate > secondDate ? 1 : firstDate < secondDate ? -1 : 0;
+}
+
+function timezoneOffsetToSame(date: Date){
+     return true;
+}
+
 export {
     convertDateToString2DigitsShortMonth,
     convertStringToNormalDate,
     normalizeDateToDate,
     convertDateValueToString,
-    convertDateValueToDate
+    convertDateValueToDate,
+    sortDatesAsc,
+    timezoneOffsetToSame
 }

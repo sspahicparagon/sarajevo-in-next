@@ -1,6 +1,6 @@
 import { Flex, Heading } from "@chakra-ui/react";
-import { convertDateToString2DigitsShortMonth } from "../helpers/DateHelper";
-import { EventHTMLSafe } from "../interfaces/EventOverride";
+import { convertDateToString2DigitsShortMonth } from "../../helpers/DateHelper";
+import { EventHTMLSafe } from "../../interfaces/EventOverride";
 import EventCard from "./EventCard";
 
 const EventWithDateContainer = (props: {eventKey: string} & {events: { [key: string]: EventHTMLSafe[] } } & {locale: string}) => {
