@@ -39,7 +39,7 @@ export default function WithSubnavigation() {
     const { isOpen, onToggle, onClose } = useDisclosure();
 
     return (
-        <Box marginTop={'var(--toolbar-container-height)'}>
+        <Box>
             <Flex
                 bg={'var(--base-color)'}
                 color={'var(--color-gray)'}
@@ -78,7 +78,7 @@ export default function WithSubnavigation() {
 
 const DesktopNav = () => {
     const { data } = useSession();
-    
+    const { t } = useTranslation<TranslationType>('common')
     const popoverContentBgColor = 'var(--base-color)';
     return (
         <Stack direction={'row'} spacing={4}>
@@ -92,7 +92,7 @@ const DesktopNav = () => {
                                 <ChakraNextLink
                                     href={navItem.href ?? '#'}
                                     className={navStyle['desktop-nav-item']}>
-                                    {navItem.label}
+                                    {t(navItem.label)}
                                 </ChakraNextLink>
                                 {navItem.children && 
                                 <Icon
@@ -202,7 +202,7 @@ const MobileNavItem = ({ label, children, href, checkCondition, onToggle }: NavI
                         fontWeight={600}
                         fontSize={'3xl'}
                     >
-                        {label}
+                        {t(label)}
                     </Text>
                 </>
             </Flex>
@@ -258,6 +258,10 @@ const NAV_ITEMS: Array<NavItem> = [
     {
         label: 'Event',
         href: '/event'
+    },
+    {
+        label: 'Blog',
+        href: '/posts'
     },
     {
         label: 'Admin',

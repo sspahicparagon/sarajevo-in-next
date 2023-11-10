@@ -8,7 +8,6 @@
 }
 
 .toolbar-wrapper {
-    position: fixed;
-    top: 0;
+    position: inherit;
     z-index: 999;
 }

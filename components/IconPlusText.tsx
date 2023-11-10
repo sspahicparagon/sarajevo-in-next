@@ -67,7 +67,7 @@ export default function IconPlusText({
                         />
                         :
                         <FontAwesomeIcon
-                            size={'xl'}
+                            size={'lg'}
                             icon={imageFa}
                             color={'var(--color-gray)'}
                             style={{ marginRight: '2px' }}

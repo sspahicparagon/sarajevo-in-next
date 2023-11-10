@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { GetServerSidePropsContext, NextPage } from "next";
-import { SSRConfig } from "next-i18next";
+import { SSRConfig, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import EventCalendar from "../../components/event/EventCalendar";
 import { EventFactory } from "../../factory/EventFactory";
@@ -14,9 +14,11 @@ import SEO from "../../components/SEO";
 import cache from "../../lib/cache";
 import { normalizeDateToDate } from "../../helpers/DateHelper";
 import { RedisKeys } from "../../values/GlobalValues";
+import { TranslationType } from "../../interfaces/TranslationType";
 
 const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] } }> = (props) => {
     const [eventKeys, setEventKeys] = useState<string[]>(Object.keys(props.events));
+    const { t } = useTranslation<TranslationType>('common');
 
     const dateWasSelected = (date: Date, dateString: string):void => {
         if(Object.keys(props.events).includes(dateString))
@@ -33,7 +35,7 @@ const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] } }>
             <SEO
                 title={'SarajevoIN Events'}
                 canonicalRelativeRoute={'event'}
-                description={''}
+                description={t('Event-Description')}
                 imageUrl={''}
             />
             <EventCalendar locale={LanguageHelper.languageCodeBeingUsed(props)} markDates={Object.keys(props.events)} onChange={dateWasSelected}/>

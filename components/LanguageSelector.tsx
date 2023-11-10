@@ -21,9 +21,15 @@ export default function LanguageSelector({ onChange }: { onChange?: (locale: str
     const locales = getLanguages();
 
     const languageNames = useMemo(() => {
-        return new Intl.DisplayNames([currentLanguage], {
-            type: 'language'
-        });
+        if(currentLanguage == 'bs')
+            return new Intl.DisplayNames(['sr-Latn-BA'], {
+                type: 'language'
+            });
+        else {
+            return new Intl.DisplayNames([currentLanguage], {
+                type: 'language'
+            });
+        }
     }, [currentLanguage]);
 
     const [value, setValue] = useState({
@@ -48,15 +54,21 @@ export default function LanguageSelector({ onChange }: { onChange?: (locale: str
         }, [switchToLocale, onChange]
     )
 
+    const bosnianLanguageNames: {[key: string]: string} = {
+        'en': 'Engleski',
+        'de': 'Njemački',
+        'bs': 'Bosanski'
+    }
     return (
         <Select
             onChange={languageChanged}
-            width={'100px'}
+            width={{'base': '85px', 'md': '100px'}}
             height={'32px'}
             className={`${style.container}`}
             color={'lightgray'}
             variant={'unstyled'}
             name={LanguageSelector.name}
+            fontSize={{'base': 'small', 'md': 'medium'}}
         >
             {locales.map((language: string) => {
                 return (
@@ -65,7 +77,7 @@ export default function LanguageSelector({ onChange }: { onChange?: (locale: str
                         key={language}
                         className={style.option}
                     >
-                        {capitalize(languageNames.of(language) ?? language)}
+                        {capitalize(languageNames.of(language) ?? bosnianLanguageNames[`${language}`])}
                     </option>
                 )
             })}

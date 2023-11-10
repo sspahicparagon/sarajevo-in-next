@@ -6,7 +6,13 @@
     cursor: pointer;
 }
 
-
 .option {
     background: var(--base-color) !important;
+    font-size: large;
+}
+
+@media (max-width: 768px) {
+    .option {
+        font-size: small !important;
+    }
 }

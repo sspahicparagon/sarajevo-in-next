@@ -32,6 +32,10 @@ function timezoneOffsetToSame(date: Date){
      return true;
 }
 
+function convertStringToPrettyDate(date: string, locale: string = 'en') {
+    return new Date(date).toLocaleDateString(locale == 'bs' ? 'sr-Latn-BA' : locale, { day: '2-digit', month: 'long', 'year': 'numeric' })
+}
+
 export {
     convertDateToString2DigitsShortMonth,
     convertStringToNormalDate,
@@ -39,5 +43,6 @@ export {
     convertDateValueToString,
     convertDateValueToDate,
     sortDatesAsc,
-    timezoneOffsetToSame
+    timezoneOffsetToSame,
+    convertStringToPrettyDate
 }

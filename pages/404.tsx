@@ -5,6 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import pageStyle from '../styles/Page404.module.css';
 import { TranslationType } from "../interfaces/TranslationType";
+import Head from "next/head";
 
 const Page404: NextPage<SSRConfig> = function (props) {
     const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
@@ -14,6 +15,10 @@ const Page404: NextPage<SSRConfig> = function (props) {
             height={'100vh'}
             className={pageStyle.container}
         >
+
+            <Head>
+                <title>404 Page</title>
+            </Head>
             <Flex
                 height={'100%'}
                 width={'100%'}

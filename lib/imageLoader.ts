@@ -16,3 +16,7 @@ export default function imageLoader({ src, width, quality }: ImageLoaderConfig) 
 
     return result;
 }
+
+export const wordpressImageLoader = ({src, width, quality}: ImageLoaderConfig) => {
+    return src!;
+}

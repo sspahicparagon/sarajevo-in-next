@@ -12,6 +12,7 @@ export default function Toolbar() {
                 flexDirection={'column'}
                 width={'100%'}
                 className={toolbarStyle['toolbar-wrapper']}
+
             >
                 <Flex
                     flexDirection={'row'}
@@ -26,8 +27,8 @@ export default function Toolbar() {
                             image={'/instagram-icon.svg'}
                             height={'34px'}
                             width={'34px'}
-                            minHeight={'30px'}
-                            minWidth={'30px'}
+                            minHeight={'24px'}
+                            minWidth={'24px'}
                             openInNewTab={true}
                         />
                     </Flex>
@@ -40,8 +41,8 @@ export default function Toolbar() {
                             image={'/tiktok-icon.svg'}
                             height={'40px'}
                             width={'40px'}
-                            minHeight={'30px'}
-                            minWidth={'30px'}
+                            minHeight={'24px'}
+                            minWidth={'24px'}
                             openInNewTab={true}
                         />
                     </Flex>
@@ -55,8 +56,8 @@ export default function Toolbar() {
                             imageFa={faEnvelope}
                             height={'40px'}
                             width={'40px'}
-                            minHeight={'30px'}
-                            minWidth={'30px'}
+                            minHeight={'24px'}
+                            minWidth={'24px'}
                             text={'info@sarajevoin.ba'}
                             openInNewTab={true}
                         />
@@ -64,7 +65,7 @@ export default function Toolbar() {
                     <Flex
                         flexDirection={'column'}
                         className={toolbarStyle.column}
-                        width={'110px'}
+                        width={{'base': '80px', 'md': '110px'}}
                     >
                         <LanguageSelector />
                     </Flex>

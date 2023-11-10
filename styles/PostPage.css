@@ -1,0 +1,93 @@
+.wordpress-content-container h2 {
+  font-size: 1.7rem;
+  text-decoration: underline;
+  padding-block: 1rem;
+  color: var(--base-color);
+  font-weight: normal;
+}
+
+.wordpress-content-container {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: var(--chakra-colors-gray-600);
+  padding-block: 3rem;
+  flex-direction: column;
+  font-weight: lighter;
+}
+
+.wordpress-content-container img,
+.wordpress-content-container figure {
+  width: 600px;
+  margin: auto;
+  padding-block: 1rem;
+  height: auto !important;
+}
+
+.wordpress-content-container figcaption {
+  text-decoration: underline;
+  text-decoration-color: var(--indicator-color);
+  text-align: center;
+}
+
+.wordpress-content-container p {
+  padding-block: 1rem;
+}
+
+.wordpress-content-container h3,
+.wordpress-content-container h4,
+.wordpress-content-container h5 {
+  font-size: 1.4rem;
+  padding-block: 1rem;
+  font-weight: 600;
+}
+
+.wordpress-content-container h3::before,
+.wordpress-content-container h4::before,
+.wordpress-content-container h5::before {
+  content: "- ";
+}
+
+.wordpress-content-container figure + a {
+  text-align: center;
+  padding-top: 1rem;
+  font-size: 1.2rem;
+}
+
+
+.wordpress-content-container a {
+  color: var(--indicator-color);
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+.wordpress-content-container li::marker {
+  color: var(--indicator-color);
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .wordpress-content-container {
+    font-size: 0.7rem;
+    line-height: 1.2rem;
+    text-align: justify;
+  }
+  
+  .wordpress-content-container figure,
+  .wordpress-content-container img {
+    width: 230px;
+  }
+
+  .wordpress-content-container h2 {
+    font-size: 1rem;
+  }
+
+  .wordpress-content-container h3,
+  .wordpress-content-container h4,
+  .wordpress-content-container h5 {
+    font-size: 0.9rem;
+  }
+
+  .wordpress-content-container figure + a {
+    font-size: 0.7rem;
+  }
+}

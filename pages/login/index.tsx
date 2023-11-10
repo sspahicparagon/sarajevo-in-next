@@ -2,8 +2,6 @@ import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
-import Router from "next/router";
-import { JWTService } from "../../services/JWTService";
 import pageStyle from '../../styles/Login.module.css';
 import { ImageStorage } from "../../values/GlobalValues";
 import { signIn } from "next-auth/react";
@@ -19,35 +17,39 @@ const Login: NextPage = () => {
     }
 
     return (
-        <Flex
-            height={'100vh'}
-            flexDirection={'column'}
-            className={pageStyle.container}
-            backgroundImage={`${ImageStorage}/public/images/track-images/track-image-8.webp`}
-        >
+        <>
             <Head>
-                <meta property="og:image" content={`${ImageStorage}/public/images/track-images/track-image-8.webp`} />
-                <title>SarajevoIN - Log In</title>
+                <title>Login Page</title>
             </Head>
-            <form onSubmit={handleSubmit}>
-                <FormControl
-                    width={'350px'}
-                    flexDirection={'column'}
-                    className={pageStyle.form}
-                >
-                    <FormLabel>Username</FormLabel>
-                    <Input isRequired type={'text'} />
-                    <FormLabel>Password</FormLabel>
-                    <Input isRequired type={'password'} />
-                    <Button
-                        className={pageStyle.button}
-                        variant={'solid'}
-                        type={'submit'}
-                    >Log In</Button>
-                </FormControl>
-            </form>
-
-        </Flex>
+            <Flex
+                height={'100vh'}
+                flexDirection={'column'}
+                className={pageStyle.container}
+                backgroundImage={`${ImageStorage}/public/images/track-images/track-image-8.webp`}
+            >
+                <Head>
+                    <meta property="og:image" content={`${ImageStorage}/public/images/track-images/track-image-8.webp`} />
+                    <title>SarajevoIN - Log In</title>
+                </Head>
+                <form onSubmit={handleSubmit}>
+                    <FormControl
+                        width={'350px'}
+                        flexDirection={'column'}
+                        className={pageStyle.form}
+                    >
+                        <FormLabel>Username</FormLabel>
+                        <Input isRequired type={'text'} />
+                        <FormLabel>Password</FormLabel>
+                        <Input isRequired type={'password'} />
+                        <Button
+                            className={pageStyle.button}
+                            variant={'solid'}
+                            type={'submit'}
+                        >Log In</Button>
+                    </FormControl>
+                </form>
+            </Flex>
+        </>
     )
 }
 

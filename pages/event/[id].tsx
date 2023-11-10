@@ -15,7 +15,7 @@ const EventModalPage: NextPage<{selectedEvent: EventHTMLSafe} & { description: s
   return (
     <>
       <SEO
-        title={`${props.selectedEvent.Name} - ${props.selectedEvent.location?.Name}`}
+        title={`Event - ${props.selectedEvent.Name} - ${props.selectedEvent.location?.Name}`}
         description={props.description}
         imageUrl={EventFactory.getFullQualityImage(props.selectedEvent?.Image ?? "")}
         canonicalRelativeRoute={`/event/${props.selectedEvent.EventID}`}

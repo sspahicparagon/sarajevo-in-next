@@ -3,21 +3,21 @@ import { useRouter } from "next/router";
 import imageLoader from "../lib/imageLoader";
 
 interface SEOProps {
-  canonicalRelativeRoute: string;
-  title: string | undefined | null, 
-  description: string | undefined | null, 
-  imageUrl:  string | undefined | null
+  canonicalRelativeRoute?: string;
+  title?: string | undefined | null;
+  description?: string | undefined | null;
+  imageUrl?:  string | undefined | null;
+  imageLoaderFunction?: (({}) => string);
 }
 
-const SEO = ({ canonicalRelativeRoute, title = '', description = '', imageUrl = '' }: SEOProps) => {
-
-  if(!canonicalRelativeRoute.startsWith('/'))
+const SEO = ({ canonicalRelativeRoute, title = '', description = '', imageUrl = '', imageLoaderFunction = imageLoader }: SEOProps) => {
+  if(!canonicalRelativeRoute?.startsWith('/'))
     canonicalRelativeRoute = '/' + canonicalRelativeRoute;
 
   if(!title || title == '') title = "SarajevoIN Page";
   if(!description || description == '') description = "SarajevoIN";
   if(!imageUrl || imageUrl == '') imageUrl = `${process.env.BASE_URL}/sarajevo.in-logo-removebg (1).png`;
-  else imageUrl = imageLoader({src: imageUrl});
+  else imageUrl = imageLoaderFunction({src: imageUrl});
 
   const { locale } = useRouter();
   const supportedLanguages = [{ lang: 'x-default', canonical: true }, { lang: 'bs', canonical: false }, { lang: 'de', canonical: false }]
