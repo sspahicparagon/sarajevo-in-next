@@ -66,11 +66,20 @@ const Categories: NextPage<SSRConfig & { categoryName: string }> = (props) => {
   )
 };
 
-export const getStaticPaths: GetStaticPaths = async() => {
+export const getStaticPaths: GetStaticPaths = async({locales}) => {
   const allCategories = await BlogService.getAllCategorySlugs();
 
   return {
-    paths: allCategories.edges.map((edge) => `/post-categories/${edge.node.slug}`) || [],
+    paths: allCategories.edges.flatMap((edge) => {
+      return locales?.map((locale) => {
+        return {
+          params: {
+            slug: edge.node.slug
+          },
+          locale: locale
+        }
+      }) ?? [];
+     }),
     fallback: 'blocking',
   }
 };

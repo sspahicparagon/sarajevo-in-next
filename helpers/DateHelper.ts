@@ -1,7 +1,7 @@
 import { Value } from "react-calendar/dist/cjs/shared/types";
 
 function convertDateToString2DigitsShortMonth(date: Date, locale: string = 'en') {
-    return date.toLocaleDateString(locale, { day: '2-digit', month: 'short' })
+    return date.toLocaleDateString(locale == 'bs' ? 'sr-Latn-BA' : locale, { day: '2-digit', month: 'short' })
 }
 
 function convertStringToNormalDate(date: string): Date {

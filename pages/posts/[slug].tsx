@@ -90,11 +90,20 @@ export const getStaticProps: GetStaticProps = async({
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async() => {
+export const getStaticPaths: GetStaticPaths = async({locales}) => {
   const allPosts = await BlogService.getAllPostSlugs();
 
   return {
-    paths: allPosts.edges.map((edge) => `/posts/${edge.node.slug}`) || [],
+    paths: allPosts.edges.flatMap((edge) => {
+      return locales?.map((locale) => {
+        return {
+          params: {
+            slug: edge.node.slug
+          },
+          locale: locale
+        }
+      }) ?? [];
+     }),
     fallback: 'blocking',
   }
 };

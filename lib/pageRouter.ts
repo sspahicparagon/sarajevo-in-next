@@ -13,7 +13,7 @@ const getPagePaths = function (context: any, array: any[], key: string) {
     });
 
     return paths;
-}
+};
 
 const gaPageView = (url: string, title: string) => {
     window.gtag('config', process.env.GA_TRACKING_ID, {

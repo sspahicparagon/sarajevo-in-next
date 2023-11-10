@@ -171,9 +171,9 @@ export async function getStaticProps(context: any) {
         props: {
             ...(await serverSideTranslations(context.locale, ['description', 'common', 'footer'])),
             information: response,
-            revalidate: 3600,
-            notFound: !response
-        }
+        },
+        revalidate: 60 * 60 * 24,
+        notFound: !response
     }
 }
 
