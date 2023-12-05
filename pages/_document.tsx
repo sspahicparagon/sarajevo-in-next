@@ -40,20 +40,24 @@ const Document: NextPage = () => {
                         })(window,document,'script','dataLayer','GTM-5SLWQ7WD');`,
                     }}
                     id="gtag-manager-init"
+                    strategy="afterInteractive"
                 />
                 {/* <!-- Start cookieyes banner -->  */}
                 <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/b268ae0794b933d674632154/script.js" async></script> 
                 {/* <!-- End cookieyes banner --> */}
             </Head>
             <body>
-                <noscript>
-                    <iframe 
-                        src="https://www.googletagmanager.com/ns.html?id=GTM-5SLWQ7WD"
-                        height="0" 
-                        width="0" 
-                        style={{"display":"none","visibility":"hidden"}}>
-                    </iframe>
-                </noscript>
+                <noscript
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            <iframe 
+                            src="https://www.googletagmanager.com/ns.html?id=GTM-5SLWQ7WD"
+                            height="0" 
+                            width="0" 
+                            style={{"display":"none","visibility":"hidden"}}>
+                            </iframe>`
+                    }}
+                />
                 <Main />
                 <NextScript />
             </body>
