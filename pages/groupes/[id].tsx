@@ -1,6 +1,6 @@
 import { Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import { groupe, location } from "@prisma/client";
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { SSRConfig, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
@@ -14,12 +14,23 @@ import { TranslationType } from "../../interfaces/TranslationType";
 import DynamicGrid from "../../components/Grid/DynamicGrid";
 import { GridAdapter } from "../../adapter/GridAdapter";
 import LocationGrid from "../../components/Grid/LocationGrid";
+import { CustomAdFactory } from "../../factory/CustomAdFactory";
+import cache from "../../lib/cache";
+import { CustomAdFull, CustomAdTypeFull } from "../../interfaces/CustomAd";
+import { AdFormatsPerPage, RedisKeys } from "../../values/GlobalValues";
+import { AdService } from "../../services/AdService";
+import useAdManager from "../../hooks/useAdManager";
 
-const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } | null }> = (props) => {
+interface GroupesProps {
+    groupe: groupe & { location: location[] } | null;
+    groupedAds: {[key: string]: CustomAdFull[]};
+};
+
+const Groupes: NextPage<SSRConfig & GroupesProps> = (props) => {
     const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
     const { groupe } = props;
     const router = useRouter();
-
+    
     useEffect(() => {
         if(groupe == null) router.push('/404');
     })
@@ -58,6 +69,7 @@ const Groupes: NextPage<SSRConfig & { groupe: groupe & { location: location[] } 
                         linkEndpoint={'details'}
                         handleScrollPosClick={handleScrollPosClick}
                         child={<LocationGrid />}
+                        groupedAds={props.groupedAds}
                     />
                 </main>
             </Flex>
@@ -75,16 +87,19 @@ export async function getStaticPaths(context: any) {
     };
 }
 
-export async function getStaticProps(context: any) {
+export const getStaticProps: GetStaticProps<GroupesProps> = async (context: any) => {
     let result: number = parseInt(context.params.id);
     let groupe = isNaN(result) ? await GroupService.getGroupeWithLocationByName(context.params.id) : await GroupService.getGroupeWithLocationByID(result);
 
+    const customAds = CustomAdFactory.groupByWidthAndHeight(await cache.fetchCache<CustomAdFull[], CustomAdTypeFull[][]>(RedisKeys.CustomAds, AdService.getAdsByAdTypes, 60 * 60, AdFormatsPerPage['groupes']));
     return {
         props: {
             ...(await serverSideTranslations(context.locale, ['common', 'footer'])),
             groupe: groupe,
-            revalidate: 3600
-        }
+            groupedAds: customAds
+        },
+        revalidate: 3600,
+        notFound: !groupe
     }
 }
 

@@ -1,14 +1,20 @@
 import { redis } from "./redis";
 
-const fetchCache = async<T>(key: string, fetchFunction: () => Promise<T>, expires: number) => {
-  if(!isRedisConfigured()) return await fetchFunction();
+type Parameter<T> = T extends (...args: infer T) => Promise<any> ? Promise<T> : never;
+
+function call<T, U extends unknown[]>(key: string, fn: (...args: U) => Promise<T>, expires: number, ...args: U): Promise<T> {
+  return fn(...args);
+}
+
+const fetchCache = async<T, U extends unknown[]>(key: string, fn: (...args: U) => Promise<T>, expires: number, ...args: U): Promise<T> => {
+  if(!isRedisConfigured()) return await fn(...args);
 
   const existingData = await checkIfDataIsCached<T>(key);
 
   if(existingData !== null) return existingData;
 
-  return setDataToCache(key, fetchFunction, expires);
-}
+  return setDataToCache(key, fn, expires, ...args);
+};
 
 const checkIfDataIsCached = async<T>(key: string): Promise<T | null> => {
   if(!isRedisConfigured()) return null;
@@ -20,10 +26,10 @@ const checkIfDataIsCached = async<T>(key: string): Promise<T | null> => {
   return JSON.parse(stringifiedData);
 }
 
-const setDataToCache = async<T>(key: string, fetchFunction: () => T, expires: number) => {
-  if(!isRedisConfigured()) return await fetchFunction();
+const setDataToCache = async<T, P extends unknown[]>(key: string, fetchFunction: (...args: P) => T, expires: number, ...args: P): Promise<T> => {
+  if(!isRedisConfigured()) return await fetchFunction(...args);
 
-  const data = await fetchFunction();
+  const data = await fetchFunction(...args);
 
   //@ts-ignore
   await redis.set(key, JSON.stringify(data), "EX", expires);

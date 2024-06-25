@@ -1,16 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prismaClient from '../../../lib/prisma';
-import * as ftp from 'basic-ftp';
-import fs from 'fs/promises';
-import sharp from 'sharp';
 import { parseForm } from '../../../lib/parse-form';
-import { ImageUploadKeyValue } from '../../../values/GlobalValues';
-import path from 'path';
 import EventService from '../../../services/EventService';
 import { EventFull } from '../../../interfaces/EventOverride';
 import { TranslationService } from '../../../services/TranslationService';
-import { RRule, RRuleSet } from 'rrule';
 import { EventFactory } from '../../../factory/EventFactory';
 import { TranslationFactory } from '../../../factory/TranslationFactory';
 import { FileService } from '../../../services/FileService';
@@ -21,9 +14,6 @@ export const config = {
         bodyParser: false
     }
 };
-const SUCCESSFUL_FILE_UPLOAD:number = 226;
-const IMAGE_EXTENSION_WITH_BEST_QUALITY: string = "";
-
 
 const fileUploadConfig: {quality:number, nameExtended:string}[] = [
     {quality: 30, nameExtended: '-1'},

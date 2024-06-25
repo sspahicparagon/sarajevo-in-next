@@ -74,3 +74,25 @@ model event_translation {
 
   @@index([EventID], map: "EventTranslation_EventID")
 }
+
+model custom_ad {
+  CustomAdID     Int            @id @default(autoincrement())
+  EndDate        DateTime       @db.DateTime(0)
+  Image          String         @db.VarChar(1023)
+  Name           String         @db.VarChar(255)
+  Url            String?        @db.VarChar(1023)
+  Order          Int
+  CustomAdTypeID Int
+  CreatedAt      DateTime       @default(now()) @db.DateTime(0)
+  EditedAt       DateTime?      @db.DateTime(0)
+  custom_ad_type custom_ad_type @relation(fields: [CustomAdTypeID], references: [CustomAdTypeID], onDelete: Cascade, map: "CustomAd_CustomAdTypeID")
+
+  @@index([CustomAdTypeID], map: "CustomAd_CustomAdTypeID")
+}
+
+model custom_ad_type {
+  CustomAdTypeID Int         @id @default(autoincrement())
+  Width          String      @db.VarChar(15)
+  Height         String      @db.VarChar(15)
+  custom_ad      custom_ad[]
+}

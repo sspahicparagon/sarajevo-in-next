@@ -13,8 +13,10 @@ const SUCCESSFUL_UPLOAD: number = 226;
 const SUCCESSFUL_REMOVE: number = 250;
 const IMAGE_EXTENSION_WITH_BEST_QUALITY: string = "";
 
+export type ImageFolderTypes = 'events' | 'ads';
+
 const FileServiceFunction = () => {
-  const uploadImageToRemoteServer = async (files: formidable.Files): Promise<string> => {
+  const uploadImageToRemoteServer = async (files: formidable.Files, imageFolder: ImageFolderTypes = 'events'): Promise<string> => {
 
     const fileStoredInUploadedFolder = Array.isArray(files[ImageUploadKeyValue]) ? files[ImageUploadKeyValue][0] : files[ImageUploadKeyValue];
     let result: ftp.FTPResponse | undefined = undefined;
@@ -34,8 +36,7 @@ const FileServiceFunction = () => {
         var buffer = await file.readFile();
         for(let fileConfig of fileUploadConfig){
             //Convert the image to webp
-            let location: string = `/public/images/events/${nameOfFileWithoutExtension}${fileConfig.nameExtended}.webp`;
-
+          let location: string = `/public/images/${imageFolder}/${nameOfFileWithoutExtension}${fileConfig.nameExtended}.webp`;
             await sharp(buffer).webp({quality: fileConfig.quality}).toFile('.' + location);
 
             //Upload the image to the external server
@@ -51,9 +52,14 @@ const FileServiceFunction = () => {
         file.close();
     }
     catch(err) {
-        console.error('Error happened while saving image', {err});
+      console.error('Error happened while saving image', { err });
+      try {
         await client.remove(`${process.env.IMAGE_DIRECTORY}${location}`)
-        savedImageLocation = '';
+      }
+      catch (e) {
+        console.error('Error happened while deleting image', { e });
+      }
+      savedImageLocation = '';
     }
 
     client.close();
@@ -61,7 +67,7 @@ const FileServiceFunction = () => {
     return savedImageLocation.replace('/public', '');
   };
 
-  const removeImageFromRemoteServer = async (locationOfImage: string): Promise<boolean> => {
+  const removeImageFromRemoteServer = async (locationOfImage: string, imageFolder: ImageFolderTypes = 'events'): Promise<boolean> => {
     let result: ftp.FTPResponse | undefined = undefined;
     const client = new ftp.Client();
     const nameOfFileWithoutExtension = path.parse(locationOfImage).name;
@@ -77,7 +83,7 @@ const FileServiceFunction = () => {
 
         for(let fileConfig of fileUploadConfig){
             //Convert the image to webp
-            let location: string = `/public/images/events/${nameOfFileWithoutExtension}${fileConfig.nameExtended}.webp`;
+          let location: string = `/public/images/${imageFolder}/${nameOfFileWithoutExtension}${fileConfig.nameExtended}.webp`;
             result = await client.remove(`${process.env.IMAGE_DIRECTORY}${location}`)
         };
     }

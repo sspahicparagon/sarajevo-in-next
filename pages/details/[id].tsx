@@ -11,14 +11,21 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { location, worktime } from '@prisma/client';
 import { getPagePaths } from "../../lib/pageRouter";
 import PageTitle from "../../components/PageTitle";
-import { NumberOfSentencesInParagraph } from "../../values/GlobalValues";
+import { AdFormatsPerPage, NumberOfSentencesInParagraph, RedisKeys } from "../../values/GlobalValues";
 import SEO from "../../components/SEO";
 import { TranslationType } from "../../interfaces/TranslationType";
+import NormalAd from "../../components/ad/NormalAd";
+import { CustomAdFactory } from "../../factory/CustomAdFactory";
+import cache from "../../lib/cache";
+import { CustomAdFull, CustomAdTypeFull } from "../../interfaces/CustomAd";
+import { AdService } from "../../services/AdService";
+import useAdManager from "../../hooks/useAdManager";
 
 
-const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] } }> = (props) => {
+const Details: NextPage<SSRConfig & { information: location & { worktime: worktime[] }, groupedAds: {[key: string]: CustomAdFull[]} }> = (props) => {
     const { t } = useTranslation<TranslationType>(props._nextI18Next?.ns);
     const title = "SarajevoIN - " + [props.information?.Name];
+    const { getAd } = useAdManager(props.groupedAds);
 
     const handleDisplayedText = (text: string): string[] => { 
         let textSplitOnPunctuation: string[]= text.split('.').filter(ele => ele != "" && ele != " ");
@@ -81,6 +88,12 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                                     <InformationCard title={t("kontakt-informacije").toString()} information={props.information} />
                                 </Flex>
                                 <br />
+                                <Flex 
+                                    justify={'center'}
+                                >
+                                    <NormalAd customAd={getAd(300,315)} condition={true} />
+                                </Flex>
+                                <br />
                                 <Flex
                                     flexDirection={'column'}
                                     className={detailsStyle['information-card']}
@@ -120,6 +133,7 @@ const Details: NextPage<SSRConfig & { information: location & { worktime: workti
                                 </Flex>
                             </Flex>
                         </Flex>
+                        {/* <NormalAd width='900' height='250' /> */}
                         {(t(`description-${props.information.LocationID}`) != `description-${props.information?.LocationID}`) &&
                             <Flex
                                 flexDirection={'column'}
@@ -167,10 +181,13 @@ export async function getStaticPaths(context: any) {
 export async function getStaticProps(context: any) {
     const response = await InformationService.getLocationWithWorkTime(context.params.id);
 
+    const customAds = CustomAdFactory.groupByWidthAndHeight(await cache.fetchCache<CustomAdFull[], CustomAdTypeFull[][]>(RedisKeys.CustomAds, AdService.getAdsByAdTypes, 60 * 60, AdFormatsPerPage['details']));
+
     return {
         props: {
             ...(await serverSideTranslations(context.locale, ['description', 'common', 'footer'])),
             information: response,
+            groupedAds: customAds
         },
         revalidate: 60 * 60 * 24,
         notFound: !response

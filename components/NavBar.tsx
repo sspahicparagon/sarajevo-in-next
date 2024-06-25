@@ -17,18 +17,15 @@ import {
     DrawerHeader,
     DrawerBody,
     VStack,
-    HStack,
-    Grid,
 } from '@chakra-ui/react';
 import {
     HamburgerIcon,
-    CloseIcon,
     ChevronDownIcon,
     ChevronRightIcon,
 } from '@chakra-ui/icons';
 
 import navStyle from '../styles/Navigation.module.css';
-import { CategoryIcons, CookieName } from '../values/GlobalValues';
+import { CategoryIcons } from '../values/GlobalValues';
 import { useTranslation } from 'next-i18next';
 import ChakraNextLink from './ChakraNextLink';
 import { useSession } from 'next-auth/react';
@@ -267,7 +264,22 @@ const NAV_ITEMS: Array<NavItem> = [
         label: 'Admin',
         href: '#',
         checkCondition: true,
-        children: [{ label: 'Event', href: '/admin-event' }, { label: 'Location', href: '/admin-location' }]
+children : [
+  {
+    label: 'Event',
+    href: '/admin-event'
+  }, {
+    label: 'Location',
+    href: '/admin-location'
+  }, {
+    label: 'Ad Type',
+    href: '/admin-ad/type'
+  }, {
+    label: 'Custom Ad',
+    href: '/admin-ad'
+  }
+]
+
     },
     {
         label: 'Privacy',

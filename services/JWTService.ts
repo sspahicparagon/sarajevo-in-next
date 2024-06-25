@@ -1,7 +1,5 @@
 import axios from 'axios';
-import { JWTVerifyResult, SignJWT, jwtVerify } from 'jose';
-import { useCookies } from 'react-cookie';
-import { CookieName } from '../values/GlobalValues';
+import { SignJWT, jwtVerify } from 'jose';
 
 function JWTServiceFunction() {
 

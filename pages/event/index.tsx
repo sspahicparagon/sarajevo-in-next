@@ -13,12 +13,18 @@ import EventWithDateContainer from "../../components/event/EventWithDateContaine
 import SEO from "../../components/SEO";
 import cache from "../../lib/cache";
 import { normalizeDateToDate } from "../../helpers/DateHelper";
-import { RedisKeys } from "../../values/GlobalValues";
+import { AdFormatsPerPage, RedisKeys } from "../../values/GlobalValues";
 import { TranslationType } from "../../interfaces/TranslationType";
+import NormalAd from "../../components/ad/NormalAd";
+import { AdService } from "../../services/AdService";
+import { CustomAdFactory } from "../../factory/CustomAdFactory";
+import { CustomAdFull, CustomAdTypeFull } from "../../interfaces/CustomAd";
+import useAdManager from "../../hooks/useAdManager";
 
-const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] } }> = (props) => {
+const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] }, groupedAds: {[key: string]: CustomAdFull[]} }> = (props) => {
     const [eventKeys, setEventKeys] = useState<string[]>(Object.keys(props.events));
     const { t } = useTranslation<TranslationType>('common');
+    const { getAd } = useAdManager(props.groupedAds);
 
     const dateWasSelected = (date: Date, dateString: string):void => {
         if(Object.keys(props.events).includes(dateString))
@@ -38,51 +44,74 @@ const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] } }>
                 description={t('Event-Description')}
                 imageUrl={''}
             />
-            <EventCalendar locale={LanguageHelper.languageCodeBeingUsed(props)} markDates={Object.keys(props.events)} onChange={dateWasSelected}/>
-            <Flex
-                flexDirection={'column'}
-                key={'EventContainer'}
-                className={eventStyle['container']}
+            <EventCalendar 
+                locale={LanguageHelper.languageCodeBeingUsed(props)} 
+                markDates={Object.keys(props.events)} 
+                onChange={dateWasSelected} 
+            />
+            <Flex 
+                flexDirection={'row'} 
+                gap={12} 
+                position={'relative'}
             >
-                {
-                    eventKeys.map((key: string) => {
-
+                <Flex 
+                    position={'fixed'} 
+                    left={`calc(25% - ${200}px)`}
+                    top={`calc(50% - ${700 / 2}px)`}
+                >
+                    <NormalAd customAd={getAd(200, 700)} />
+                </Flex>
+                <Flex
+                    flexDirection={'column'}
+                    key={'EventContainer'}
+                    className={eventStyle['container']}
+                >
+                    { eventKeys.map((key: string, index) => {
+                        let condition = index % 2 == 0;
+                        let ad = undefined;
+                        if(condition)
+                            ad = getAd(550, 200);
                         return (
+                            <div key={key}>
                                 <EventWithDateContainer 
                                     eventKey={key} 
                                     events={props.events} 
                                     locale={props._nextI18Next?.initialLocale ?? ""}
                                     key={Math.random()}
-                                />        
-                            )
-                    })
-                }
+                                />
+                                <NormalAd condition={condition} customAd={ad}/>
+                            </div>
+                        )})
+                    }
+                </Flex>
             </Flex>
         </Flex>
     );
 }
 
-export async function getServerSideProps({ locale = 'en', req, res }: GetServerSidePropsContext) {
+export async function getServerSideProps({ locale = 'en', req, res,  }: GetServerSidePropsContext) {
     res.setHeader(
         'Cache-Control',
         'public, max-age=600, s-maxage=600, stale-while-revalidate=1200'
     )
-    const events = await cache.fetchCache<EventFull[]>(RedisKeys.FilteredEventsForNextTwoMonths, EventService.getEventsFilteredNextTwoMonths, 60 * 60);
+    const events = await cache.fetchCache<EventFull[], unknown[]>(RedisKeys.FilteredEventsForNextTwoMonths, EventService.getEventsFilteredNextTwoMonths, 60 * 60);
 
     let eventsGroupedByDate: { [key: string]: EventHTMLSafe[] } = {};
 
     events.map(event => {
         let dateString = normalizeDateToDate(event.Date!).toLocaleDateString('en');
-        if(eventsGroupedByDate[dateString] == undefined) eventsGroupedByDate[dateString] = []
+        if(eventsGroupedByDate[dateString] == undefined) eventsGroupedByDate[dateString] = [];
 
-        eventsGroupedByDate[dateString].push(EventFactory.prepareEventForHTML(event))
+        eventsGroupedByDate[dateString].push(EventFactory.prepareEventForHTML(event));
     });
 
+    const customAds = CustomAdFactory.groupByWidthAndHeight(await cache.fetchCache<CustomAdFull[], CustomAdTypeFull[][]>(RedisKeys.CustomAds, AdService.getAdsByAdTypes, 60 * 60, AdFormatsPerPage['event']));
 
     return {
         props: {
             ...(await serverSideTranslations(locale, ['common', 'footer'])),
             events: eventsGroupedByDate,
+            groupedAds: customAds
         }
     };
 }

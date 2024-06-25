@@ -1,9 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { JWTService } from '../../../services/JWTService';
-import { serialize } from "cookie";
-import { CookieName } from '../../../values/GlobalValues';
-import { glob } from "glob";
 
 export default async function handler(
     req: NextApiRequest,

@@ -4,7 +4,7 @@ import { withAuth } from "next-auth/middleware"
 export default withAuth({
   callbacks: {
     authorized({ req, token }) {
-      if (req.nextUrl.pathname === "/admin-event" || req.nextUrl.pathname === '/admin-location') {
+      if (req.nextUrl.pathname === "/admin-event" || req.nextUrl.pathname === '/admin-location' || req.nextUrl.pathname === '/admin-ad') {
         return token?.jti != undefined && token?.jti != null;
       }
       return !!token;
@@ -12,4 +12,4 @@ export default withAuth({
   },
 })
 
-export const config = { matcher: ["/admin-event", "/admin-event/:id*", "/api/:path*", "/admin-location", "/admin-location/:id*"] }
+export const config = { matcher: ["/admin-event", "/admin-event/:id*", "/api/:path*", "/admin-location", "/admin-location/:id*", "/admin-ad", "/admin-ad/type", "/admin-ad/:id*", "/admin-ad/type/:id*"] }

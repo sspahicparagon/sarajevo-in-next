@@ -1,26 +1,35 @@
 import { Flex, Grid, Heading, Text } from '@chakra-ui/react'
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
-import { SSRConfig, UserConfig, useTranslation } from 'next-i18next'
+import type { GetStaticProps } from 'next'
+import { SSRConfig, useTranslation } from 'next-i18next'
 import SlideshowContainer from '../components/SlideshowContainer'
 import style from '../styles/Home.module.css'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import TrackImagesService from '../services/TrackImagesService'
 import IconPlusText from '../components/IconPlusText'
-import { CategoryIcons, LogoImage } from '../values/GlobalValues'
+import { AdFormatsPerPage, CategoryIcons, LogoImage, RedisKeys } from '../values/GlobalValues'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import SEO from '../components/SEO'
 import { LanguageHelper } from '../helpers/LanguageHelper'
 import CardElement from '../interfaces/CardElement'
 import { TranslationType } from '../interfaces/TranslationType'
+import NormalAd from '../components/ad/NormalAd'
+import { CustomAdFactory } from '../factory/CustomAdFactory'
+import cache from '../lib/cache'
+import { CustomAdFull, CustomAdTypeFull } from '../interfaces/CustomAd'
+import { AdService } from '../services/AdService'
+import useAdManager from '../hooks/useAdManager'
 
 interface HomeTypes {
   trackImages: CardElement[];
+  groupedAds: { [key: string]: CustomAdFull[] };
 }
 
-const Home = ({ trackImages, _nextI18Next  }: HomeTypes & SSRConfig) => {
+
+const Home = ({ trackImages, _nextI18Next, groupedAds }: HomeTypes & SSRConfig) => {
   const { t } = useTranslation<TranslationType>(_nextI18Next?.ns);
   let categories = Object.keys(CategoryIcons);
+  const { getAd } = useAdManager(groupedAds);
 
   const title = "SarajevoIN - " + t("Home-Title");
   return (
@@ -36,6 +45,13 @@ const Home = ({ trackImages, _nextI18Next  }: HomeTypes & SSRConfig) => {
           canonicalRelativeRoute={''}
         />
         <main>
+          <section>
+            <Flex 
+              justify={'center'}
+            >
+              <NormalAd customAd={getAd(900, 250)} condition={true}/>
+            </Flex>
+          </section>
           <section>
             <Grid
               className={style['hero-container']}
@@ -126,12 +142,15 @@ const Home = ({ trackImages, _nextI18Next  }: HomeTypes & SSRConfig) => {
 export const getStaticProps:GetStaticProps<HomeTypes> = async (context) => {
   let trackImages = await TrackImagesService.trackImages();
 
+  const customAds = CustomAdFactory.groupByWidthAndHeight(await cache.fetchCache<CustomAdFull[], CustomAdTypeFull[][]>(RedisKeys.CustomAds, AdService.getAdsByAdTypes, 60 * 30, AdFormatsPerPage['home']));
+
   return {
     props: {
       ...(await serverSideTranslations(LanguageHelper.getLanguageSafe(context.locale), ['common', 'footer'])),
-      revalidate: 3600,
-      trackImages: trackImages
-    }
+      trackImages: trackImages,
+      groupedAds: customAds
+    },
+    revalidate: 1800
   };
 }
 

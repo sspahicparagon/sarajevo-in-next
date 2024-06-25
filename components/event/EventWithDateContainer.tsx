@@ -2,6 +2,7 @@ import { Flex, Heading } from "@chakra-ui/react";
 import { convertDateToString2DigitsShortMonth } from "../../helpers/DateHelper";
 import { EventHTMLSafe } from "../../interfaces/EventOverride";
 import EventCard from "./EventCard";
+import NormalAd from "../ad/NormalAd";
 
 const EventWithDateContainer = (props: {eventKey: string} & {events: { [key: string]: EventHTMLSafe[] } } & {locale: string}) => {
     
@@ -38,7 +39,6 @@ const EventWithDateContainer = (props: {eventKey: string} & {events: { [key: str
                 return (
                     <EventCard event={event} key={event.EventID ?? "-1" + event.Date }/>
                 )
-                
             })
         }
     </Flex>

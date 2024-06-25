@@ -14,6 +14,7 @@ import { Session } from 'next-auth';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from '@fortawesome/fontawesome-svg-core';
+import { CookiesProvider } from 'react-cookie';
 
 declare global {
   interface Window {
@@ -58,13 +59,15 @@ function MyApp({ Component, pageProps, session }: AppProps & { session: Session 
     <>
     <SessionProvider session={session}>
       <ChakraProvider>
-        <Box
-          overflowX={'hidden'}
-        >
-          <Toolbar />
-          <Component {...pageProps} />
-          <Footer />
-        </Box>
+        <CookiesProvider>
+          <Box
+            overflowX={'hidden'}
+          >
+            <Toolbar />
+            <Component {...pageProps} />
+            <Footer />
+          </Box>
+        </CookiesProvider>
       </ChakraProvider>
       </SessionProvider>
     </>

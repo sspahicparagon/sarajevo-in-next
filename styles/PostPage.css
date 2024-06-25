@@ -9,7 +9,7 @@
 .wordpress-content-container {
   font-size: 1.25rem;
   line-height: 1.75rem;
-  color: var(--chakra-colors-gray-600);
+  color: var(--chakra-colors-gray-900);
   padding-block: 3rem;
   flex-direction: column;
   font-weight: lighter;
