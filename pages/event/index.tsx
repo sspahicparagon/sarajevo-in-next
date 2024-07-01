@@ -54,7 +54,7 @@ const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] }, g
             <Flex 
                 backgroundColor={'var(--base-color)'} 
                 color={'var(--color-gray)'}
-                boxShadow={'rgba(0, 0, 0, 0.1) 0px 4px 12px;'}
+                boxShadow={'var(--color-gray) 0px 4px 12px;'}
                 maxWidth={'550px'}
                 minWidth={'320px'}
                 justify={'center'}
