@@ -257,6 +257,16 @@ const NAV_ITEMS: Array<NavItem> = [
         href: '/event'
     },
     {
+        label: 'Service',
+        href: '#',
+        children: [
+            {
+                label: 'Event Organizer',
+                href: '/service/event-organizer'
+            }
+        ]
+    },
+    {
         label: 'Blog',
         href: '/posts'
     },
@@ -264,22 +274,24 @@ const NAV_ITEMS: Array<NavItem> = [
         label: 'Admin',
         href: '#',
         checkCondition: true,
-children : [
-  {
-    label: 'Event',
-    href: '/admin-event'
-  }, {
-    label: 'Location',
-    href: '/admin-location'
-  }, {
-    label: 'Ad Type',
-    href: '/admin-ad/type'
-  }, {
-    label: 'Custom Ad',
-    href: '/admin-ad'
-  }
-]
-
+        children : [
+            {
+                label: 'Event',
+                href: '/admin-event'
+            }, 
+            {
+                label: 'Location',
+                href: '/admin-location'
+            }, 
+            {
+                label: 'Ad Type',
+                href: '/admin-ad/type'
+            }, 
+            {
+                label: 'Custom Ad',
+                href: '/admin-ad'
+            }
+        ]
     },
     {
         label: 'Privacy',

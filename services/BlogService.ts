@@ -1,3 +1,4 @@
+import Page, { PageNode, getPageByDatabaseId } from "../interfaces/BlogPage";
 import { CategorySlug, getAllCategorySlugsQuery } from "../interfaces/Category";
 import Post, { PaginatedPosts, PostNode, PostSlug, getAllPostSlugsQuery, getPostAndMorePostsQuery, getPostAndMorePostsQueryContent, loadLatestPostsQuery, loadLatestsPostsForCategoryQuery } from "../interfaces/Post";
 
@@ -82,6 +83,19 @@ const BlogServiceFunction = () => {
     return { post: data.post, posts: resultingPosts };
   };
 
+  const getPageById = async(id: number) => {
+    const data = await fetchWordpressAPI<
+    {
+      page: PageNode
+    },
+    {
+      id: string | null
+    }
+    >(getPageByDatabaseId, { variables: { id: id.toString() } });
+
+    return { page: data.page };
+  }
+
   const loadLatestPosts = async (params: {lastCursorId: string | null, locale: string | null}) => {
     const data = await fetchWordpressAPI<
       {
@@ -122,7 +136,8 @@ const BlogServiceFunction = () => {
     loadLatestPosts,
     getPost,
     loadLatestPostsForCategory,
-    getAllCategorySlugs
+    getAllCategorySlugs,
+    getPageById
   };
 
 

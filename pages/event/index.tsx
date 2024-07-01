@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { GetServerSidePropsContext, NextPage } from "next";
 import { SSRConfig, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -20,6 +20,9 @@ import { AdService } from "../../services/AdService";
 import { CustomAdFactory } from "../../factory/CustomAdFactory";
 import { CustomAdFull, CustomAdTypeFull } from "../../interfaces/CustomAd";
 import useAdManager from "../../hooks/useAdManager";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons"
+import ChakraNextLink from "../../components/ChakraNextLink";
 
 const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] }, groupedAds: {[key: string]: CustomAdFull[]} }> = (props) => {
     const [eventKeys, setEventKeys] = useState<string[]>(Object.keys(props.events));
@@ -44,6 +47,30 @@ const Event: NextPage<SSRConfig & {events: { [key: string]: EventHTMLSafe[] }, g
                 description={t('Event-Description')}
                 imageUrl={''}
             />
+            <ChakraNextLink
+                href={'/service/event-organizer'}
+                className={eventStyle['event-organizer-link']}
+            >
+            <Flex 
+                backgroundColor={'var(--base-color)'} 
+                color={'var(--color-gray)'}
+                boxShadow={'rgba(0, 0, 0, 0.1) 0px 4px 12px;'}
+                maxWidth={'550px'}
+                minWidth={'320px'}
+                justify={'center'}
+                align={'center'}
+                borderRadius={10}
+                padding={'0.5rem'}
+                >
+                <FontAwesomeIcon icon={faWandMagicSparkles} />
+                <Text 
+                    marginLeft={'1rem'} 
+                    fontSize={{"base": '0.7rem', 'sm': '0.9rem', 'md': '1rem'}}
+                    fontFamily={'Poppins'}>
+                    Pravite događaj? Mi smo tu za Vas! Pogledajte naše usluge.
+                </Text>
+            </Flex>
+            </ChakraNextLink>
             <EventCalendar 
                 locale={LanguageHelper.languageCodeBeingUsed(props)} 
                 markDates={Object.keys(props.events)} 

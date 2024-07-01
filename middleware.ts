@@ -12,4 +12,17 @@ export default withAuth({
   },
 })
 
-export const config = { matcher: ["/admin-event", "/admin-event/:id*", "/api/:path*", "/admin-location", "/admin-location/:id*", "/admin-ad", "/admin-ad/type", "/admin-ad/:id*", "/admin-ad/type/:id*"] }
+export const config = { matcher: [
+    "/admin-event", 
+    "/admin-event/:id*", 
+    "/api/ad/:path*", 
+    "/api/event/:path*",
+    "/api/location/:path*", 
+    "/admin-location", 
+    "/admin-location/:id*", 
+    "/admin-ad", 
+    "/admin-ad/type", 
+    "/admin-ad/:id*", 
+    "/admin-ad/type/:id*"
+  ] 
+}

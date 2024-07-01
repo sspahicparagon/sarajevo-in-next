@@ -195,3 +195,20 @@
 .single-event-time {
     justify-content: flex-end;
 }
+
+.event-organizer-link {
+    transform: "rotateX(70deg)";
+    transition: "all 0.8s";
+  }
+
+.event-organizer-link:hover {
+    transform: "rotateX(20deg)";
+}
+.event-organizer-link:after {
+    content: '""';
+    position: "absolute";
+    left: 0;
+    bottom: 0;
+    background: "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1))";
+    transform: "rotateX(90deg)";
+}

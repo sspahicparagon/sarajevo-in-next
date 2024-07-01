@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import "../styles/PostPage.css";
+import '../styles/BlogPage.css';
 import type { AppProps } from 'next/app'
 import { Box, ChakraProvider } from '@chakra-ui/react'
 import Toolbar from '../components/Toolbar';
