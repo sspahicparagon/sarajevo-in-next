@@ -89,6 +89,10 @@ const AdFormatsPerPage: { [key: string]: CustomAdTypeFull[] } = {
         {
             Width: '300',
             Height: '315'
+        },
+        {
+            Width: '300',
+            Height: '315'
         }
     ]
 };
